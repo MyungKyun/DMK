@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Session">
+      <UniqueIdentifier>{b3cc4817-0ed5-4055-aabc-8d02acfa7024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Singleton">
+      <UniqueIdentifier>{c3cc74ce-f5b3-4a74-bdbd-202aa8426ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Lock">
+      <UniqueIdentifier>{afeb5ebc-6e49-4928-b78e-917e600c7890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Iocp">
+      <UniqueIdentifier>{685e198b-071d-4569-abef-8ef3f11d23d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Network">
+      <UniqueIdentifier>{e2aac618-5482-4d57-861a-57b29bf761b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Network\IoEventProcessor">
+      <UniqueIdentifier>{458ed035-f1d9-4e2d-8f19-91d31e8e573a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Server">
+      <UniqueIdentifier>{673c1593-845d-4d90-8551-0f8e6a4a7535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Thread">
+      <UniqueIdentifier>{7435b264-7c87-482e-a042-4d2a4193f83f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Util">
+      <UniqueIdentifier>{c9099a0f-1c42-4fdb-8fb1-df5b1db3ad22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\PacketProcess">
+      <UniqueIdentifier>{6b587f10-fd53-46e9-b23d-fb01bc8ae29f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\IPaddress">
+      <UniqueIdentifier>{1bf0cc7c-c1da-4903-b694-395b91f27a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Overlapped">
+      <UniqueIdentifier>{33c783b8-1c15-4703-9957-a9842563d58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ConditionVariable">
+      <UniqueIdentifier>{a3249cb9-d6b7-47c2-ad48-915b4b30b1af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet">
+      <UniqueIdentifier>{55812e87-6353-41bc-b318-28da7ea4d7dd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>소스 파일\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionPool.h">
+      <Filter>소스 파일\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="Iocp.h">
+      <Filter>소스 파일\Iocp</Filter>
+    </ClInclude>
+    <ClInclude Include="EXFunction.h">
+      <Filter>소스 파일\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>소스 파일\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerNetWorkDepartment.h">
+      <Filter>소스 파일\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="WinsockHelper.h">
+      <Filter>소스 파일\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="AcceptProcessor.h">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="IoProcessor.h">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="ReceiveProcessor.h">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>소스 파일\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>소스 파일\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>소스 파일\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadLocal.h">
+      <Filter>소스 파일\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadManager.h">
+      <Filter>소스 파일\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketProcess.h">
+      <Filter>소스 파일\PacketProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="IPv4.h">
+      <Filter>소스 파일\IPaddress</Filter>
+    </ClInclude>
+    <ClInclude Include="Lock.h">
+      <Filter>소스 파일\Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="LockManager.h">
+      <Filter>소스 파일\Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="LockSafeScope.h">
+      <Filter>소스 파일\Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWorkLib.h">
+      <Filter>소스 파일\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlapped.h">
+      <Filter>소스 파일\Overlapped</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionVariable.h">
+      <Filter>소스 파일\ConditionVariable</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>소스 파일\Packet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>소스 파일\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionPool.cpp">
+      <Filter>소스 파일\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="Iocp.cpp">
+      <Filter>소스 파일\Iocp</Filter>
+    </ClCompile>
+    <ClCompile Include="EXFunction.cpp">
+      <Filter>소스 파일\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Listener.cpp">
+      <Filter>소스 파일\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerNetWorkDepartment.cpp">
+      <Filter>소스 파일\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="WinsockHelper.cpp">
+      <Filter>소스 파일\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="AcceptProcessor.cpp">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="IoProcessor.cpp">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="ReceiveProcessor.cpp">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>소스 파일\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>소스 파일\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadLocal.cpp">
+      <Filter>소스 파일\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadManager.cpp">
+      <Filter>소스 파일\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketProcess.cpp">
+      <Filter>소스 파일\PacketProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="IPv4.cpp">
+      <Filter>소스 파일\IPaddress</Filter>
+    </ClCompile>
+    <ClCompile Include="Lock.cpp">
+      <Filter>소스 파일\Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="LockManager.cpp">
+      <Filter>소스 파일\Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="LockSafeScope.cpp">
+      <Filter>소스 파일\Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlapped.cpp">
+      <Filter>소스 파일\Overlapped</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionVariable.cpp">
+      <Filter>소스 파일\ConditionVariable</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
