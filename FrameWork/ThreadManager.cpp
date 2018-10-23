@@ -41,44 +41,6 @@ Thread* ThreadManager::GetThread(Int id)
 	return found->second;
 }
 
-//Void	ThreadManager::WaitGroup(UShort department)
-//{
-//	decltype(auto) threadsMap = threadGroup_[department];
-//	for ( auto& i : threadsMap)
-//	{
-//		if (nullptr == i.second)
-//		{
-//			continue;
-//		}
-//		
-//		i.second->Wait(&hasPacketData_);
-//	}
-//}
-//
-//Void	ThreadManager::OnNeedNotifyPacketInTheQueue()
-//{
-//	needNotifyPacketInTheQueue_ = true;
-//}
-//
-//Void	ThreadManager::EmptyPacketQueue()
-//{
-//	needNotifyPacketInTheQueue_.store(false);
-//}
-//
-//Void		ThreadManager::NeedNotify()
-//{
-//	if (false == needNotifyPacketInTheQueue_.load())
-//	{
-//		needNotifyPacketInTheQueue_.store(true);
-//	}
-//	NotifyAll();
-//}
-//
-//Void	ThreadManager::NotifyAll()
-//{
-//	hasPacketData_.notify_all();
-//}
-
 Int	ThreadManager::Gen()
 {
 	return latesThreadId_++;
