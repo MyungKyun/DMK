@@ -173,7 +173,7 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 
 		if (GisEmptyPacketQueue_.load() == true)
 		{
-			GisEmptyPacketQueue_.exchange(false);
+			GisEmptyPacketQueue_.store(false);
 			GhasPacketDataCond_.notify_all();
 		}
 
