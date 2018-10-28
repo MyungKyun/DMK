@@ -140,6 +140,9 @@
     <ClInclude Include="Packet.h">
       <Filter>소스 파일\Packet</Filter>
     </ClInclude>
+    <ClInclude Include="SendProcessor.h">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -210,6 +213,9 @@
     </ClCompile>
     <ClCompile Include="ConditionVariable.cpp">
       <Filter>소스 파일\ConditionVariable</Filter>
+    </ClCompile>
+    <ClCompile Include="SendProcessor.cpp">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
