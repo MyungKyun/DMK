@@ -51,11 +51,16 @@ private:
 		handlerTable_.emplace(100, &TestLogicProcess::handler_Msg_Process);
 	}
 
-	static Void	handler_Msg_Process(Byte* buffer, Int bytes)
+	static Void	handler_Msg_Process(Byte* buffer, Int bytes, std::shared_ptr<Session> sessionPtr)
 	{
 		MessagePacket* msg = reinterpret_cast< MessagePacket*>(buffer);
 
 		std::cout << msg->val << std::endl;
+
+		std::shared_ptr<SendBuffer> sendBuffer = std::make_shared<SendBuffer>(bytes + static_cast<Int>(sizeof(PacketHeader)));
+		sendBuffer->SetData(buffer);
+
+		sessionPtr->Send(sendBuffer);
 	}
 
 };
