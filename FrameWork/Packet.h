@@ -18,15 +18,18 @@ struct MessagePacket
 };
 /////////////////
 
+class Session;
 struct DataPack
 {
-	UShort	packetType_ = 0;
-	Byte*	dataBuffer_;
-	Int     dataBytes_ = 0;
+	UShort					 packetType_ = 0;
+	Byte*					 dataBuffer_;
+	Int						 dataBytes_ = 0;
+	std::shared_ptr<Session> sessionPtr;
 
-	DataPack(UShort type, const Byte* buf, Int dataBytes)
+	DataPack(UShort type, const Byte* buf, Int dataBytes, std::shared_ptr<Session> sessionptr)
 		: packetType_(type)
 		, dataBytes_(dataBytes)
+		, sessionPtr(sessionptr)
 	{
 		dataBuffer_ = new Byte[dataBytes];
 		::memcpy_s(dataBuffer_, dataBytes, buf, dataBytes);
