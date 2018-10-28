@@ -60,9 +60,17 @@ Void	Session::ReRegisterToIocp()
 }
 
 
-Void	Session::Send(Overlapped_Ex * overlapped, UInt bytes)
+Void	Session::Send(std::shared_ptr<SendBuffer> sendBuffer)
 {
+	// 큐에 저장해둔다.. 우선은 Cuncurrency queue에 버퍼를 저장해두자.
+	Bool sendImmediately = false;
 	
+	sendBufferQue_.Push(sendBuffer, sendImmediately);
+
+	if (true == sendImmediately)
+	{
+		sendProcessor_->PostSend(shared_from_this());
+	}
 }
 
 Bool	Session::AcceptCompleted(const IPv4& address)

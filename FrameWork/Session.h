@@ -22,14 +22,14 @@ private:
 	Byte*							sendBuf_;
 
 	Int								recvEnd_, recvBegin_;
-
+	SendBufferQueue					sendBufferQue_;
 	UInt							processedBytes_ = 0;
 	UInt							receivedBytes_ = 0;
 	std::atomic_bool				completedConnect_;
 
 	IPv4							peerAddress_;
 	ReceiveProcessor*				recvProcessor_;
-	SendProcessor*					sendProcessor_; // 리시브, 센드를,, 그냥 세션이 가지고 있을까.. ServerNetDepartment에서 옮겨오는걸 고려해보자.
+	SendProcessor*					sendProcessor_; // 리시브, 센드를,, 그냥 세션이 가지고 있을까..
 
 public:
 
@@ -49,7 +49,7 @@ public:
 	Void		SetSessionId(UDLong sessionId);
 	
 	Void		ReRegisterToIocp();
-	Void		Send(Overlapped_Ex* overlapped, UInt bytes);
+	Void		Send(std::shared_ptr<SendBuffer> sendBuffer);
 	Bool		AcceptCompleted(const IPv4& address);
 
 
