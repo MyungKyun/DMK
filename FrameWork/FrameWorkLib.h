@@ -88,6 +88,7 @@
 #include "Thread.h"
 #include "ThreadManager.h"
 #include "PacketProcess.h"
+#include "SendBufferQueue.h"
 #include "IoProcessor.h"
 #include "AcceptProcessor.h"
 #include "SendProcessor.h"

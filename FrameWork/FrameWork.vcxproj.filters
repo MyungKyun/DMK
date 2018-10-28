@@ -143,6 +143,9 @@
     <ClInclude Include="SendProcessor.h">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
     </ClInclude>
+    <ClInclude Include="SendBufferQueue.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -216,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="SendProcessor.cpp">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="SendBufferQueue.cpp">
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
