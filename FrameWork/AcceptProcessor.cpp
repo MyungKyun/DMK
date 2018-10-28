@@ -29,7 +29,7 @@ Void AcceptProcessor::PreparingAccept(SessionPool* sessionPool, UShort totalAcce
 
 	Overlapped_Ex_Accept* overlappedAccept = new Overlapped_Ex_Accept(this, listenSock, sessionPtr);
 
-		DWORD recvBytes = 0;
+	DWORD recvBytes = 0;
 	if (false == EXFunction::AcceptEx(listenSock, sessionPtr->GetSocket(), overlappedAccept->buf_, 0,
 		sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16, &recvBytes, overlappedAccept))
 	{

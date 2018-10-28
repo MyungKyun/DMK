@@ -2,6 +2,7 @@
 
 PacketProcess::PacketProcess()
 	: startThreadCount_(0)
+	, curCount_(0)
 {
 	
 }

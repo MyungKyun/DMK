@@ -90,6 +90,7 @@
 #include "PacketProcess.h"
 #include "IoProcessor.h"
 #include "AcceptProcessor.h"
+#include "SendProcessor.h"
 #include "ReceiveProcessor.h"
 
 #include "Session.h"
