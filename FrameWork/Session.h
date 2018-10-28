@@ -8,7 +8,7 @@ class Session :	public std::enable_shared_from_this<Session>
 private:
 	
 	Session() = delete;
-	Session(ServerNetWorkDepartment* serverNetDept, Int ioTotalBufsize, ReceiveProcessor* recvProcessor);
+	Session(ServerNetWorkDepartment* serverNetDept, Int ioTotalBufsize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor);
 
 
 private:
@@ -30,6 +30,7 @@ private:
 	IPv4							peerAddress_;
 	ReceiveProcessor*				recvProcessor_;
 	SendProcessor*					sendProcessor_; // 리시브, 센드를,, 그냥 세션이 가지고 있을까.. ServerNetDepartment에서 옮겨오는걸 고려해보자.
+
 public:
 
 	template <typename ... Args>
