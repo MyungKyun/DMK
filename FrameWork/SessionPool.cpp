@@ -37,7 +37,7 @@ SessionPool::~SessionPool()
 
 }
 
-Bool	SessionPool::MakeSessionPool( ServerNetWorkDepartment* serverNetWorkDept, UShort poolCount, ReceiveProcessor* recvProcessor)
+Bool	SessionPool::MakeSessionPool( ServerNetWorkDepartment* serverNetWorkDept, UShort poolCount, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
 {
 	if (nullptr == serverNetWorkDept)
 	{
@@ -53,7 +53,7 @@ Bool	SessionPool::MakeSessionPool( ServerNetWorkDepartment* serverNetWorkDept, U
 	
 	for (auto i = 0; i < poolCount; ++i)
 	{
-		auto sessionPtr = Session::CreateSession(serverNetWorkDept, IO_BUFFER_SIZE, recvProcessor);
+		auto sessionPtr = Session::CreateSession(serverNetWorkDept, IO_BUFFER_SIZE, recvProcessor, sendProcessor);
 		sessionQue_.push_back(sessionPtr);
 		serverNetWorkDept->RegisterToIocp(sessionPtr->GetHandle());
 	}
