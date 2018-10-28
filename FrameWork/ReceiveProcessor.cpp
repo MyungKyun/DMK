@@ -167,7 +167,7 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 		
 		auto realDatabuffer = recvBuffer + sizeof(PacketHeader);
 		
-		DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader) );
+		DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
 		
 		contentsLogicProcess_->Push(dPack);
 
