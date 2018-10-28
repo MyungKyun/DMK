@@ -1,13 +1,14 @@
 #include "stdafx.h"
 #include "Session.h"
 
-Session::Session(ServerNetWorkDepartment* serverNetDept, Int bufSize, ReceiveProcessor* recvProcessor)
+Session::Session(ServerNetWorkDepartment* serverNetDept, Int bufSize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
 	: totalBufferSize_(bufSize)
 	, sessionId_(0)
 	, recvEnd_(0)
 	, recvBegin_(0)
 	, serverNetDept_(serverNetDept ? serverNetDept : nullptr)
 	, recvProcessor_(recvProcessor ? recvProcessor : nullptr)
+	, sendProcessor_(sendProcessor ? sendProcessor : nullptr)
 
 {
 	sendBuf_ = new Byte[bufSize];

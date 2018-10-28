@@ -9,6 +9,8 @@ class ServerNetWorkDepartment
 	Listener				listener_;
 	AcceptProcessor			acceptProcessor_;
 	ReceiveProcessor		receiveProcessor_;
+	SendProcessor			sendProcessor_;
+
 	UShort					totalAcceptCount_;
 
 public:
