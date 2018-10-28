@@ -22,7 +22,7 @@ Bool	ServerNetWorkDepartment::Initialize(PacketProcess* contentLogicProcess)
 		assert(false);
 	}
 
-	if (false == sessionPool_->MakeSessionPool(this, totalAcceptCount_, &receiveProcessor_))
+	if (false == sessionPool_->MakeSessionPool(this, totalAcceptCount_, &receiveProcessor_, &sendProcessor_))
 	{
 		return false;
 	}
