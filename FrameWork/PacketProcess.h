@@ -18,7 +18,7 @@ class PacketProcess
 
 protected:
 
-	using PacketHandle = Void(*)(Byte* buffer, Int bytes);
+	using PacketHandle = Void(*)(Byte* buffer, Int bytes, std::shared_ptr<Session> sessionPtr);
 	std::unordered_map < UShort, PacketHandle> handlerTable_;
 
 public:

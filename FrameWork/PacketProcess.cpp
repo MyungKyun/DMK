@@ -81,7 +81,7 @@ Void PacketProcess::execute()
 		return;
 	}
 
-	handler(pack->dataBuffer_, pack->dataBytes_);
+	handler(pack->dataBuffer_, pack->dataBytes_, pack->sessionPtr);
 
 	delete pack;
 	pack = nullptr;
