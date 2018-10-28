@@ -10,7 +10,6 @@ enum IO_TYPE
 };
 
 class IoProcessor;
-class Session;
 
 struct Overlapped_Ex : public OVERLAPPED
 {
