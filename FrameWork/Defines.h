@@ -1,0 +1,11 @@
+#pragma once
+
+
+enum
+{
+	NETWORK_IO_PROCESSING_DEPT = 0,
+	PACKET_PROCESSING_DEPT = 1,
+
+	MAX_DEPT,
+};
+
