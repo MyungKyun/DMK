@@ -3,14 +3,6 @@
 class ThreadManager : public Singleton<ThreadManager>
 {
 
-	using ThreadMap = std::unordered_map<UDLong, Thread*>;
-	ThreadMap	threadMap_;
-	//Int			latesThreadId_ = 0;
-	std::atomic_ulong	latestThreadId_;
-
-	//using ThreadGroup = std::array<ThreadMap, MAX_DEPT>;
-	//ThreadGroup			threadGroup_;
-
 	ThreadDepartment*		threadDept_[MAX_DEPT];
 
 public:
