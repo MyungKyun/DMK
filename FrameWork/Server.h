@@ -16,8 +16,7 @@ protected:
 	DWORD											startThreadCount_;    // 스레드를 몇개 생성할지 변수 우선은 시스템코어 개수로..
 	PacketProcess*									contentLogicProcess_ = nullptr;
 	ServerNetWorkDepartment*						serverNetDept_ = nullptr;
-	std::array<Thread*, Count::MAX_THREAD_COUNT>	threads_;
-
+	
 public:
 
 	Server(PacketProcess* contentLogicProcess);

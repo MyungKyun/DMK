@@ -23,18 +23,18 @@ PacketProcess::~PacketProcess()
 Bool PacketProcess::Setup()
 {
 	// юс╫ц
-	if (startThreadCount_ <= 0)
-	{
-		SYSTEM_INFO sys;
-		::GetSystemInfo(&sys);
+	//if (startThreadCount_ <= 0)
+	//{
+	//	SYSTEM_INFO sys;
+	//	::GetSystemInfo(&sys);
 
-		startThreadCount_ = 4;
-	}
+	//	startThreadCount_ = 4;
+	//}
 
-	for (DWORD i = 0; i < startThreadCount_; ++i)
-	{
-		threads_[i] = _CREATE_THREAD(PacketProcess, Run, PACKET_PROCESSING_DEPT);
-	}
+	//for (DWORD i = 0; i < startThreadCount_; ++i)
+	//{
+	//	threads_[i] = _CREATE_THREAD(PacketProcess, Run, PACKET_PROCESSING_DEPT);
+	//}
 
 	return true;
 }

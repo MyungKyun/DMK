@@ -5,7 +5,7 @@ Lock::Lock()
 	LockfileName_ = L"";
 	LockLine_ = -1;
 	threadId_ = -1;
-	lockId_ = LockManager::GetInstance()->GenId();
+//	lockId_ = LockManager::GetInstance()->GenId();
 }
 
 Lock::~Lock()

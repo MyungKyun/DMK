@@ -31,6 +31,7 @@
 #include <functional>
 
 #include <thread>
+#include <future>
 #include <mutex>
 #include <memory>
 
@@ -67,6 +68,7 @@
 #endif
 
 #include "ConditionVariable.h"
+#include "Defines.h"
 #include "Type.h"
 #include "Packet.h"
 #include "Utility.h"
@@ -86,6 +88,8 @@
 #include "LockSafeScope.h"
 
 #include "Thread.h"
+#include "NetworkIoThread.h"
+#include "ThreadDepartment.h"
 #include "ThreadManager.h"
 #include "PacketProcess.h"
 #include "SendBufferQueue.h"

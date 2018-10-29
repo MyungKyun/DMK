@@ -12,13 +12,6 @@ Server::~Server()
 {
 	ShutDown();
 
-
-	for (int i = 0; i < threads_.size(); ++i)
-	{
-		delete threads_[i];
-		threads_[i] = nullptr;
-	}
-
 	delete contentLogicProcess_;
 	contentLogicProcess_ = nullptr;
 }
@@ -51,23 +44,7 @@ Bool Server::Setup(SessionPool* sessionPool)
 
 Void Server::Run()
 {
-	SYSTEM_INFO sys;
-	::GetSystemInfo(&sys);
-
-	if (startThreadCount_ <= 0)
-	{
-		startThreadCount_ = sys.dwNumberOfProcessors;
-	}
-
-	if (startThreadCount_ > sys.dwNumberOfProcessors)
-	{
-		startThreadCount_ = sys.dwNumberOfProcessors;
-	}
-
-	for (DWORD i = 0; i < startThreadCount_; ++i)
-	{
-		threads_[i] = _CREATE_THREAD(Server, threadRun, NETWORK_PROCESSING_DEPT );
-	}
+	
 }
 
 Void Server::ShutDown()

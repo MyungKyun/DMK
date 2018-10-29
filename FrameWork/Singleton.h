@@ -22,42 +22,27 @@ template <typename T>
 class Singleton : private Uncopyable
 {
 
-	using	valueType = T;
-	using   pointerType = valueType*;
-	using	atomicType = std::atomic<pointerType>;
-	using	mtxType = std::mutex;
-
-
-	static	atomicType		sInstance_;
-	static  mtxType			mtx_;
+	static std::once_flag		onceFlag_;
+	static std::unique_ptr<T>	sInstance;
 
 public:
 
-	static pointerType GetInstance()
+	template<typename... Args>
+	static T& GetInstance(Args&&... args)
 	{
-		pointerType	temp = sInstance_.load();
+		std::call_once(onceFlag_, [](Args&&... args) ->  Void { sInstance.reset(new T(std::forward<Args>(args)...)); },
+			std::forward<Args>(args)...);
 
-		if (nullptr == temp)
-		{
-			std::lock_guard<mtxType> lock(mtx_);
-
-			temp = sInstance_.load();
-
-			if (nullptr == temp)
-			{
-				temp = new valueType;
-				sInstance_.store(temp);
-			}
-		}
-
-		return sInstance_;
+		return *sInstance;
 	}
-
-
 };
 
-template <typename T>
-typename Singleton<T>::atomicType Singleton<T>::sInstance_ = nullptr;
 
-template <typename T>
-typename Singleton<T>::mtxType Singleton<T>::mtx_;
+template<typename T>
+std::unique_ptr<T> Singleton<T>::sInstance;
+
+template<typename T>
+std::once_flag Singleton<T>::onceFlag_;
+
+
+

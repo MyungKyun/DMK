@@ -146,6 +146,15 @@
     <ClInclude Include="SendBufferQueue.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadDepartment.h">
+      <Filter>소스 파일\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkIoThread.h">
+      <Filter>소스 파일\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -222,6 +231,9 @@
     </ClCompile>
     <ClCompile Include="SendBufferQueue.cpp">
       <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadDepartment.cpp">
+      <Filter>소스 파일\Thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

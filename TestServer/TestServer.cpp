@@ -18,6 +18,11 @@ public:
 
 	Bool	Setup()
 	{
+
+		//GThreadManager.AddDepartment(NetworkIoThread::GetDepartmentNumber(), &iocp_);
+		
+		GThreadManager.AddDepartment(NetworkIoThread::GetDepartmentNumber(), &iocp_);
+		GThreadManager.Start<NetworkIoThread>(0, "NetworkIoThread", &iocp_);
 		sessionPool_ = new SessionPool();
 		if (false == Server::Setup(sessionPool_))
 		{
