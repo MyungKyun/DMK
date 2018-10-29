@@ -1,38 +1,48 @@
 #include "stdafx.h"
 
-Thread::Thread(std::thread* thread, UShort department )
-	: thread_(thread)
-	, department_(department)
+Thread::Thread(const String& threadName, Short deptNum)
+	: name_(threadName)
+	, deptNumber_(deptNum)
 {
-	
-	threadId_ = ThreadManager::GetInstance()->Gen();
 
-	Init_TLS(threadId_);
-
-	ThreadManager::GetInstance()->PushThread(this); 
 }
 
 Thread::~Thread()
 {
-	
+	isStop_ = true;
+	if (thread_.joinable())
+	{
+		thread_.join();
+	}
 }
 
-UShort	Thread::GetDepartment()
+Short	Thread::GetDepartmentNumber()
 {
-	return department_;
+	return deptNumber_;
 }
 
-Void	Thread::SetLock(Lock* lock)
+
+Void	Thread::Initialize()
 {
-	lock_ = lock;
+	thread_ = std::thread(&Thread::ThreadRun, this);
 }
 
-const Lock*	Thread::GetLock() const
+Bool	Thread::Setup()
 {
-	return lock_;
+	::Init_TLS(GetCurrentThreadId(), deptNumber_);
+	::SetThreadName(LThreadId, name_.c_str());
+
+	return true;
 }
 
-Int Thread::GetId() const
+Void	Thread::ThreadRun(Thread* thread)
 {
-	return threadId_;
+	assert(thread);
+
+	if (thread->Setup())
+	{
+		thread->Run();
+	}
+
+	thread->ShutDown();
 }

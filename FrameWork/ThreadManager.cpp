@@ -1,47 +1,34 @@
 #include "stdafx.h"
 
-std::condition_variable	 hasPacketData_;
-std::atomic_bool				needNotifyPacketInTheQueue_ = false;
 ThreadManager::~ThreadManager()
 {
 
 }
 
-
-Void ThreadManager::PushThread(Thread* thread)
+Bool	ThreadManager::AddDepartment(Short deptNum, Iocp* iocp)
 {
-	//threadMap_.emplace(thread->GetId(), thread);
-	threadGroup_[thread->GetDepartment()].emplace(thread->GetId(), thread);
-}
-
-Void	ThreadManager::RemoveThread(Int id)
-{
-	auto found = threadMap_.find(id);
-	if (found == threadMap_.cend())
+	if (0 > deptNum || deptNum >= MAX_DEPT)
 	{
-		return;
+		return false;
 	}
 
-	threadMap_.erase(found);
-}
-
-Thread* ThreadManager::GetThread(Int id)
-{
-	if (threadMap_.empty())
+	if (nullptr != threadDept_[deptNum])
 	{
-		return nullptr;
+		return false;
 	}
 
-	auto found = threadMap_.find(id);
-	if (found == threadMap_.cend())
+	ThreadDepartment* dept = new ThreadDepartment(deptNum, iocp);
+	threadDept_[deptNum] = dept;
+	return true;
+}
+
+
+ThreadDepartment*		ThreadManager::GetDepartment(Short deptNum) const
+{
+	if (0 > deptNum || deptNum >= MAX_DEPT)
 	{
 		return nullptr;
 	}
 
-	return found->second;
-}
-
-Int	ThreadManager::Gen()
-{
-	return latesThreadId_++;
+	return threadDept_[deptNum];
 }
