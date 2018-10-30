@@ -2,7 +2,6 @@
 
 Server::Server(PacketProcess* contentLogicProcess)
 	: contentLogicProcess_(contentLogicProcess)
-	, startThreadCount_(0)
 	
 {
 	
@@ -76,10 +75,4 @@ Bool Server::startup()
 	}
 
 	return true;
-}
-
-
-Void Server::threadRun()
-{
-	iocp_.ListenToCompletionPort();
 }
