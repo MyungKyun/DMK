@@ -9,3 +9,16 @@ enum
 	MAX_DEPT,
 };
 
+class IdGenerator : public Singleton<IdGenerator>
+{
+	std::atomic<UDLong>		sessionIdGen_{ 0 };
+
+public:
+
+	UDLong				SessionIdGenerate()
+	{
+		return sessionIdGen_.fetch_add(1);
+	}
+};
+
+#define		GIDGen		Singleton<IdGenerator>::GetInstance()
