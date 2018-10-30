@@ -20,6 +20,6 @@ public:
 
 	Bool			Initialize(PacketProcess* contentLogicProcess);
 	Void			RegisterToIocp(HANDLE handle);
-	Void			ReturnSessionAndPreparingAccpet(UDLong sessionId);
+	Void			ReturnSessionAndPreparingAccpet(std::shared_ptr<Session>& sessionPtr);
 };
 

@@ -45,9 +45,9 @@ Bool	ServerNetWorkDepartment::Initialize(PacketProcess* contentLogicProcess)
 	return true;
 }
 
-Void	ServerNetWorkDepartment::ReturnSessionAndPreparingAccpet(UDLong sessionId)
+Void	ServerNetWorkDepartment::ReturnSessionAndPreparingAccpet(std::shared_ptr<Session>& sessionPtr)
 {
-	sessionPool_->ReturnSession(sessionId);
+	sessionPool_->SessionReturns(sessionPtr);
 
 	acceptProcessor_.PreparingAccept(sessionPool_, totalAcceptCount_, listener_.GetListenSocket());
 }
