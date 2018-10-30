@@ -42,7 +42,9 @@ ThreadManager
 	- Lock 클래스의 LockSafeScope, LockManager 클래스를 삭제하였다. 단순히 recursive_mutex로 Lock을 걸었던걸 변경하여
               shared_mutex, shared_lock, unique_lock 으로 사용하도록 한다. 매크로 추가.
 
-	% Google protobuffer 대신 flatbuffer를 사용해 보는걸 고려해봄직하다. 자료를 찾아보니 protobuf와 다르게 직렬화시 모델에 값을 채우는게 바이트어레이고
-	 역직렬화시 바이트어레이가 곧 모델이라 복사하는 과정이 없어 성능이 좋다고한다.  사용시에 코드 작성량이 조금 많다는게 단점이라고 한다.
-                          
-              이외에도 ZeroFormatter 라는 직/역직렬화 라이브러리가 있는데 C#만 지원하는것 같다. C#에선 압도적인 성능을 보이는것같다. 
+	% Google protobuffer 대신 flatbuffer를 사용해 보는걸 고려해봄직하다. 
+	 자료를 찾아보니 protobuf와 다르게 직렬화시 모델에 값을 채우는게 바이트어레이고
+	 역직렬화시 바이트어레이가 곧 모델이라 복사하는 과정이 없어 성능이 좋다고한다.  
+	 사용시에 코드 작성량이 조금 많다는게 단점이라고 한다    
+         이외에도 ZeroFormatter 라는 직/역직렬화 라이브러리가 있는데 C#만 지원하는것 같다. 
+	 C#에선 압도적인 성능을 보이는것같다. 
