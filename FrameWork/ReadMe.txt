@@ -25,3 +25,19 @@ ThreadManager
             - 아직 정확하게 동작할 코드는 작성하지 않았다. 
 	    
 	SendBufferQueue 로 Send가 정상 동작한다면 그 후에 구글 프로토버퍼를 붙여볼 계획이다.
+
+2018-10-29
+	
+	- ThreadDepartment 클래스를 추가 하였다. 해당 클래스는 생성된 Thread들을 unique_ptr로 관리하며
+	  ThreadManager 클래스에서 Thread 생성하기전 Department 를 먼저 생성하고, Thread를 생성하여야 동작한다.
+              이렇게 나눈 이유는 추후 Thread에 Job을 넘길때 어떤 ThreadDepartment 에 넘길지 선택하기 위함이다.
+
+2018-10-30
+
+	- Session 클래스의 sessionId를 발급하기 위한 IdGenerator 싱글톤 클래스를 추가하였다.
+	  Session이 생성될때 sessionId가 발급되고, 해당 ID 는 서버 프로그램이 종료될때까지 바뀌지 않는다.
+              이전에는 SessionPool에서 Session을 가져올때 ID를 발급해주었는데 이렇게 되면 Lock을 걸어야해서
+              최초 서버 구동시 아이디를 모두 발급해버리게 수정 하였다.
+
+	- Lock 클래스의 LockSafeScope, LockManager 클래스를 삭제하였다. 단순히 recursive_mutex로 Lock을 걸었던걸 변경하여
+              shared_mutex, shared_lock, unique_lock 으로 사용하도록 한다. 매크로 추가.
