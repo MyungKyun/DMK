@@ -3,7 +3,7 @@
 
 Session::Session(ServerNetWorkDepartment* serverNetDept, Int bufSize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
 	: totalBufferSize_(bufSize)
-	, sessionId_(0)
+	, sessionId_(GIDGen.SessionIdGenerate())
 	, recvEnd_(0)
 	, recvBegin_(0)
 	, serverNetDept_(serverNetDept ? serverNetDept : nullptr)
@@ -33,11 +33,6 @@ Void	Session::Disconnect()
 	
 }
 
-Void	Session::SetSessionId(UDLong sessionId)
-{
-	sessionId_ = sessionId;
-}
-
 UDLong	Session::GetSessionId() const
 {
 	return sessionId_;
@@ -56,7 +51,7 @@ Void	Session::ReRegisterToIocp()
 
 	serverNetDept_->RegisterToIocp(reinterpret_cast<HANDLE>(socket_));
 
-	serverNetDept_->ReturnSessionAndPreparingAccpet(sessionId_);
+	serverNetDept_->ReturnSessionAndPreparingAccpet(GetThisPtr());
 }
 
 
@@ -69,7 +64,7 @@ Void	Session::Send(std::shared_ptr<SendBuffer> sendBuffer)
 
 	if (true == sendImmediately)
 	{
-		sendProcessor_->PostSend(shared_from_this());
+		sendProcessor_->PostSend(GetThisPtr());
 	}
 }
 
@@ -84,12 +79,17 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 		return false;
 	}
 
-	if (false == recvProcessor_->ReservingReceive(shared_from_this()))
+	if (false == recvProcessor_->ReservingReceive(GetThisPtr()))
 	{
 		return false;
 	}
 	
 	return true;
+}
+
+std::shared_ptr<Session>	Session::GetThisPtr()
+{
+	return shared_from_this();
 }
 
 Byte*	Session::GetRecvBuf()

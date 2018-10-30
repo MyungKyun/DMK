@@ -45,14 +45,10 @@ public:
 
 	Void		Disconnect();
 	
-
-	Void		SetSessionId(UDLong sessionId);
-	
 	Void		ReRegisterToIocp();
 	Void		Send(std::shared_ptr<SendBuffer> sendBuffer);
 	Bool		AcceptCompleted(const IPv4& address);
-
-
+	
 	Byte*		GetRecvBuf();
 	Int&		GetRecvBegin();
 	Int&		GetRecvEnd();
@@ -64,4 +60,6 @@ public:
 	Void		ResetBufferBeginSize();
 	Void		ResetBufferEndSize();
 
+
+	std::shared_ptr<Session>	GetThisPtr();
 };
