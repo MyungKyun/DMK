@@ -27,7 +27,7 @@ struct Overlapped_Ex_Accept : public Overlapped_Ex
 	std::shared_ptr<Session> sessionSptr;
 
 
-	Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, const std::shared_ptr<Session>& sessionPtr);
+	Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, const std::shared_ptr<Session> sessionPtr);
 };
 
 struct Overlapped_Ex_Preparing_Receive : public Overlapped_Ex

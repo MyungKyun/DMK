@@ -17,7 +17,7 @@ Overlapped_Ex::Overlapped_Ex(IO_TYPE type, IoProcessor* processor, SOCKET socket
 	processor_ = processor;
 }
 
-Overlapped_Ex_Accept::Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, const std::shared_ptr<Session>& sessionPtr)
+Overlapped_Ex_Accept::Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, const std::shared_ptr<Session> sessionPtr)
 	: Overlapped_Ex(IO_ACCEPT, processor, socket, nullptr, 0)
 	, sessionSptr(sessionPtr)
 {
