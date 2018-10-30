@@ -122,12 +122,6 @@
     <ClInclude Include="Lock.h">
       <Filter>소스 파일\Lock</Filter>
     </ClInclude>
-    <ClInclude Include="LockManager.h">
-      <Filter>소스 파일\Lock</Filter>
-    </ClInclude>
-    <ClInclude Include="LockSafeScope.h">
-      <Filter>소스 파일\Lock</Filter>
-    </ClInclude>
     <ClInclude Include="FrameWorkLib.h">
       <Filter>소스 파일\Server</Filter>
     </ClInclude>
@@ -212,12 +206,6 @@
       <Filter>소스 파일\IPaddress</Filter>
     </ClCompile>
     <ClCompile Include="Lock.cpp">
-      <Filter>소스 파일\Lock</Filter>
-    </ClCompile>
-    <ClCompile Include="LockManager.cpp">
-      <Filter>소스 파일\Lock</Filter>
-    </ClCompile>
-    <ClCompile Include="LockSafeScope.cpp">
       <Filter>소스 파일\Lock</Filter>
     </ClCompile>
     <ClCompile Include="Overlapped.cpp">

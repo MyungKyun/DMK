@@ -169,8 +169,6 @@ IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
     <ClInclude Include="IPv4.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="Lock.h" />
-    <ClInclude Include="LockManager.h" />
-    <ClInclude Include="LockSafeScope.h" />
     <ClInclude Include="NetworkIoThread.h" />
     <ClInclude Include="Overlapped.h" />
     <ClInclude Include="Packet.h" />
@@ -202,8 +200,6 @@ IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
     <ClCompile Include="IPv4.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="Lock.cpp" />
-    <ClCompile Include="LockManager.cpp" />
-    <ClCompile Include="LockSafeScope.cpp" />
     <ClCompile Include="Overlapped.cpp" />
     <ClCompile Include="PacketProcess.cpp" />
     <ClCompile Include="ReceiveProcessor.cpp" />
