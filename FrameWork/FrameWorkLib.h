@@ -33,6 +33,7 @@
 #include <thread>
 #include <future>
 #include <mutex>
+#include <shared_mutex>
 #include <memory>
 
 #include <string>
@@ -68,12 +69,12 @@
 #endif
 
 #include "ConditionVariable.h"
-#include "Defines.h"
+#include "Singleton.h"
 #include "Type.h"
+#include "Defines.h"
 #include "Packet.h"
 #include "Utility.h"
 #include "WinsockHelper.h"
-#include "Singleton.h"
 #include "IPv4.h"
 
 #include "Iocp.h"
@@ -84,8 +85,6 @@
 #include "ThreadLocal.h"
 
 #include "Lock.h"
-#include "LockManager.h"
-#include "LockSafeScope.h"
 
 #include "Thread.h"
 #include "NetworkIoThread.h"
