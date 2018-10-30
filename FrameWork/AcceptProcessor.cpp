@@ -25,7 +25,7 @@ Void AcceptProcessor::PreparingAccept(SessionPool* sessionPool, UShort totalAcce
 		return;
 	}
 
-	auto& sessionPtr = sessionPool->GetSession();
+	decltype(auto) sessionPtr = sessionPool->GetSession();
 
 	Overlapped_Ex_Accept* overlappedAccept = new Overlapped_Ex_Accept(this, listenSock, sessionPtr);
 
