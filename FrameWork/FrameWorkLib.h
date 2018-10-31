@@ -97,10 +97,11 @@
 #include "SendProcessor.h"
 #include "ReceiveProcessor.h"
 
-#include "Session.h"
-#include "SessionPool.h"
 #include "NetworkDepartment.h"
 #include "ClientNetWorkDepartment.h"
 #include "ServerNetWorkDepartment.h"
 #include "NetworkDepartmentManager.h"
+
+#include "Session.h"
+#include "SessionPool.h"
 #include "Server.h"

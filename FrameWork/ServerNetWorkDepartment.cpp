@@ -15,7 +15,8 @@ ServerNetWorkDepartment::~ServerNetWorkDepartment()
 
 }
 
-Bool	ServerNetWorkDepartment::Initialize(PacketProcess* contentLogicProcess)
+
+Bool	ServerNetWorkDepartment::Setup()
 {
 	if (nullptr == iocp_)
 	{
@@ -27,8 +28,8 @@ Bool	ServerNetWorkDepartment::Initialize(PacketProcess* contentLogicProcess)
 		return false;
 	}
 
-	receiveProcessor_.Setup(contentLogicProcess);
-
+	// 패킷큐잉 하는것을 제거하자 큐잉이 비싸당..
+	//receiveProcessor_.Setup(contentLogicProcess);
 
 	if (false == listener_.Listen(address_))
 	{
@@ -45,7 +46,7 @@ Bool	ServerNetWorkDepartment::Initialize(PacketProcess* contentLogicProcess)
 	return true;
 }
 
-Void	ServerNetWorkDepartment::ReturnSessionAndPreparingAccpet(std::shared_ptr<Session>& sessionPtr)
+Void	ServerNetWorkDepartment::SessionWasDismissed(const std::shared_ptr<Session>& sessionPtr)
 {
 	sessionPool_->SessionReturns(sessionPtr);
 
