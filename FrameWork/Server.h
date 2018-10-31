@@ -5,15 +5,16 @@ class Server
 	enum Count 
 	{
 		//юс╫ц
-		TOTAL_ACCEPT_COUNT	= 100,
+		TOTAL_ACCEPT_COUNT	= 1,
 	};
 
 protected:
 
 	Iocp											iocp_;
 	PacketProcess*									contentLogicProcess_ = nullptr;
-	ServerNetWorkDepartment*						serverNetDept_ = nullptr;
-	
+
+	NetworkDepartmentManager						netDeptManger_;
+		
 public:
 
 	Server(PacketProcess* contentLogicProcess);
