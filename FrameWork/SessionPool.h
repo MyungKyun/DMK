@@ -22,10 +22,10 @@ public:
 	SessionPool();
 	~SessionPool();
 
-	Bool							MakeSessionPool(ServerNetWorkDepartment* serverNetWorkDept, UShort poolCount, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor);
+	Bool							MakeSessionPool(NetworkDepartment* networkDept, UShort poolCount, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor);
 	
 	SessionSptr						GetSession();
 	
-	Void							SessionReturns(std::shared_ptr<Session>& sessionPtr);
+	Void							SessionReturns(const std::shared_ptr<Session>& sessionPtr);
 		
 };

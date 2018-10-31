@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Session.h"
 
-Session::Session(ServerNetWorkDepartment* serverNetDept, Int bufSize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
+Session::Session(NetworkDepartment* serverNetDept, Int bufSize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
 	: totalBufferSize_(bufSize)
 	, sessionId_(GIDGen.SessionIdGenerate())
 	, recvEnd_(0)
@@ -51,7 +51,7 @@ Void	Session::ReRegisterToIocp()
 
 	serverNetDept_->RegisterToIocp(reinterpret_cast<HANDLE>(socket_));
 
-	serverNetDept_->ReturnSessionAndPreparingAccpet(GetThisPtr());
+	serverNetDept_->SessionWasDismissed(GetThisPtr());
 }
 
 

@@ -8,28 +8,28 @@ class Session :	public std::enable_shared_from_this<Session>
 private:
 	
 	Session() = delete;
-	Session(ServerNetWorkDepartment* serverNetDept, Int ioTotalBufsize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor);
+	Session(NetworkDepartment* serverNetDept, Int ioTotalBufsize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor);
 
 
 private:
 
-	ServerNetWorkDepartment*		serverNetDept_;
-	UDLong							sessionId_ = 0;
-	SOCKET							socket_ = INVALID_SOCKET;
-	Int								totalBufferSize_ = 0;
+	NetworkDepartment*								serverNetDept_;
+	UDLong											sessionId_ = 0;
+	SOCKET											socket_ = INVALID_SOCKET;
+	Int												totalBufferSize_ = 0;
 
-	Byte*							recvBuf_;
-	Byte*							sendBuf_;
+	Byte*											recvBuf_;
+	Byte*											sendBuf_;
 
-	Int								recvEnd_, recvBegin_;
-	SendBufferQueue					sendBufferQue_;
-	UInt							processedBytes_ = 0;
-	UInt							receivedBytes_ = 0;
-	std::atomic_bool				completedConnect_;
+	Int												recvEnd_, recvBegin_;
+	SendBufferQueue									sendBufferQue_;
+	UInt											processedBytes_ = 0;
+	UInt											receivedBytes_ = 0;
+	std::atomic_bool								completedConnect_;
 
-	IPv4							peerAddress_;
-	ReceiveProcessor*				recvProcessor_;
-	SendProcessor*					sendProcessor_; // 리시브, 센드를,, 그냥 세션이 가지고 있을까..
+	IPv4											peerAddress_;
+	ReceiveProcessor*								recvProcessor_;
+	SendProcessor*									sendProcessor_; // 리시브, 센드를,, 그냥 세션이 가지고 있을까..
 
 public:
 

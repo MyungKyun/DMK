@@ -13,9 +13,9 @@ SessionPool::~SessionPool()
 
 }
 
-Bool	SessionPool::MakeSessionPool( ServerNetWorkDepartment* serverNetWorkDept, UShort poolCount, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
+Bool	SessionPool::MakeSessionPool(NetworkDepartment* networkDept, UShort poolCount, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
 {
-	if (nullptr == serverNetWorkDept)
+	if (nullptr == networkDept)
 	{
 		return false;
 	}
@@ -29,15 +29,15 @@ Bool	SessionPool::MakeSessionPool( ServerNetWorkDepartment* serverNetWorkDept, U
 	
 	for (auto i = 0; i < poolCount; ++i)
 	{
-		auto sessionPtr = Session::CreateSession(serverNetWorkDept, IO_BUFFER_SIZE, recvProcessor, sendProcessor);
+		auto sessionPtr = Session::CreateSession(networkDept, IO_BUFFER_SIZE, recvProcessor, sendProcessor);
 		sessionQue_.push(sessionPtr);
-		serverNetWorkDept->RegisterToIocp(sessionPtr->GetHandle());
+		networkDept->RegisterToIocp(sessionPtr->GetHandle());
 	}
 		
 	return true;
 }
 
-Void	SessionPool::SessionReturns(std::shared_ptr<Session>& sessionPtr)
+Void	SessionPool::SessionReturns(const std::shared_ptr<Session>& sessionPtr)
 {
 	sessionQue_.push(sessionPtr);
 }
