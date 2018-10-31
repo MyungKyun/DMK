@@ -28,7 +28,7 @@ ThreadManager
 
 2018-10-29
 	
-	- ThreadDepartment 클래스를 추가 하였다. 해당 클래스는 생성된 Thread들을 unique_ptr로 관리하며
+	- ThreadDepartment 클래스를 추가 하였다. 해당 클래스는 생성된 Thread들을 unique_ptr로 관리한다.
 	  ThreadManager 클래스에서 Thread 생성하기전 Department 를 먼저 생성하고, Thread를 생성하여야 동작한다.
               이렇게 나눈 이유는 추후 Thread에 Job을 넘길때 어떤 ThreadDepartment 에 넘길지 선택하기 위함이다.
 
