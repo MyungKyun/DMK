@@ -167,9 +167,11 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 		
 		auto realDatabuffer = recvBuffer + sizeof(PacketHeader);
 		
-		DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
 		
-		contentsLogicProcess_->Push(dPack);
+		DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
+
+		// 패킷 큐잉을 하지 말고, Io Thread가 패킷까지 처리하고 로직처리 스레드로 넘기는 방안을 생각해보자.
+		//contentsLogicProcess_->Push(dPack);
 
 		if (GisEmptyPacketQueue_.load() == true)
 		{
