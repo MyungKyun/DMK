@@ -51,6 +51,9 @@
     <Filter Include="소스 파일\Packet">
       <UniqueIdentifier>{55812e87-6353-41bc-b318-28da7ea4d7dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Network\NetworkDepartment">
+      <UniqueIdentifier>{cf70e36d-99a5-46bb-912b-3cbca9555031}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,9 +78,6 @@
       <Filter>소스 파일\Network</Filter>
     </ClInclude>
     <ClInclude Include="Listener.h">
-      <Filter>소스 파일\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerNetWorkDepartment.h">
       <Filter>소스 파일\Network</Filter>
     </ClInclude>
     <ClInclude Include="WinsockHelper.h">
@@ -149,6 +149,18 @@
     <ClInclude Include="Defines.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="ServerNetWorkDepartment.h">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientNetWorkDepartment.h">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkDepartmentManager.h">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkDepartment.h">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -167,9 +179,6 @@
       <Filter>소스 파일\Network</Filter>
     </ClCompile>
     <ClCompile Include="Listener.cpp">
-      <Filter>소스 파일\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerNetWorkDepartment.cpp">
       <Filter>소스 파일\Network</Filter>
     </ClCompile>
     <ClCompile Include="WinsockHelper.cpp">
@@ -222,6 +231,18 @@
     </ClCompile>
     <ClCompile Include="ThreadDepartment.cpp">
       <Filter>소스 파일\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerNetWorkDepartment.cpp">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientNetWorkDepartment.cpp">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkDepartmentManager.cpp">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkDepartment.cpp">
+      <Filter>소스 파일\Network\NetworkDepartment</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

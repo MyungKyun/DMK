@@ -99,5 +99,8 @@
 
 #include "Session.h"
 #include "SessionPool.h"
+#include "NetworkDepartment.h"
+#include "ClientNetWorkDepartment.h"
 #include "ServerNetWorkDepartment.h"
+#include "NetworkDepartmentManager.h"
 #include "Server.h"
