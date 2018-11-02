@@ -26,7 +26,7 @@ public:
 
 		for (Int i = 0; i < threadCount; ++i)
 		{
-			threads_.push_back(std::make_unique<ThreadType>(args...);
+			threads_.push_back(std::make_unique<ThreadType>(args...));
 		}
 
 		for (auto& thread : threads_)
