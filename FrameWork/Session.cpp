@@ -1,19 +1,12 @@
 #include "stdafx.h"
 #include "Session.h"
 
-Session::Session(NetworkDepartment* serverNetDept, Int bufSize, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor)
+Session::Session(NetworkDepartment* serverNetDept, Int bufSize)
 	: totalBufferSize_(bufSize)
 	, sessionId_(GIDGen.SessionIdGenerate())
-	, recvEnd_(0)
-	, recvBegin_(0)
 	, serverNetDept_(serverNetDept ? serverNetDept : nullptr)
-	, recvProcessor_(recvProcessor ? recvProcessor : nullptr)
-	, sendProcessor_(sendProcessor ? sendProcessor : nullptr)
-
+	
 {
-	sendBuf_ = new Byte[bufSize];
-	recvBuf_ = new Byte[bufSize];
-
 	socket_ = WinsockHelper::CreateTcpSocket();
 	std::atomic_init(&completedConnect_, false);
 }
@@ -21,11 +14,7 @@ Session::Session(NetworkDepartment* serverNetDept, Int bufSize, ReceiveProcessor
 
 Session::~Session()
 {
-	delete[] sendBuf_;
-	delete[] recvBuf_;
-
-	sendBuf_ = nullptr;
-	recvBuf_ = nullptr;
+	::closesocket(socket_);
 }
 
 Void	Session::Disconnect()
@@ -55,17 +44,14 @@ Void	Session::ReRegisterToIocp()
 }
 
 
-Void	Session::Send(std::shared_ptr<SendBuffer> sendBuffer)
+Void	Session::Send(Byte* buf, Int len)
 {
-	// 큐에 저장해둔다.. 우선은 Cuncurrency queue에 버퍼를 저장해두자.
-	Bool sendImmediately = false;
-	
-	sendBufferQue_.Push(sendBuffer, sendImmediately);
-
-	if (true == sendImmediately)
+	if (false == completedConnect_.load())
 	{
-		sendProcessor_->PostSend(GetThisPtr());
+		return;
 	}
+
+	sendProcessor_.PostSend(GetThisPtr(), buf, len);
 }
 
 Bool	Session::AcceptCompleted(const IPv4& address)
@@ -79,7 +65,7 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 		return false;
 	}
 
-	if (false == recvProcessor_->ReservingReceive(GetThisPtr()))
+	if (false == recvProcessor_.ReservingReceive(GetThisPtr()))
 	{
 		return false;
 	}
@@ -91,22 +77,6 @@ std::shared_ptr<Session>	Session::GetThisPtr()
 {
 	return shared_from_this();
 }
-
-Byte*	Session::GetRecvBuf()
-{
-	return recvBuf_;
-}
-
-Int&	Session::GetRecvBegin()
-{
-	return recvBegin_;
-}
-
-Int&	Session::GetRecvEnd()
-{
-	return recvEnd_;
-}
-
 
 HANDLE	Session::GetHandle() 
 {
@@ -128,14 +98,4 @@ Bool	Session::IsConnected()
 	}
 
 	return true;
-}
-
-Void	Session::ResetBufferBeginSize()
-{
-	recvBegin_ = 0;
-}
-
-Void	Session::ResetBufferEndSize()
-{
-	recvEnd_ = 0;
 }
