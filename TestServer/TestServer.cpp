@@ -62,10 +62,6 @@ private:
 
 		std::cout << msg->val << std::endl;
 
-		std::shared_ptr<SendBuffer> sendBuffer = std::make_shared<SendBuffer>(bytes + static_cast<Int>(sizeof(PacketHeader)));
-		sendBuffer->SetData(buffer);
-
-		sessionPtr->Send(sendBuffer);
 	}
 
 };
