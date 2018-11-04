@@ -22,7 +22,7 @@ public:
 	SessionPool();
 	~SessionPool();
 
-	Bool							MakeSessionPool(NetworkDepartment* networkDept, UShort poolCount, ReceiveProcessor* recvProcessor, SendProcessor* sendProcessor);
+	Bool							MakeSessionPool(NetworkDepartment* networkDept, UShort poolCount);
 	
 	SessionSptr						GetSession();
 	
