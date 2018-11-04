@@ -18,6 +18,11 @@ public:
 
 		decltype(auto) deptPtr = new DeptType(std::forward<Args>(args)...);
 		
+		if (nullptr == deptPtr)
+		{
+			return false;
+		}
+		
 		if (false == deptPtr->Setup())
 		{
 			return false;
