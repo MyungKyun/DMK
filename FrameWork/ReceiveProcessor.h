@@ -5,9 +5,12 @@ class ReceiveProcessor	: public IoProcessor
 
 	PacketProcess*			contentsLogicProcess_;
 	std::atomic_bool		needNotify_;
-
+	Byte*					recvBuf_;
+	Int						recvEnd_, recvBegin_;
+	Int						totalRecvBufferSize_;
 
 public:
+
 	ReceiveProcessor();
 	~ReceiveProcessor();
 

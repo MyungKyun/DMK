@@ -1,13 +1,17 @@
 #include "stdafx.h"
 
 ReceiveProcessor::ReceiveProcessor()
+	: recvBegin_(0)
+	, recvEnd_(0)
+	, totalRecvBufferSize_(IO_BUFFER_SIZE)
 {
-
+	recvBuf_ = new Byte[IO_BUFFER_SIZE];
 }
 
 ReceiveProcessor::~ReceiveProcessor()
 {
-
+	delete[] recvBuf_;
+	recvBuf_ = nullptr;
 }
 
 Void	ReceiveProcessor::Setup(PacketProcess* contentLogicProcess)
@@ -75,42 +79,37 @@ Void	ReceiveProcessor::postReceive(Overlapped_Ex* overlapped, Int numberOfTransf
 		assert(false);
 	}
 	
-	auto& sessionPtr = overlappedPreRecv->sessionSPtr;
+	auto& sessionPtr = overlappedPreRecv->sessionSPtr_;
 
 	if (false == sessionPtr->IsConnected())
 	{
 		return;
 	}
 
-	auto  recvBuf = sessionPtr->GetRecvBuf();
-	auto& recvBegin = sessionPtr->GetRecvBegin();
-	auto& recvEnd = sessionPtr->GetRecvEnd();
 
-	Int bufferSize = recvEnd - recvBegin;
+	Int bufferSize = recvEnd_ - recvBegin_;
 	if (bufferSize == 0)
 	{
-		sessionPtr->ResetBufferBeginSize();
-		sessionPtr->ResetBufferEndSize();
+		recvEnd_ = 0;
+		recvBegin_ = 0;
 	}
 	else if (bufferSize < 0)
 	{
 		// 디스커넥트 시켜야한다.
-		sessionPtr->ResetBufferBeginSize();
-		sessionPtr->ResetBufferEndSize();
+		recvEnd_ = 0;
+		recvBegin_ = 0;
 	}
 	else
 	{
 		
-		::memmove(recvBuf, recvBuf + recvBegin, bufferSize);
-		recvBegin = 0;
-		recvEnd = bufferSize;
+		::memmove(recvBuf_, recvBuf_ + recvBegin_, bufferSize);
+		recvBegin_ = 0;
+		recvEnd_ = bufferSize;
 	}
 
 	SOCKET socket = sessionPtr->GetSocket();
 
-	Int totalBufferSize = sessionPtr->GetBufferSize();
-
-	Overlapped_Ex* overlappedRecv = new Overlapped_Ex_Processing_Receive(this, socket, recvBuf + recvEnd, totalBufferSize - recvEnd, sessionPtr);
+	Overlapped_Ex* overlappedRecv = new Overlapped_Ex_Processing_Receive(this, socket, recvBuf_ + recvEnd_, totalRecvBufferSize_ - recvEnd_, sessionPtr);
 	
 	DWORD recvBytes = 0;
 	DWORD flags = 0;
@@ -134,27 +133,22 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 {	
 	Overlapped_Ex_Processing_Receive* overlappedRecv = static_cast<Overlapped_Ex_Processing_Receive*>(overlapped);
 
-	auto  recvBuffer = overlappedRecv->sessionSPtr->GetRecvBuf();
-	auto& recvBegin = overlappedRecv->sessionSPtr->GetRecvBegin();
-	auto& recvEnd = overlappedRecv->sessionSPtr->GetRecvEnd();
-	Int totalBufferSize = overlappedRecv->sessionSPtr->GetBufferSize();
-
-	recvEnd += numberOfTransferredBytes;
+	recvEnd_ += numberOfTransferredBytes;
 	
-	if (recvEnd > totalBufferSize)
+	if (recvEnd_ > totalRecvBufferSize_)
 	{
 		return;
 	}
 
-	Int bufferLength = recvEnd - recvBegin;
+	Int bufferLength = recvEnd_ - recvBegin_;
 	Int processedLen = 0;
 	Int processStandByBytes = bufferLength;
 
 	while (processStandByBytes >= sizeof(PacketHeader))
 	{
-		const PacketHeader* header = reinterpret_cast<const PacketHeader*>(recvBuffer);
+		const PacketHeader* header = reinterpret_cast<const PacketHeader*>(recvBuf_);
 
-		if (header->size < sizeof(PacketHeader) || totalBufferSize < header->size)
+		if (header->size < sizeof(PacketHeader) || totalRecvBufferSize_ < header->size)
 		{
 			return;
 		}
@@ -165,28 +159,36 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 		}
 
 		
-		auto realDatabuffer = recvBuffer + sizeof(PacketHeader);
+		auto realDatabuffer = recvBuf_ + sizeof(PacketHeader);
 		
 		
-		DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
+		//DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
+
+		MessagePacket* msg = reinterpret_cast<MessagePacket*>(realDatabuffer);
+		printf("[%d]\n", msg->val);
+
+		//Echo Test
+		overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
+
+
 
 		// 패킷 큐잉을 하지 말고, Io Thread가 패킷까지 처리하고 로직처리 스레드로 넘기는 방안을 생각해보자.
 		//contentsLogicProcess_->Push(dPack);
 
-		if (GisEmptyPacketQueue_.load() == true)
+		/*if (GisEmptyPacketQueue_.load() == true)
 		{
 			GisEmptyPacketQueue_.store(false);
 			GhasPacketDataCond_.notify_all();
-		}
+		}*/
 
-		recvBuffer += header->size;
+		recvBuf_ += header->size;
 		processStandByBytes -= header->size;
 	}
 
 
-	recvBegin += (bufferLength - processStandByBytes);
+	recvBegin_ += (bufferLength - processStandByBytes);
 
-	ReservingReceive(overlappedRecv->sessionSPtr);
+	ReservingReceive(overlappedRecv->sessionSPtr_);
 
 
 	delete overlappedRecv;
