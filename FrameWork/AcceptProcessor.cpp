@@ -53,8 +53,8 @@ Void AcceptProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numb
 	
 	Overlapped_Ex_Accept* overlappedAccept = static_cast<Overlapped_Ex_Accept*>(overlapped);
 
-	auto& sessionPtr = overlappedAccept->sessionSptr;
-	SOCKET sessionSocket = overlappedAccept->sessionSptr->GetSocket();
+	auto& sessionPtr = overlappedAccept->sessionSPtr_;
+	SOCKET sessionSocket = overlappedAccept->sessionSPtr_->GetSocket();
 	
 	Bool result = ioEventResult;
 	sockaddr_storage addr;
