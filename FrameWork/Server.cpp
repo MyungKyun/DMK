@@ -28,10 +28,10 @@ Bool Server::Setup(SessionPool* sessionPool)
 	}
 			
 	// 패킷큐에 큐잉을 제거해야겠다. IoThread가 패킷처리를 하고 로직을 로직쓰레드 잡으로 넘기는 방안이 좋겠다. 큐잉이 비싸다.
-	if (false == contentLogicProcess_->Setup())
+	/*if (false == contentLogicProcess_->Setup())
 	{
 		return false;
-	}
+	}*/
 
 	return true;
 }

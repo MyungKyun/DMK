@@ -14,15 +14,6 @@ ReceiveProcessor::~ReceiveProcessor()
 	recvBuf_ = nullptr;
 }
 
-Void	ReceiveProcessor::Setup(PacketProcess* contentLogicProcess)
-{
-	if (nullptr == contentLogicProcess)
-	{
-		assert(false);
-	}
-
-	contentsLogicProcess_ = contentLogicProcess;
-}
 
 Void	ReceiveProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numberOfTransferredBytes, Bool ioEventResult)
 {

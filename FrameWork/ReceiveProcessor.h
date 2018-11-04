@@ -3,7 +3,6 @@
 class ReceiveProcessor	: public IoProcessor
 {
 
-	PacketProcess*			contentsLogicProcess_;
 	std::atomic_bool		needNotify_;
 	Byte*					recvBuf_;
 	Int						recvEnd_, recvBegin_;
@@ -14,10 +13,7 @@ public:
 	ReceiveProcessor();
 	~ReceiveProcessor();
 
-	Void	Setup(PacketProcess* contentLogicProcess);
-
 	Void	CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numberOfTransferredBytes, Bool ioEventResult) override;
-
 	Bool	ReservingReceive(const std::shared_ptr<Session>& sessionPtr);
 
 private:

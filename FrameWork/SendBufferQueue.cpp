@@ -15,7 +15,7 @@ SendBufferQueue::~SendBufferQueue()
 	}
 }
 
-Bool		SendBufferQueue::Empty()
+Bool	SendBufferQueue::Empty()
 {
 	return sendQue_.empty();
 }
@@ -36,7 +36,7 @@ Void	SendBufferQueue::Push(Byte* buf, Int len, Bool& sendImmediately)
 	}
 }
 
-Void		SendBufferQueue::Copy(Byte* buf, Int bufferSize, Int& outSize)
+Void	SendBufferQueue::Copy(Byte* buf, Int bufferSize, Int& outSize)
 {
 	outSize = 0;
 	Int remainBufSize = bufferSize;
