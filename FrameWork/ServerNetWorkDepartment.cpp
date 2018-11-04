@@ -23,7 +23,7 @@ Bool	ServerNetWorkDepartment::Setup()
 		assert(false);
 	}
 
-	if (false == sessionPool_->MakeSessionPool(this, totalAcceptCount_, &receiveProcessor_, &sendProcessor_))
+	if (false == sessionPool_->MakeSessionPool(this, totalAcceptCount_))
 	{
 		return false;
 	}

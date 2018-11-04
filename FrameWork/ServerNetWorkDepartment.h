@@ -8,9 +8,7 @@ class ServerNetWorkDepartment : public NetworkDepartment
 	IPv4					address_;
 	Listener				listener_;
 	AcceptProcessor			acceptProcessor_;
-	ReceiveProcessor		receiveProcessor_;
-	SendProcessor			sendProcessor_;
-
+	
 	UShort					totalAcceptCount_;
 
 public:
