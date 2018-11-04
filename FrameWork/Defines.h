@@ -9,6 +9,13 @@ enum
 	MAX_DEPT,
 };
 
+enum
+{
+	// юс╫ц
+	IO_BUFFER_SIZE = 128 * 1024,
+};
+
+
 class IdGenerator : public Singleton<IdGenerator>
 {
 	std::atomic<UDLong>		sessionIdGen_{ 0 };
