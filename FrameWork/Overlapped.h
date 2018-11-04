@@ -17,30 +17,31 @@ struct Overlapped_Ex : public OVERLAPPED
 	SOCKET					socket_;
 	WSABUF					wsabuf_;
 	IoProcessor*			processor_;
+	std::shared_ptr<Session> sessionSPtr_;
 
-	Overlapped_Ex(IO_TYPE type, IoProcessor* processor, SOCKET socket, Byte* buf, Int len);
+	Overlapped_Ex(IO_TYPE type, IoProcessor* processor, std::shared_ptr<Session> sessionPtr, SOCKET socket, Byte* buf, Int len);
 };
 
 struct Overlapped_Ex_Accept : public Overlapped_Ex
 {
 	Char	buf_[(sizeof(sockaddr_storage) + 16) * 2];
-	std::shared_ptr<Session> sessionSptr;
 
-
-	Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, const std::shared_ptr<Session> sessionPtr);
+	Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket,  std::shared_ptr<Session> sessionPtr);
 };
 
 struct Overlapped_Ex_Preparing_Receive : public Overlapped_Ex
 {
-	std::shared_ptr<Session> sessionSPtr;
 
-	Overlapped_Ex_Preparing_Receive(IoProcessor* processor, const std::shared_ptr<Session> sessionPtr);
+	Overlapped_Ex_Preparing_Receive(IoProcessor* processor,  std::shared_ptr<Session> sessionPtr);
 };
 
 struct Overlapped_Ex_Processing_Receive : public Overlapped_Ex
 {
-	std::shared_ptr<Session> sessionSPtr;
+	Overlapped_Ex_Processing_Receive(IoProcessor* processor, SOCKET socket, Byte* buf, Int len,  std::shared_ptr<Session> sessionPtr);
+};
 
-	Overlapped_Ex_Processing_Receive(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, const std::shared_ptr<Session> sessionPtr);
+struct Overlapped_Ex_Send : public Overlapped_Ex
+{
+	Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, std::shared_ptr<Session> sessionPtr);
 };
 
