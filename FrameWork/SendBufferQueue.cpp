@@ -30,7 +30,7 @@ Void	SendBufferQueue::Push(Byte* buf, Int len, Bool& sendImmediately)
 
 	sendQue_.push(sendBuffer);
 
-	if (1 == currentCount_)
+	if (1 == currentCount_.load())
 	{
 		sendImmediately = true;
 	}
@@ -71,27 +71,30 @@ Void	SendBufferQueue::Copy(Byte* buf, Int bufferSize, Int& outSize)
 Void	SendBufferQueue::pop(Byte* buf,Int bufferSize, Int& outSize)
 {
 	Int remainSize = bufferSize;
+	Bool isEnough = true;
+	std::shared_ptr<SendBuffer> sendBuffer;
 
-	while (false == sendQue_.empty())
+	while (sendQue_.try_pop(sendBuffer))
 	{
-		std::shared_ptr<SendBuffer> sendBuffer;
-		if (true == sendQue_.try_pop(sendBuffer))
-		{
-			currentCount_.fetch_sub(1);
-		}
+		currentCount_.fetch_sub(1);
 
-		if (0 >= remainSize || 
+		if (0 >= remainSize ||
 			remainSize < sendBuffer->len_)
 		{
-			reservingTo_.push_back(std::move(sendBuffer));
+			isEnough = false;
 		}
-		else
+
+		if (isEnough)
 		{
 			::memcpy_s(buf, remainSize, sendBuffer->buffer_, sendBuffer->len_);
 
 			outSize += sendBuffer->len_;
-			remainSize -= outSize;
-
+			remainSize -= sendBuffer->len_;
+		}
+		else
+		{
+			reservingTo_.push_back(std::move(sendBuffer));
+			continue;
 		}
 	}
 }
