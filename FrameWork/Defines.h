@@ -3,6 +3,12 @@
 
 enum
 {
+	PACKET_MAX_SIZE = 65535,
+};
+
+
+enum
+{
 	NETWORK_IO_PROCESSING_DEPT = 0,
 	PACKET_PROCESSING_DEPT = 1,
 

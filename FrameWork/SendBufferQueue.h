@@ -1,10 +1,5 @@
 #pragma once
 
-enum
-{
-	PACKET_MAX_SIZE = 65535,
-};
-
 struct SendBuffer
 {
 	Byte*		buffer_;
