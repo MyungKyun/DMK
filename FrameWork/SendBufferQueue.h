@@ -9,7 +9,6 @@ struct SendBuffer
 		: len_(packetSize)
 	{
 		assert(packetSize <= PACKET_MAX_SIZE);
-		//buffer_ = new Byte[packetSize];
 	}
 
 	~SendBuffer()
