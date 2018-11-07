@@ -2,21 +2,6 @@
 
 #include "stdafx.h"
 
-class Uncopyable
-{
-private:
-	
-	Uncopyable(const Uncopyable&);
-	Uncopyable(const Uncopyable&&);
-	Uncopyable& operator=(const Uncopyable&);
-	Uncopyable&& operator=(const Uncopyable&&);
-
-protected:
-
-	Uncopyable() {}
-	virtual ~Uncopyable() {}
-};
-
 
 template <typename T>
 class Singleton : private Uncopyable

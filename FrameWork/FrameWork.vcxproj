@@ -163,6 +163,7 @@ IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
     <ClInclude Include="ClientNetWorkDepartment.h" />
     <ClInclude Include="ConditionVariable.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Job.h" />
     <ClInclude Include="NetworkDepartment.h" />
     <ClInclude Include="NetworkDepartmentManager.h" />
     <ClInclude Include="EXFunction.h" />

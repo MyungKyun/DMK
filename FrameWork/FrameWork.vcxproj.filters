@@ -54,6 +54,9 @@
     <Filter Include="소스 파일\Network\NetworkDepartment">
       <UniqueIdentifier>{cf70e36d-99a5-46bb-912b-3cbca9555031}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Job">
+      <UniqueIdentifier>{1fe21ffb-2c36-484c-b3c7-16841d4f40f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="NetworkDepartment.h">
       <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>소스 파일\Job</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

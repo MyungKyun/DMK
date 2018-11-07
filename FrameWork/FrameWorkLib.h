@@ -68,12 +68,14 @@
 #pragma comment(linker, "/include:__tcmalloc")
 #endif
 
+
 #include "ConditionVariable.h"
 #include "Singleton.h"
 #include "Type.h"
 #include "Defines.h"
 #include "Packet.h"
 #include "Utility.h"
+#include "Job.h"
 #include "WinsockHelper.h"
 #include "IPv4.h"
 
