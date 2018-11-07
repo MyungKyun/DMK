@@ -28,9 +28,6 @@ Bool	ServerNetWorkDepartment::Setup()
 		return false;
 	}
 
-	// 패킷큐잉 하는것을 제거하자 큐잉이 비싸당..
-	//receiveProcessor_.Setup(contentLogicProcess);
-
 	if (false == listener_.Listen(address_))
 	{
 		return false;
