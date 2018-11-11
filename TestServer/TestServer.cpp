@@ -10,24 +10,24 @@ class TestServer : public Server
 	SessionPool*			sessionPool_;
 
 public:
-	TestServer(PacketProcess* contentLogicProcess)
-		: Server(contentLogicProcess)
+	TestServer(Dispatcher* packetDispatcher)
+		: Server(packetDispatcher)
 	{
 
 	}
 
 	Bool	Setup()
 	{
-		
-		GThreadManager.AddDepartment(NetworkIoThread::GetDepartmentNumber(), &iocp_);
-		GThreadManager.Start<NetworkIoThread>(0, "NetworkIoThread", &iocp_);
-		
 		sessionPool_ = new SessionPool();
 		
 		if (false == Server::Setup(sessionPool_))
 		{
 			return false;
 		}
+
+		GThreadManager.AddDepartment(NetworkIoThread::GetDepartmentNumber(), &iocp_);
+		GThreadManager.Start<NetworkIoThread>(0, "NetworkIoThread", &iocp_);
+
 
 		return true;
 	}
@@ -38,38 +38,54 @@ public:
 	}
 };
 
+//Bool  handler_default(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes);
 
-class TestLogicProcess : public PacketProcess
+class TestPacketDispathcer : public Dispatcher
 {
 public:
 	
-	TestLogicProcess() 
+	TestPacketDispathcer()
 	{
-		RegisterHandler();
+		InitHandlers(&handler_default);
+
+		Register(10, &handler_Msg_Process);
 	}
-	~TestLogicProcess() {}
-	
+	~TestPacketDispathcer() {}
+
 private:
 
-	Void RegisterHandler() final
+	static Bool  handler_default(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes)
 	{
-		handlerTable_.emplace(100, &TestLogicProcess::handler_Msg_Process);
+		return true;
 	}
-
-	static Void	handler_Msg_Process(Byte* buffer, Int bytes, std::shared_ptr<Session> sessionPtr)
+	
+	static Bool	handler_Msg_Process(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes)
 	{
-		MessagePacket* msg = reinterpret_cast< MessagePacket*>(buffer);
+		MessagePacket* msg = reinterpret_cast< MessagePacket*>(buf);
 
-		std::cout << msg->val << std::endl;
+		//std::cout << msg->val << std::endl;
+		//overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
+		
+		Int bufSize = sizeof(PacketHeader) + transferredBytes;
+		
 
+		//SendBuffer buffer(bufSize);
+//		PacketHeader* header = reinterpret_cast<PacketHeader*>();
+
+		//buffer.SetData(buf);
+		//session->Send(buffer, bufSize);
+		return true;
 	}
-
 };
+
+
+
+
 
 int main()
 {
 
-	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestLogicProcess());
+	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestPacketDispathcer);
 	
 	if (false == server->Setup())
 	{
