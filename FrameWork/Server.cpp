@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
-Server::Server(PacketProcess* contentLogicProcess)
-	: contentLogicProcess_(contentLogicProcess)
+Server::Server(Dispatcher* packetDispatcher)
+	: testDispatcher_(packetDispatcher)
 	
 {
 	
@@ -10,9 +10,6 @@ Server::Server(PacketProcess* contentLogicProcess)
 Server::~Server()
 {
 	ShutDown();
-
-	delete contentLogicProcess_;
-	contentLogicProcess_ = nullptr;
 }
 
 Bool Server::Setup(SessionPool* sessionPool)
@@ -22,17 +19,11 @@ Bool Server::Setup(SessionPool* sessionPool)
 		return false;
 	}
 
-	if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, sessionPool, IPv4("127.0.0.1", 20000), Count::TOTAL_ACCEPT_COUNT))
+	if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, testDispatcher_, sessionPool, IPv4("127.0.0.1", 20000), Count::TOTAL_ACCEPT_COUNT))
 	{
 		return false;
 	}
-			
-	// 패킷큐에 큐잉을 제거해야겠다. IoThread가 패킷처리를 하고 로직을 로직쓰레드 잡으로 넘기는 방안이 좋겠다. 큐잉이 비싸다.
-	/*if (false == contentLogicProcess_->Setup())
-	{
-		return false;
-	}*/
-
+	
 	return true;
 }
 

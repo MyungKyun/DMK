@@ -13,12 +13,13 @@ SendProcessor::~SendProcessor()
 }
 
 
-Void	SendProcessor::PostSend(std::shared_ptr<Session>& sessionPtr, Byte* buf, Int len)
+Void	SendProcessor::PostSend(std::shared_ptr<Session> sessionPtr, Byte* buf, Int len)
 {
 	Bool sendImmediately = false;
 	
 	sendBufferQue_.Push(buf, len, sendImmediately);
 
+	//std::cout << "PostSend UseCount : " << sessionPtr.use_count() << std::endl;
 	if (sendImmediately)
 	{
 		postSend(sessionPtr);
@@ -34,7 +35,10 @@ Void SendProcessor::CompleteIoEventProcess(Overlapped_Ex * overlapped, Int numbe
 		return;
 	}
 
-	if (false == sendBufferQue_.Empty())
+	Int numberOfSent = overlappedSend->numberOfSend_;
+	Int sentBytes = overlappedSend->wsabuf_.len;
+
+	if (true == sendBufferQue_.NeedMoreSend(numberOfSent, sentBytes))
 	{
 		postSend(overlappedSend->sessionSPtr_);
 	}
@@ -44,13 +48,13 @@ Void SendProcessor::CompleteIoEventProcess(Overlapped_Ex * overlapped, Int numbe
 }
 
 
-Void SendProcessor::postSend(std::shared_ptr<Session>& sessionPtr)
+Void SendProcessor::postSend(std::shared_ptr<Session> sessionPtr)
 {
 	Int sendSize = 0;
-	
-	sendBufferQue_.Copy(sendBuf_, IO_BUFFER_SIZE, sendSize);
+	Int numberOfSend = 0;
+	sendBufferQue_.Copy(sendBuf_, IO_BUFFER_SIZE, sendSize, numberOfSend);
 
-	Overlapped_Ex* overlappedSend = new Overlapped_Ex_Send(this, sessionPtr->GetSocket(), sendBuf_, sendSize, sessionPtr);
+	Overlapped_Ex* overlappedSend = new Overlapped_Ex_Send(this, sessionPtr->GetSocket(), sendBuf_, sendSize, numberOfSend, sessionPtr);
 
 	DWORD sendBytes = 0;
 	if (SOCKET_ERROR == ::WSASend(sessionPtr->GetSocket(), &(overlappedSend->wsabuf_), 1, &sendBytes, 0, overlappedSend, nullptr))

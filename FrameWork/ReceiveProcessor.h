@@ -14,7 +14,7 @@ public:
 	~ReceiveProcessor();
 
 	Void	CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numberOfTransferredBytes, Bool ioEventResult) override;
-	Bool	ReservingReceive(const std::shared_ptr<Session>& sessionPtr);
+	Bool	ReservingReceive(std::shared_ptr<Session> sessionPtr);
 
 private:
 

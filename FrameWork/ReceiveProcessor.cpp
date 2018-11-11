@@ -27,9 +27,12 @@ Void	ReceiveProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int num
 		processingReceive(overlapped, numberOfTransferredBytes);
 		break;
 	}
+
+	delete overlapped;
+	overlapped = nullptr;
 }
 
-Bool	ReceiveProcessor::ReservingReceive(const std::shared_ptr<Session>& sessionPtr)
+Bool	ReceiveProcessor::ReservingReceive(std::shared_ptr<Session> sessionPtr)
 {
 	SOCKET socket = sessionPtr->GetSocket();
 
@@ -115,8 +118,8 @@ Void	ReceiveProcessor::postReceive(Overlapped_Ex* overlapped, Int numberOfTransf
 		return;
 	}
 
-	delete overlappedPreRecv;
-	overlappedPreRecv = nullptr;
+	/*delete overlappedPreRecv;
+	overlappedPreRecv = nullptr;*/
 }
 
 
@@ -155,12 +158,21 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 		
 		//DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
 
-		MessagePacket* msg = reinterpret_cast<MessagePacket*>(realDatabuffer);
-		printf("[%d]\n", msg->val);
+		//MessagePacket* msg = reinterpret_cast<MessagePacket*>(realDatabuffer);
+		//printf("[%d]\n", msg->val);
 
+		
+		
+
+		//sendbuffer를 만들고
+		//버퍼의 사이즈를 구하고
+		//packet header 내용 채우고
+		//버퍼내용 채우고
+		//send
+		//overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, recvBuf_ + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
+		
 		//Echo Test
 		overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
-
 
 
 		// 패킷 큐잉을 하지 말고, Io Thread가 패킷까지 처리하고 로직처리 스레드로 넘기는 방안을 생각해보자.
@@ -172,16 +184,25 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 			GhasPacketDataCond_.notify_all();
 		}*/
 
-		recvBuf_ += header->size;
+		//recvBuf_ += header->size;
 		processStandByBytes -= header->size;
 	}
 
+	processedLen = bufferLength - processStandByBytes;
 
-	recvBegin_ += (bufferLength - processStandByBytes);
+	if (bufferLength < processedLen)
+	{
+		//망
+		//disconnect
+	}
+	else
+	{
+		recvBegin_ += processedLen;
+		ReservingReceive(overlappedRecv->sessionSPtr_);
+	}
+	
 
-	ReservingReceive(overlappedRecv->sessionSPtr_);
 
-
-	delete overlappedRecv;
-	overlappedRecv = nullptr;
+	/*delete overlappedRecv;
+	overlappedRecv = nullptr;*/
 }

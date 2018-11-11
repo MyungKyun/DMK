@@ -11,13 +11,12 @@ class Server
 protected:
 
 	Iocp											iocp_;
-	PacketProcess*									contentLogicProcess_ = nullptr;
-
+	Dispatcher*										testDispatcher_;
 	NetworkDepartmentManager						netDeptManger_;
 		
 public:
 
-	Server(PacketProcess* contentLogicProcess);
+	Server(Dispatcher* packetDispatcher);
 	~Server();
 
 	Bool			Setup(SessionPool* sessionPool);
