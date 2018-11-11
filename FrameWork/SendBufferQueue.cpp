@@ -127,11 +127,8 @@ Void	SendBufferQueue::pop(Byte* buf,Int bufferSize, Int& outSize, Int& numberOfS
 				remainSize -= sendBuffer->len_;
 				++numberOfSend;
 				
-				if (nullptr != sendBuffer)
-				{
-					delete sendBuffer;
-					sendBuffer = nullptr;
-				}
+				delete sendBuffer;
+				sendBuffer = nullptr;
 			}
 			else
 			{
