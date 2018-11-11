@@ -1,14 +1,16 @@
 #pragma once
 
 class SessionPool;
+class NetworkDepartment;
 
 class AcceptProcessor : public IoProcessor
 {
 
 	std::atomic<UShort>		postAcceptCount_;
+	NetworkDepartment*		networkDept_;
 
 public:
-	AcceptProcessor();
+	AcceptProcessor(NetworkDepartment* networkDept);
 	~AcceptProcessor();
 
 	Void PreparingAccept(SessionPool* sessionPool,  UShort totalAcceptCount, SOCKET listenSock);

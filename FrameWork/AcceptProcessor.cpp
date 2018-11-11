@@ -1,7 +1,8 @@
 #include "stdafx.h"
 
-AcceptProcessor::AcceptProcessor()
+AcceptProcessor::AcceptProcessor(NetworkDepartment* networkDept)
 	: postAcceptCount_(0)
+	, networkDept_(networkDept)
 {
 
 }
@@ -85,7 +86,14 @@ Void AcceptProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numb
 	}
 	else
 	{
-		sessionPtr->AcceptCompleted(IPv4(reinterpret_cast<const sockaddr*>(&addr), addrLen));
+		if (true == sessionPtr->AcceptCompleted(IPv4(reinterpret_cast<const sockaddr*>(&addr), addrLen)))
+		{
+			networkDept_->AddSession(sessionPtr);
+		}
+		else
+		{
+			networkDept_->SessionWasDismissed(sessionPtr);
+		}
 	}
 
 
