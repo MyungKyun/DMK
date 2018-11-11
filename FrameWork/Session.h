@@ -18,8 +18,6 @@ private:
 	SOCKET											socket_ = INVALID_SOCKET;
 	Int												totalBufferSize_ = 0;
 	
-	UInt											processedBytes_ = 0;
-	UInt											receivedBytes_ = 0;
 	std::atomic_bool								completedConnect_;
 
 	IPv4											peerAddress_;
@@ -47,6 +45,9 @@ public:
 	HANDLE		GetHandle();
 	SOCKET		GetSocket();
 	Bool		IsConnected();
+	
+	NetworkDepartment*		GetNetworkDept();
+
 
 	std::shared_ptr<Session>	GetThisPtr();
 };

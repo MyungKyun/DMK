@@ -14,6 +14,7 @@ Session::Session(NetworkDepartment* serverNetDept, Int bufSize)
 
 Session::~Session()
 {
+	std::cout << "session dctor call" << std::endl;
 	::closesocket(socket_);
 }
 
@@ -43,6 +44,10 @@ Void	Session::ReRegisterToIocp()
 	serverNetDept_->SessionWasDismissed(GetThisPtr());
 }
 
+NetworkDepartment*		Session::GetNetworkDept()
+{
+	return serverNetDept_;
+}
 
 Void	Session::Send(Byte* buf, Int len)
 {
@@ -51,7 +56,7 @@ Void	Session::Send(Byte* buf, Int len)
 		return;
 	}
 
-	sendProcessor_.PostSend(GetThisPtr(), buf, len);
+	sendProcessor_.PostSend(shared_from_this(), buf, len);
 }
 
 Bool	Session::AcceptCompleted(const IPv4& address)
@@ -65,7 +70,7 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 		return false;
 	}
 
-	if (false == recvProcessor_.ReservingReceive(GetThisPtr()))
+	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
 	{
 		return false;
 	}
