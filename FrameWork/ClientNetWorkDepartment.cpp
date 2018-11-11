@@ -25,7 +25,12 @@ Void		ClientNetWorkDepartment::RegisterToIocp(HANDLE handle)
 }
 
 
-Void		ClientNetWorkDepartment::SessionWasDismissed(const std::shared_ptr<Session>& sessionPtr)
+Void		ClientNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
+{
+
+}
+
+Void		ClientNetWorkDepartment::SessionWasDismissed(std::shared_ptr<Session>& sessionPtr)
 {
 	sessionPool_->SessionReturns(sessionPtr);
 }

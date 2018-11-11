@@ -14,5 +14,6 @@ public:
 
 	Bool		Setup();
 	Void		RegisterToIocp(HANDLE handle) final;
-	Void		SessionWasDismissed(const std::shared_ptr<Session>& sessionPtr) final;
+	Void		AddSession(std::shared_ptr<Session>& session) final;
+	Void		SessionWasDismissed(std::shared_ptr<Session>& sessionPtr) final;
 };
