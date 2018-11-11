@@ -18,27 +18,28 @@ Overlapped_Ex::Overlapped_Ex(IO_TYPE type, IoProcessor* processor, std::shared_p
 	sessionSPtr_ = sessionPtr;
 }
 
-Overlapped_Ex_Accept::Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, const std::shared_ptr<Session> sessionPtr)
+Overlapped_Ex_Accept::Overlapped_Ex_Accept(IoProcessor* processor, SOCKET socket, std::shared_ptr<Session> sessionPtr)
 	: Overlapped_Ex(IO_ACCEPT, processor, sessionPtr, socket, nullptr, 0)
 {
 
 }
 
 
-Overlapped_Ex_Preparing_Receive::Overlapped_Ex_Preparing_Receive(IoProcessor* processor, const std::shared_ptr<Session> sessionPtr)
+Overlapped_Ex_Preparing_Receive::Overlapped_Ex_Preparing_Receive(IoProcessor* processor, std::shared_ptr<Session> sessionPtr)
 	: Overlapped_Ex(IO_RESERVING_RECV, processor, sessionPtr, INVALID_SOCKET, nullptr, 0)
 {
 
 }
 
-Overlapped_Ex_Processing_Receive::Overlapped_Ex_Processing_Receive(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, const std::shared_ptr<Session> sessionPtr)
+Overlapped_Ex_Processing_Receive::Overlapped_Ex_Processing_Receive(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, std::shared_ptr<Session> sessionPtr)
 	: Overlapped_Ex(IO_RECV, processor, sessionPtr, socket, buf, len)
 {
 
 }
 
-Overlapped_Ex_Send::Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, std::shared_ptr<Session> sessionPtr)
+Overlapped_Ex_Send::Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, Int numberOfSend, std::shared_ptr<Session> sessionPtr)
 	: Overlapped_Ex(IO_SEND, processor, sessionPtr, socket, buf, len)
+	, numberOfSend_(numberOfSend)
 {
 
 }

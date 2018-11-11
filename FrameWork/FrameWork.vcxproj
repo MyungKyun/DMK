@@ -70,7 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>$(ProjectName)R</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -107,7 +112,7 @@ IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
 IF EXIST ..\..\ServerLib\include DEL ..\..\ServerLib\include\*.h</Command>
     </PreBuildEvent>
     <Lib>
-      <OutputFile>$(OutDir)ServerLibD.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,7 +157,7 @@ IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
 </Command>
     </PreBuildEvent>
     <Lib>
-      <OutputFile>$(OutDir)ServerLibR.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -163,6 +168,8 @@ IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
     <ClInclude Include="ClientNetWorkDepartment.h" />
     <ClInclude Include="ConditionVariable.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Dispatcher.h" />
+    <ClInclude Include="Handler.h" />
     <ClInclude Include="Job.h" />
     <ClInclude Include="NetworkDepartment.h" />
     <ClInclude Include="NetworkDepartmentManager.h" />

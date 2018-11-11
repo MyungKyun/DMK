@@ -18,7 +18,7 @@ enum
 enum
 {
 	// юс╫ц
-	IO_BUFFER_SIZE = 128 * 1024,
+	IO_BUFFER_SIZE = 8,//128 * 1024,
 };
 
 

@@ -42,6 +42,8 @@ struct Overlapped_Ex_Processing_Receive : public Overlapped_Ex
 
 struct Overlapped_Ex_Send : public Overlapped_Ex
 {
-	Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, std::shared_ptr<Session> sessionPtr);
+	Int numberOfSend_;
+
+	Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, Int numberOfSend, std::shared_ptr<Session> sessionPtr);
 };
 

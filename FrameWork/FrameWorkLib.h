@@ -62,11 +62,11 @@
 #define	CONTEXT_SWITCH		::SwitchToThread()
 #endif
 
-#define		USE_TCMALLOC		0
-#if   USE_TCMALLOC
-#pragma comment(lib, "libtcmalloc_minimal")
-#pragma comment(linker, "/include:__tcmalloc")
-#endif
+//#define		USE_TCMALLOC		0
+//#if   USE_TCMALLOC
+//#pragma comment(lib, "libtcmalloc_minimal")
+//#pragma comment(linker, "/include:__tcmalloc")
+//#endif
 
 
 #include "ConditionVariable.h"
@@ -81,6 +81,8 @@
 
 #include "Iocp.h"
 #include "Overlapped.h"
+#include "Handler.h"
+#include "Dispatcher.h"
 
 #include "EXFunction.h"
 #include "Listener.h"
@@ -94,6 +96,7 @@
 #include "ThreadManager.h"
 #include "PacketProcess.h"
 #include "SendBufferQueue.h"
+
 #include "IoProcessor.h"
 #include "AcceptProcessor.h"
 #include "SendProcessor.h"

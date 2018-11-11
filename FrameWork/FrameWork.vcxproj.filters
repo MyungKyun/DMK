@@ -57,6 +57,9 @@
     <Filter Include="소스 파일\Job">
       <UniqueIdentifier>{1fe21ffb-2c36-484c-b3c7-16841d4f40f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Network\Dispatcher">
+      <UniqueIdentifier>{a5c05582-e075-4d58-a0bb-4ed1df7b541a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -166,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="Job.h">
       <Filter>소스 파일\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="Dispatcher.h">
+      <Filter>소스 파일\Network\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler.h">
+      <Filter>소스 파일\Network\Dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
