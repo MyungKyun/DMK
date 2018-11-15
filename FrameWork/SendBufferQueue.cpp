@@ -13,6 +13,12 @@ SendBufferQueue::~SendBufferQueue()
 	{
 		sendBuffer.reset();
 	}*/
+
+	SendBuffer* sendBuffer = nullptr;
+	while (sendQue_.try_pop(sendBuffer))
+	{
+		delete sendBuffer;
+	}
 }
 
 Bool	SendBufferQueue::Empty()
@@ -24,13 +30,7 @@ Void	SendBufferQueue::Push(Byte* buf, Int len, Bool& sendImmediately)
 {
 	currentCount_.fetch_add(1);
 
-	/*std::shared_ptr<SendBuffer> sendBuffer = std::make_shared<SendBuffer>();
-	sendBuffer->buffer_ = buf;
-	sendBuffer->len_ = len;*/
-
 	SendBuffer* sendBuffer = new SendBuffer(len);
-	//sendBuffer->buffer_ = buf;
-	//sendBuffer->len_ = len; 
 	sendBuffer->SetData(buf);
 
 	remainingTransferBytes_.fetch_add(len);
