@@ -179,7 +179,7 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 			GhasPacketDataCond_.notify_all();
 		}*/
 
-		//recvBuf_ += header->size;
+		recvBuf_ += header->size;
 		processStandByBytes -= header->size;
 	}
 
