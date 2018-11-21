@@ -99,7 +99,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\ServerLib\include\*.h DEL ..\..\ServerLib\include\*.h
+      <Command>IF EXIST ..\ServerLib\include\*.h DEL ..\ServerLib\include\*.h
 
 copy $(SolutionDir)\FrameWork\*.h ..\ServerLib\include\
 copy $(SolutionDir)x64\Debug\*.lib ..\ServerLib\lib\</Command>
