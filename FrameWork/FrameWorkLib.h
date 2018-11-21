@@ -62,11 +62,11 @@
 #define	CONTEXT_SWITCH		::SwitchToThread()
 #endif
 
-//#define		USE_TCMALLOC		0
-//#if   USE_TCMALLOC
-//#pragma comment(lib, "libtcmalloc_minimal")
-//#pragma comment(linker, "/include:__tcmalloc")
-//#endif
+
+#ifndef   _DEBUG
+#pragma comment(lib, "libtcmalloc_minimal")
+#pragma comment(linker, "/include:__tcmalloc")
+#endif
 
 
 #include "ConditionVariable.h"
