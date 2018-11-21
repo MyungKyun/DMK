@@ -149,7 +149,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
       <Command>IF EXIST $(SolutionDir)ServerLib\include\*.h DEL $(SolutionDir)ServerLib\include\*.h
 
 copy $(SolutionDir)FrameWork\*.h $(SolutionDir)ServerLib\include\
-copy $(SolutionDir)x64\Debug\*.lib $(SolutionDir)ServerLib\lib\</Command>
+copy $(SolutionDir)x64\Release\*.lib $(SolutionDir)ServerLib\lib\</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)ServerLib\ MD $(SolutionDir)ServerLib\
