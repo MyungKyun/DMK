@@ -93,28 +93,27 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../Flatbuffers/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rdParty/Flatbuffers/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\..\ServerLib\lib\*.lib DEL ..\..\ServerLib\lib\*.lib
-IF EXIST ..\..\ServerLib\include\*.h DEL ..\..\ServerLib\include\*.h
+      <Command>IF EXIST ..\ServerLib\include\*.h DEL ..\..\ServerLib\include\*.h
 
-copy $(SolutionDir)\FrameWork\*.h ..\..\ServerLib\include\
-copy $(SolutionDir)x64\Debug\*.lib ..\..\ServerLib\lib\</Command>
+copy $(SolutionDir)\FrameWork\*.h ..\ServerLib\include\
+copy $(SolutionDir)x64\Debug\*.lib ..\ServerLib\lib\</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>IF NOT EXIST ..\..\ServerLib\ MD ..\..\ServerLib\
-IF NOT EXIST ..\..\ServerLib\lib MD ..\..\ServerLib\lib
-IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
+      <Command>IF NOT EXIST ..\ServerLib\ MD ..\ServerLib\
+IF NOT EXIST ..\ServerLib\lib MD ..\ServerLib\lib
+IF NOT EXIST ..\ServerLib\include MD ..\ServerLib\include
 
-IF EXIST ..\..\ServerLib\include DEL ..\..\ServerLib\include\*.h</Command>
+IF EXIST ..\..\ServerLib\include DEL ..\ServerLib\include\*.h</Command>
     </PreBuildEvent>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../../Flatbuffers/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../3rdParty/Flatbuffers/lib/</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,6 +139,7 @@ IF EXIST ..\..\ServerLib\include DEL ..\..\ServerLib\include\*.h</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../3rdParty/Flatbuffers/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,19 +147,20 @@ IF EXIST ..\..\ServerLib\include DEL ..\..\ServerLib\include\*.h</Command>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\..\ServerLib\include\*.h DEL ..\..\ServerLib\include\*.h
+      <Command>IF EXIST ..\ServerLib\include\*.h DEL ..\ServerLib\include\*.h
 
-copy $(SolutionDir)\FrameWork\*.h ..\..\ServerLib\include\
-copy $(SolutionDir)x64\Release\*.lib ..\..\ServerLib\lib\</Command>
+copy $(SolutionDir)\FrameWork\*.h ..\ServerLib\include\
+copy $(SolutionDir)x64\Release\*.lib ..\ServerLib\lib\</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>IF NOT EXIST ..\..\ServerLib\ MD ..\..\ServerLib\
-IF NOT EXIST ..\..\ServerLib\lib MD ..\..\ServerLib\lib
-IF NOT EXIST ..\..\ServerLib\include MD ..\..\ServerLib\include
+      <Command>IF NOT EXIST ..\ServerLib\ MD ..\ServerLib\
+IF NOT EXIST ..\ServerLib\lib MD ..\ServerLib\lib
+IF NOT EXIST ..\ServerLib\include MD ..\ServerLib\include
 </Command>
     </PreBuildEvent>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>../3rdParty/Flatbuffers/lib/</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

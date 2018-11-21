@@ -92,12 +92,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../ServerLib/include/; ../../Flatbuffers/; ../../Packet/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>FrameWorkD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../ServerLib/lib/; ../../Flatbuffers/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../ServerLib/lib/; ../3rdParty/Flatbuffers/lib/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -134,14 +134,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../ServerLib/include/; ../../Flatbuffers/; ../../Packet/Generated/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>FrameWorkR.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../ServerLib/lib/; ../../Flatbuffers/lib/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../ServerLib/lib/; ../3rdParty/Flatbuffers/lib/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
