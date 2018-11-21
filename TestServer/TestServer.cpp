@@ -62,6 +62,9 @@ private:
 	{
 		auto playerdata = flatbuffers::GetRoot<PlayerInfo>(buf);
 
+		Int level = playerdata->level();
+
+
 		printf("[ %s,%d ]\n", playerdata->name()->c_str(), playerdata->level());
 
 		MksBuilder echoBuilder;
