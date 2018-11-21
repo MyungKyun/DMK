@@ -29,23 +29,24 @@ struct SendBuffer
 
 class SendBufferQueue
 {
-	concurrency::concurrent_queue<SendBuffer*>	sendQue_;
-	//concurrency::concurrent_queue<std::shared_ptr<SendBuffer>>	sendQue_;
+	//concurrency::concurrent_queue<SendBuffer*>	sendQue_;
+	concurrency::concurrent_queue<std::shared_ptr<SendBuffer>>	sendQue_;
 	std::atomic_int												currentCount_;
 	std::atomic_uint											remainingTransferBytes_;
-	std::vector<SendBuffer*>									reservingTo_;
+	std::vector<std::shared_ptr<SendBuffer>>					reservingTo_;
 
 public:
 
 	SendBufferQueue();
 	~SendBufferQueue();
 	
-	Void		Push(Byte* buf, Int len, Bool& sendImmediately);
+	Void		Push(std::shared_ptr<SendBuffer> sendBuffer, Int len, Bool& sendImmediately);
 	Void		Copy(Byte* buf, Int buffersize, Int& outSize, Int& numberOfSend);
 	Bool		Empty();
 	Bool		NeedMoreSend(Int numberOfSent, Int numberOfTransferredBytes);
 
 private:
 
-	Void		pop(Byte* buf, Int bufferSize, Int& outSize, Int& numberOfSend);
+	Bool		pop(Byte* buf, Int bufferSize, Int& outSize, Int& numberOfSend);
+	Bool		copyFromReserve(Byte* buf, Int bufferSize, Int& outSize, Int& numberOfSend);
 };

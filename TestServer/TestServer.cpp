@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "playerInfo_generated.h"
 
 
 class TestServer : public Server
@@ -38,8 +39,6 @@ public:
 	}
 };
 
-//Bool  handler_default(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes);
-
 class TestPacketDispathcer : public Dispatcher
 {
 public:
@@ -48,7 +47,7 @@ public:
 	{
 		InitHandlers(&handler_default);
 
-		Register(10, &handler_Msg_Process);
+		Register(100, &handler_Msg_Process);
 	}
 	~TestPacketDispathcer() {}
 
@@ -61,19 +60,16 @@ private:
 	
 	static Bool	handler_Msg_Process(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes)
 	{
-		MessagePacket* msg = reinterpret_cast< MessagePacket*>(buf);
+		auto playerdata = flatbuffers::GetRoot<PlayerInfo>(buf);
 
-		//std::cout << msg->val << std::endl;
-		//overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
-		
-		Int bufSize = sizeof(PacketHeader) + transferredBytes;
-		
+		printf("[ %s,%d ]\n", playerdata->name()->c_str(), playerdata->level());
 
-		//SendBuffer buffer(bufSize);
-//		PacketHeader* header = reinterpret_cast<PacketHeader*>();
+		MksBuilder echoBuilder;
+		auto echoData = CreatePlayerInfo(echoBuilder.Get(), echoBuilder.Get().CreateString(playerdata->name()), playerdata->level());
+		echoBuilder.Get().Finish(echoData);
 
-		//buffer.SetData(buf);
-		//session->Send(buffer, bufSize);
+
+		SendToSession(session, 100, &echoBuilder);
 		return true;
 	}
 };

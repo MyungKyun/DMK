@@ -49,14 +49,14 @@ NetworkDepartment*		Session::GetNetworkDept()
 	return serverNetDept_;
 }
 
-Void	Session::Send(Byte* buf, Int len)
+Void	Session::Send(std::shared_ptr<SendBuffer> sendBuffer, Int len)
 {
 	if (false == completedConnect_.load())
 	{
 		return;
 	}
 
-	sendProcessor_.PostSend(shared_from_this(), buf, len);
+	sendProcessor_.PostSend(shared_from_this(), sendBuffer, len);
 }
 
 Bool	Session::AcceptCompleted(const IPv4& address)

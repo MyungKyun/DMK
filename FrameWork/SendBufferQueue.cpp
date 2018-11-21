@@ -14,11 +14,11 @@ SendBufferQueue::~SendBufferQueue()
 		sendBuffer.reset();
 	}*/
 
-	SendBuffer* sendBuffer = nullptr;
+	/*SendBuffer* sendBuffer = nullptr;
 	while (sendQue_.try_pop(sendBuffer))
 	{
 		delete sendBuffer;
-	}
+	}*/
 }
 
 Bool	SendBufferQueue::Empty()
@@ -26,13 +26,11 @@ Bool	SendBufferQueue::Empty()
 	return sendQue_.empty();
 }
 
-Void	SendBufferQueue::Push(Byte* buf, Int len, Bool& sendImmediately)
+Void	SendBufferQueue::Push(std::shared_ptr<SendBuffer> sendBuffer, Int len, Bool& sendImmediately)
 {
 	currentCount_.fetch_add(1);
 
-	SendBuffer* sendBuffer = new SendBuffer(len);
-	sendBuffer->SetData(buf);
-
+	
 	remainingTransferBytes_.fetch_add(len);
 
 	sendQue_.push(sendBuffer);
@@ -59,82 +57,76 @@ Void	SendBufferQueue::Copy(Byte* buf, Int bufferSize, Int& outSize, Int& numberO
 {
 	outSize = 0;
 	numberOfSend = 0;
-	Int remainBufSize = bufferSize;
-	Bool needMoreCopy = true;
-
-	if (0 >= remainBufSize)
+	
+	if (0 >= bufferSize)
 	{
 		assert(false);
 	}
 
+	if (false == copyFromReserve(buf, bufferSize, outSize, numberOfSend))
+	{
+		return;
+	}
+
+	pop(buf, bufferSize, outSize, numberOfSend);
+	
+}
+
+Bool	SendBufferQueue::copyFromReserve(Byte* buf, Int bufferSize, Int& outSize, Int& numberOfSend)
+{
 	auto first = reservingTo_.begin();
 	auto last = reservingTo_.end();
 
 	for (; first != last; ++first)
 	{
 		auto bufPtr = *first;
-		
-		if (remainBufSize < bufPtr->len_)
+
+		if (bufferSize - outSize < bufPtr->len_)
 		{
 			reservingTo_.erase(reservingTo_.begin(), first);
-			needMoreCopy = false;
-			break;
+			return false;
 		}
 
-		::memcpy_s(buf, remainBufSize, bufPtr->buffer_, bufPtr->len_);
+		::memcpy_s(buf, bufPtr->len_, bufPtr->buffer_, bufPtr->len_);
 
 		outSize += bufPtr->len_;
-		remainBufSize -= bufPtr->len_;
 		++numberOfSend;
-		delete bufPtr;
 	}
-	
-	if (true == needMoreCopy)
-	{
-		pop(buf + outSize, remainBufSize, outSize, numberOfSend);
-	}
-	else
-	{
-		reservingTo_.clear();
-	}
-	
+
+	reservingTo_.clear();
+	return true;
 }
 
-
-Void	SendBufferQueue::pop(Byte* buf,Int bufferSize, Int& outSize, Int& numberOfSend)
+Bool	SendBufferQueue::pop(Byte* buf,Int bufferSize, Int& outSize, Int& numberOfSend)
 {
-	Int remainSize = bufferSize;
 	Bool isEnough = true;
-	
-	while (false == sendQue_.empty())
+
+	std::shared_ptr<SendBuffer> sendBuffer = nullptr;
+	while (sendQue_.try_pop(sendBuffer))
 	{
-		SendBuffer* sendBuffer = nullptr;
-		sendQue_.try_pop(sendBuffer);
-
-		if (nullptr != sendBuffer)
+		if (nullptr == sendBuffer)
 		{
-			if (0 >= remainSize ||
-				remainSize < sendBuffer->len_)
-			{
-				isEnough = false;
-			}
+			continue;
+		}
 
-			if (isEnough)
-			{
-				::memcpy_s(buf, remainSize, sendBuffer->buffer_, sendBuffer->len_);
+		if (0 >= bufferSize ||
+			bufferSize - outSize < sendBuffer->len_)
+		{
+			isEnough = false;
+		}
 
-				outSize += sendBuffer->len_;
-				remainSize -= sendBuffer->len_;
-				++numberOfSend;
-				
-				delete sendBuffer;
-				sendBuffer = nullptr;
-			}
-			else
-			{
-				reservingTo_.push_back(sendBuffer);
-				continue;
-			}
+		if (isEnough)
+		{
+			::memcpy_s(buf, sendBuffer->len_, sendBuffer->buffer_, sendBuffer->len_);
+
+			outSize += sendBuffer->len_;
+			++numberOfSend;
+		}
+		else
+		{
+			reservingTo_.push_back(sendBuffer);
 		}
 	}
+
+	return true;
 }

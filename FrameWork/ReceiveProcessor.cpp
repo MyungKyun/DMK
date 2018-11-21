@@ -153,26 +153,21 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 		}
 
 		
-		auto realDatabuffer = recvBuf_ + sizeof(PacketHeader);
-		
 		
 		//DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
 
 		//MessagePacket* msg = reinterpret_cast<MessagePacket*>(realDatabuffer);
 		//printf("[%d]\n", msg->val);
 
-		
-		
-
 		//sendbuffer를 만들고
 		//버퍼의 사이즈를 구하고
 		//packet header 내용 채우고
 		//버퍼내용 채우고
 		//send
-		//overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, recvBuf_ + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
+		overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, recvBuf_ + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
 		
 		//Echo Test
-		overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
+		//overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
 
 
 		// 패킷 큐잉을 하지 말고, Io Thread가 패킷까지 처리하고 로직처리 스레드로 넘기는 방안을 생각해보자.

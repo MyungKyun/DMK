@@ -37,7 +37,7 @@ public:
 	Void		Disconnect();
 	
 	Void		ReRegisterToIocp();
-	Void		Send(Byte* buf, Int len);
+	Void		Send(std::shared_ptr<SendBuffer> sendBuffer, Int len);
 	Bool		AcceptCompleted(const IPv4& address);
 	
 	UDLong		GetSessionId() const;

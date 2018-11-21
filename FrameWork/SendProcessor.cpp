@@ -13,11 +13,11 @@ SendProcessor::~SendProcessor()
 }
 
 
-Void	SendProcessor::PostSend(std::shared_ptr<Session> sessionPtr, Byte* buf, Int len)
+Void	SendProcessor::PostSend(std::shared_ptr<Session> sessionPtr, std::shared_ptr<SendBuffer> sendBuffer, Int len)
 {
 	Bool sendImmediately = false;
 	
-	sendBufferQue_.Push(buf, len, sendImmediately);
+	sendBufferQue_.Push(sendBuffer, len, sendImmediately);
 
 	//std::cout << "PostSend UseCount : " << sessionPtr.use_count() << std::endl;
 	if (sendImmediately)
