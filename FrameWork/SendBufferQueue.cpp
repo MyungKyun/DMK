@@ -26,14 +26,14 @@ Bool	SendBufferQueue::Empty()
 	return sendQue_.empty();
 }
 
-Void	SendBufferQueue::Push(std::shared_ptr<SendBuffer> sendBuffer, Int len, Bool& sendImmediately)
+Void	SendBufferQueue::Push(std::shared_ptr<SendBuffer>&& sendBuffer, Int len, Bool& sendImmediately)
 {
 	currentCount_.fetch_add(1);
 
 	
 	remainingTransferBytes_.fetch_add(len);
 
-	sendQue_.push(sendBuffer);
+	sendQue_.push(std::move(sendBuffer));
 
 	if (1== currentCount_.load())
 	{

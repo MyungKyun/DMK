@@ -40,7 +40,7 @@ public:
 	SendBufferQueue();
 	~SendBufferQueue();
 	
-	Void		Push(std::shared_ptr<SendBuffer> sendBuffer, Int len, Bool& sendImmediately);
+	Void		Push(std::shared_ptr<SendBuffer>&& sendBuffer, Int len, Bool& sendImmediately);
 	Void		Copy(Byte* buf, Int buffersize, Int& outSize, Int& numberOfSend);
 	Bool		Empty();
 	Bool		NeedMoreSend(Int numberOfSent, Int numberOfTransferredBytes);

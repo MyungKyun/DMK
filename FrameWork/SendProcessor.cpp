@@ -13,11 +13,11 @@ SendProcessor::~SendProcessor()
 }
 
 
-Void	SendProcessor::PostSend(std::shared_ptr<Session> sessionPtr, std::shared_ptr<SendBuffer> sendBuffer, Int len)
+Void	SendProcessor::PostSend(std::shared_ptr<Session> sessionPtr, std::shared_ptr<SendBuffer>&& sendBuffer, Int len)
 {
 	Bool sendImmediately = false;
 	
-	sendBufferQue_.Push(sendBuffer, len, sendImmediately);
+	sendBufferQue_.Push(std::move(sendBuffer), len, sendImmediately);
 
 	//std::cout << "PostSend UseCount : " << sessionPtr.use_count() << std::endl;
 	if (sendImmediately)
@@ -48,7 +48,7 @@ Void SendProcessor::CompleteIoEventProcess(Overlapped_Ex * overlapped, Int numbe
 }
 
 
-Void SendProcessor::postSend(std::shared_ptr<Session> sessionPtr)
+Void SendProcessor::postSend(std::shared_ptr<Session>& sessionPtr)
 {
 	Int sendSize = 0;
 	Int numberOfSend = 0;
