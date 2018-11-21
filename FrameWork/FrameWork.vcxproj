@@ -146,15 +146,15 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\ServerLib\include\*.h DEL ..\ServerLib\include\*.h
+      <Command>IF EXIST $(SolutionDir)ServerLib\include\*.h DEL $(SolutionDir)ServerLib\include\*.h
 
-copy $(SolutionDir)\FrameWork\*.h ..\ServerLib\include\
-copy $(SolutionDir)x64\Release\*.lib ..\ServerLib\lib\</Command>
+copy $(SolutionDir)FrameWork\*.h $(SolutionDir)ServerLib\include\
+copy $(SolutionDir)x64\Debug\*.lib $(SolutionDir)ServerLib\lib\</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>IF NOT EXIST ..\ServerLib\ MD ..\ServerLib\
-IF NOT EXIST ..\ServerLib\lib MD ..\ServerLib\lib
-IF NOT EXIST ..\ServerLib\include MD ..\ServerLib\include
+      <Command>IF NOT EXIST $(SolutionDir)ServerLib\ MD $(SolutionDir)ServerLib\
+IF NOT EXIST $(SolutionDir)ServerLib\lib MD $(SolutionDir)ServerLib\lib
+IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
 </Command>
     </PreBuildEvent>
     <Lib>
