@@ -27,5 +27,5 @@ inline Void SendToSession(std::shared_ptr<Session>& sessionPtr, UShort type, Mks
 
 	::memcpy_s(header + 1, size - sizeof(PacketHeader), builder->Get().GetBufferPointer(), builder->Get().GetSize());
 
-	sessionPtr->Send(sendBufferPtr, size);
+	sessionPtr->Send(std::move(sendBufferPtr), size);
 }
