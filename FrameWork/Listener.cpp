@@ -22,6 +22,13 @@ Bool	Listener::Listen(const IPv4& address)
 		return false;
 	}
 
+	BOOL val = TRUE;
+	if (SOCKET_ERROR == ::setsockopt(listenSocket_, IPPROTO_TCP, TCP_NODELAY, (const char*)&val, sizeof(val)))
+	{
+		WinsockHelper::ErrorDisplay(L"Listen() TCP_NODELAY failed.");
+		return false;
+	}
+
 	if (::bind(listenSocket_, address.GetSockAddr(), address.GetSockAddrLen()) == SOCKET_ERROR)
 	{
 		int errorCode = ::WSAGetLastError();
