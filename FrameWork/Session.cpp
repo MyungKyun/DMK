@@ -8,6 +8,7 @@ Session::Session(NetworkDepartment* serverNetDept, Int bufSize)
 	
 {
 	socket_ = WinsockHelper::CreateTcpSocket();
+	WinsockHelper::NagleOff(socket_);
 	std::atomic_init(&completedConnect_, false);
 }
 
@@ -49,14 +50,14 @@ NetworkDepartment*		Session::GetNetworkDept()
 	return serverNetDept_;
 }
 
-Void	Session::Send(std::shared_ptr<SendBuffer> sendBuffer, Int len)
+Void	Session::Send(std::shared_ptr<SendBuffer>&& sendBuffer, Int len)
 {
 	if (false == completedConnect_.load())
 	{
 		return;
 	}
 
-	sendProcessor_.PostSend(shared_from_this(), sendBuffer, len);
+	sendProcessor_.PostSend(shared_from_this(), std::move(sendBuffer), len);
 }
 
 Bool	Session::AcceptCompleted(const IPv4& address)
@@ -69,6 +70,8 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 	{
 		return false;
 	}
+
+	WinsockHelper::NagleOff(socket_);
 
 	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
 	{
