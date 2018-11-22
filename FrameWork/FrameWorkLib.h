@@ -69,7 +69,6 @@
 #endif
 
 
-#include "ConditionVariable.h"
 #include "Singleton.h"
 #include "Type.h"
 #include "Defines.h"
@@ -94,7 +93,6 @@
 #include "NetworkIoThread.h"
 #include "ThreadDepartment.h"
 #include "ThreadManager.h"
-#include "PacketProcess.h"
 #include "SendBufferQueue.h"
 
 #include "IoProcessor.h"
