@@ -117,9 +117,6 @@ Void	ReceiveProcessor::postReceive(Overlapped_Ex* overlapped, Int numberOfTransf
 		overlappedRecv = nullptr;
 		return;
 	}
-
-	/*delete overlappedPreRecv;
-	overlappedPreRecv = nullptr;*/
 }
 
 
@@ -138,9 +135,11 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 	Int processedLen = 0;
 	Int processStandByBytes = bufferLength;
 
+	const Byte* buf = recvBuf_;
+
 	while (processStandByBytes >= sizeof(PacketHeader))
 	{
-		const PacketHeader* header = reinterpret_cast<const PacketHeader*>(recvBuf_);
+		const PacketHeader* header = reinterpret_cast<const PacketHeader*>(buf);
 
 		if (header->size < sizeof(PacketHeader) || totalRecvBufferSize_ < header->size)
 		{
@@ -152,34 +151,9 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 			break;
 		}
 
-		
-		
-		//DataPack* dPack = new DataPack(100, realDatabuffer, header->size - sizeof(PacketHeader), overlappedRecv->sessionSPtr );
-
-		//MessagePacket* msg = reinterpret_cast<MessagePacket*>(realDatabuffer);
-		//printf("[%d]\n", msg->val);
-
-		//sendbuffer를 만들고
-		//버퍼의 사이즈를 구하고
-		//packet header 내용 채우고
-		//버퍼내용 채우고
-		//send
-		overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, recvBuf_ + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
-		
-		//Echo Test
-		//overlappedRecv->sessionSPtr_->Send(recvBuf_, header->size);
-
-
-		// 패킷 큐잉을 하지 말고, Io Thread가 패킷까지 처리하고 로직처리 스레드로 넘기는 방안을 생각해보자.
-		//contentsLogicProcess_->Push(dPack);
-
-		/*if (GisEmptyPacketQueue_.load() == true)
-		{
-			GisEmptyPacketQueue_.store(false);
-			GhasPacketDataCond_.notify_all();
-		}*/
-
-		recvBuf_ += header->size;
+		overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, buf + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
+	
+		buf += header->size;
 		processStandByBytes -= header->size;
 	}
 
@@ -195,9 +169,4 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 		recvBegin_ += processedLen;
 		ReservingReceive(overlappedRecv->sessionSPtr_);
 	}
-	
-
-
-	/*delete overlappedRecv;
-	overlappedRecv = nullptr;*/
 }
