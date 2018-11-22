@@ -184,7 +184,6 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="NetworkIoThread.h" />
     <ClInclude Include="Overlapped.h" />
     <ClInclude Include="Packet.h" />
-    <ClInclude Include="PacketProcess.h" />
     <ClInclude Include="ReceiveProcessor.h" />
     <ClInclude Include="SendBufferQueue.h" />
     <ClInclude Include="SendProcessor.h" />
@@ -215,7 +214,6 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClCompile Include="NetworkDepartment.cpp" />
     <ClCompile Include="NetworkDepartmentManager.cpp" />
     <ClCompile Include="Overlapped.cpp" />
-    <ClCompile Include="PacketProcess.cpp" />
     <ClCompile Include="ReceiveProcessor.cpp" />
     <ClCompile Include="SendBufferQueue.cpp" />
     <ClCompile Include="SendProcessor.cpp" />

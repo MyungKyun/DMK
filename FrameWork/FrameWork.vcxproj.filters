@@ -36,9 +36,6 @@
     <Filter Include="소스 파일\Util">
       <UniqueIdentifier>{c9099a0f-1c42-4fdb-8fb1-df5b1db3ad22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\PacketProcess">
-      <UniqueIdentifier>{6b587f10-fd53-46e9-b23d-fb01bc8ae29f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\IPaddress">
       <UniqueIdentifier>{1bf0cc7c-c1da-4903-b694-395b91f27a78}</UniqueIdentifier>
     </Filter>
@@ -115,9 +112,6 @@
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>소스 파일\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="PacketProcess.h">
-      <Filter>소스 파일\PacketProcess</Filter>
     </ClInclude>
     <ClInclude Include="IPv4.h">
       <Filter>소스 파일\IPaddress</Filter>
@@ -216,9 +210,6 @@
     </ClCompile>
     <ClCompile Include="Utility.cpp">
       <Filter>소스 파일\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="PacketProcess.cpp">
-      <Filter>소스 파일\PacketProcess</Filter>
     </ClCompile>
     <ClCompile Include="IPv4.cpp">
       <Filter>소스 파일\IPaddress</Filter>
