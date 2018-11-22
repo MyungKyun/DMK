@@ -75,7 +75,7 @@ Void	ServerNetWorkDepartment::RegisterToIocp(HANDLE handle)
 	iocp_->Resister(handle);
 }
 
-Bool	ServerNetWorkDepartment::Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes)
+Bool	ServerNetWorkDepartment::Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, const Byte* buf, Int transferredBytes)
 {
 	return packetDispathcer_->Dispatch(session, header, buf, transferredBytes);
 }

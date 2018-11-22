@@ -45,9 +45,6 @@
     <Filter Include="소스 파일\Overlapped">
       <UniqueIdentifier>{33c783b8-1c15-4703-9957-a9842563d58c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\ConditionVariable">
-      <UniqueIdentifier>{a3249cb9-d6b7-47c2-ad48-915b4b30b1af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Packet">
       <UniqueIdentifier>{55812e87-6353-41bc-b318-28da7ea4d7dd}</UniqueIdentifier>
     </Filter>
@@ -133,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="Overlapped.h">
       <Filter>소스 파일\Overlapped</Filter>
-    </ClInclude>
-    <ClInclude Include="ConditionVariable.h">
-      <Filter>소스 파일\ConditionVariable</Filter>
     </ClInclude>
     <ClInclude Include="Packet.h">
       <Filter>소스 파일\Packet</Filter>
@@ -234,9 +228,6 @@
     </ClCompile>
     <ClCompile Include="Overlapped.cpp">
       <Filter>소스 파일\Overlapped</Filter>
-    </ClCompile>
-    <ClCompile Include="ConditionVariable.cpp">
-      <Filter>소스 파일\ConditionVariable</Filter>
     </ClCompile>
     <ClCompile Include="SendProcessor.cpp">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>

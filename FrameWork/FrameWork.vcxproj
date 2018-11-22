@@ -168,7 +168,6 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
   <ItemGroup>
     <ClInclude Include="AcceptProcessor.h" />
     <ClInclude Include="ClientNetWorkDepartment.h" />
-    <ClInclude Include="ConditionVariable.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Handler.h" />
@@ -207,7 +206,6 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
   <ItemGroup>
     <ClCompile Include="AcceptProcessor.cpp" />
     <ClCompile Include="ClientNetWorkDepartment.cpp" />
-    <ClCompile Include="ConditionVariable.cpp" />
     <ClCompile Include="EXFunction.cpp" />
     <ClCompile Include="Iocp.cpp" />
     <ClCompile Include="IoProcessor.cpp" />

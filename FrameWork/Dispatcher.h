@@ -1,12 +1,12 @@
 #pragma once
 
-using PacketHandlerFunction = Bool(*)(std::shared_ptr<Session> , const PacketHeader* , Byte* , Int );
+using PacketHandlerFunction = Bool(*)(std::shared_ptr<Session> , const PacketHeader* , const Byte* , Int );
 
 class BaseDispatcher
 {
 public:
 	virtual ~BaseDispatcher() {}
-	virtual Bool Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes) = 0;
+	virtual Bool Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, const Byte* buf, Int transferredBytes) = 0;
 };
 
 class Dispatcher : public BaseDispatcher
@@ -37,7 +37,7 @@ public:
 	}
 
 
-	Bool Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes) final
+	Bool Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, const Byte* buf, Int transferredBytes) final
 	{
 		if (header->type >= _countof(handlers_) ||
 			nullptr == handlers_[header->type])
