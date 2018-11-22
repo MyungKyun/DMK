@@ -3,22 +3,16 @@
 SendBufferQueue::SendBufferQueue()
 {
 	std::atomic_init(&currentCount_, 0);
-	std::atomic_init(&remainingTransferBytes_, 0);
 }
 
 SendBufferQueue::~SendBufferQueue()
 {
-	/*std::shared_ptr<SendBuffer> sendBuffer;
+
+	std::shared_ptr<SendBuffer> sendBuffer;
 	while (sendQue_.try_pop(sendBuffer))
 	{
 		sendBuffer.reset();
-	}*/
-
-	/*SendBuffer* sendBuffer = nullptr;
-	while (sendQue_.try_pop(sendBuffer))
-	{
-		delete sendBuffer;
-	}*/
+	}
 }
 
 Bool	SendBufferQueue::Empty()
@@ -30,9 +24,6 @@ Void	SendBufferQueue::Push(std::shared_ptr<SendBuffer>&& sendBuffer, Int len, Bo
 {
 	currentCount_.fetch_add(1);
 
-	
-	remainingTransferBytes_.fetch_add(len);
-
 	sendQue_.push(std::move(sendBuffer));
 
 	if (1== currentCount_.load())
@@ -43,7 +34,6 @@ Void	SendBufferQueue::Push(std::shared_ptr<SendBuffer>&& sendBuffer, Int len, Bo
 
 Bool	SendBufferQueue::NeedMoreSend(Int numberOfSent, Int numberOfTransferredBytes)
 {
-	remainingTransferBytes_.fetch_sub(numberOfTransferredBytes);
 	currentCount_.fetch_sub(numberOfSent);
 	if (0 >= currentCount_.load())
 	{

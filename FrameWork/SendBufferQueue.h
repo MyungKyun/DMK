@@ -29,10 +29,8 @@ struct SendBuffer
 
 class SendBufferQueue
 {
-	//concurrency::concurrent_queue<SendBuffer*>	sendQue_;
 	concurrency::concurrent_queue<std::shared_ptr<SendBuffer>>	sendQue_;
 	std::atomic_int												currentCount_;
-	std::atomic_uint											remainingTransferBytes_;
 	std::vector<std::shared_ptr<SendBuffer>>					reservingTo_;
 
 public:
