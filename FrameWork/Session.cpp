@@ -71,7 +71,7 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 		return false;
 	}
 
-	WinsockHelper::NagleOff(socket_);
+	//WinsockHelper::NagleOff(socket_);
 
 	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
 	{
