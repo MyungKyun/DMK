@@ -53,12 +53,12 @@ public:
 
 private:
 
-	static Bool  handler_default(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes)
+	static Bool  handler_default(std::shared_ptr<Session> session, const PacketHeader* header, const Byte* buf, Int transferredBytes)
 	{
 		return true;
 	}
 	
-	static Bool	handler_Msg_Process(std::shared_ptr<Session> session, const PacketHeader* header, Byte* buf, Int transferredBytes)
+	static Bool	handler_Msg_Process(std::shared_ptr<Session> session, const PacketHeader* header,  const Byte* buf, Int transferredBytes)
 	{
 		auto playerdata = flatbuffers::GetRoot<PlayerInfo>(buf);
 
