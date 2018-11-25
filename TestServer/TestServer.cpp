@@ -81,8 +81,22 @@ private:
 
 
 
-int main()
+int main(int argc, CHAR* argv[])
 {
+
+	GLogger.Setup(argv[0]);
+	
+	int a = 10;
+	int b = 20;
+	int c = 30;
+	LOG_INFO("..........Test Server Start..........");
+	LOG_INFO("Start Test Logging...");
+	LOG_INFO("HI this is test message {0}", a);
+	LOG_TRACE("Trace Log Test");
+	LOG_DEBUG("this is debug test{0}", a);
+	LOG_WARN("Warn test {0} {1}", a, b);
+	LOG_ERROR("Error test {0} {1} {2}", a, b, c);
+	LOG_CRITIC("Critic TEst {0}", a + b);
 
 	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestPacketDispathcer);
 	

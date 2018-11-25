@@ -10,10 +10,10 @@ public:
 	~SendProcessor();
 
 	
-	Void	PostSend(std::shared_ptr<Session> sessionPtr, std::shared_ptr<SendBuffer> sendBuffer, Int len);
+	Void	PostSend(std::shared_ptr<Session> sessionPtr, std::shared_ptr<SendBuffer>&& sendBuffer, Int len);
 	Void	CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numberOfTransferredBytes, Bool ioEventResult) override;
 	
 private:
 
-	Void postSend(std::shared_ptr<Session> sessionPtr);
+	Void postSend(std::shared_ptr<Session>& sessionPtr);
 };

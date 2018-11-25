@@ -92,7 +92,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/; ../3rdParty/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +134,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/; ../3rdParty/;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

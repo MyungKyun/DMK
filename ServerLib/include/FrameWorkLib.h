@@ -62,17 +62,18 @@
 #define	CONTEXT_SWITCH		::SwitchToThread()
 #endif
 
-//#define		USE_TCMALLOC		0
-//#if   USE_TCMALLOC
-//#pragma comment(lib, "libtcmalloc_minimal")
-//#pragma comment(linker, "/include:__tcmalloc")
-//#endif
+
+#ifndef   _DEBUG
+#pragma comment(lib, "libtcmalloc_minimal")
+#pragma comment(linker, "/include:__tcmalloc")
+#endif
 
 
-#include "ConditionVariable.h"
 #include "Singleton.h"
 #include "Type.h"
 #include "Defines.h"
+#include "AsyncLogMsg.h"
+#include "Log.h"
 #include "Packet.h"
 #include "Utility.h"
 #include "Job.h"
@@ -94,7 +95,6 @@
 #include "NetworkIoThread.h"
 #include "ThreadDepartment.h"
 #include "ThreadManager.h"
-#include "PacketProcess.h"
 #include "SendBufferQueue.h"
 
 #include "IoProcessor.h"

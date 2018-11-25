@@ -54,6 +54,9 @@
     <Filter Include="소스 파일\Network\Dispatcher">
       <UniqueIdentifier>{a5c05582-e075-4d58-a0bb-4ed1df7b541a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Log">
+      <UniqueIdentifier>{e1b895a6-ebe5-4947-8246-9b55d2b41d20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -164,6 +167,12 @@
     <ClInclude Include="Handler.h">
       <Filter>소스 파일\Network\Dispatcher</Filter>
     </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>소스 파일\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncLogMsg.h">
+      <Filter>소스 파일\Log</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -240,6 +249,12 @@
     </ClCompile>
     <ClCompile Include="NetworkDepartment.cpp">
       <Filter>소스 파일\Network\NetworkDepartment</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>소스 파일\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncLogMsg.cpp">
+      <Filter>소스 파일\Log</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
