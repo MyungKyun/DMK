@@ -10,7 +10,7 @@ AsyncLogMsg::AsyncLogMsg(const spdlog::details::log_msg& lmsg)
 	, msgId_(lmsg.msg_id)
 	, msgType_(AsyncMsgType::LOG)
 	, threadId_(static_cast<DWORD>(lmsg.thread_id))
-	, text_(lmsg.payload.begin(),lmsg.payload.end())
+	, text_(lmsg.payload.data(),lmsg.payload.size())
 {
 
 }
