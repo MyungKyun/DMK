@@ -1,5 +1,5 @@
 #pragma once
-#define SPDLOG_WCHAR_FILENAMES
+
 class AsyncLog : public spdlog::logger
 {
 	
