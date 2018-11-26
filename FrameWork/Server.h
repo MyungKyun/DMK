@@ -17,11 +17,11 @@ protected:
 public:
 
 	Server(Dispatcher* packetDispatcher);
-	~Server();
+	virtual ~Server();
 
-	Bool			Setup(SessionPool* sessionPool);
-	Void			Run();
-	Void			ShutDown();
+	Bool					Setup(SessionPool* sessionPool);
+	virtual Void			Run();
+	virtual Void			ShutDown();
 
 private:
 
