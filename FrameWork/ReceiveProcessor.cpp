@@ -47,7 +47,7 @@ Bool	ReceiveProcessor::ReservingReceive(std::shared_ptr<Session> sessionPtr)
 
 		if (error != WSA_IO_PENDING)
 		{
-			WinsockHelper::ErrorDisplay(L"preparingReceive() WSARecv failed.");//임시출력
+			LOG_ERROR(L"ReservingReceive Failed Error:{0}", error);
 
 			//연결끊기 필요
 			delete overlappedPreRecv;
@@ -110,8 +110,9 @@ Void	ReceiveProcessor::postReceive(Overlapped_Ex* overlapped, Int numberOfTransf
 
 	if (SOCKET_ERROR == ::WSARecv(socket, &(overlappedRecv->wsabuf_), 1, &recvBytes, &flags, overlappedRecv, nullptr))
 	{
-		
-		WinsockHelper::ErrorDisplay(L"ReceiveProcessor::postReceive failed.");//임시출력
+		auto error = WSAGetLastError();
+		LOG_ERROR(L"postReceive Failed. Error:{0}", error);
+
 		//연결끊기 필요
 		delete overlappedRecv;
 		overlappedRecv = nullptr;

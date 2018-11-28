@@ -243,7 +243,7 @@ inline void wbuf_to_utf8buf(const fmt::wmemory_buffer &wbuf, fmt::memory_buffer 
 }
 
 template<typename... Args>
-inline void spdlog::logger::log(source_location source, level::level_enum lvl, const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::log(source_loc source, level::level_enum lvl, const wchar_t *fmt, const Args &... args)
 {
     if (!should_log(lvl))
     {
@@ -265,45 +265,45 @@ inline void spdlog::logger::log(source_location source, level::level_enum lvl, c
 }
 
 template<typename... Args>
-inline void spdlog::logger::log(level::level_enum lvl, const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::log(const char* fileName, uint32_t line, level::level_enum lvl, const wchar_t *fmt, const Args &... args)
 {
-    log(source_location{}, lvl, fmt, args...);
+    log(source_loc{fileName, line}, lvl, fmt, args...);
 }
 
 template<typename... Args>
-inline void spdlog::logger::trace(const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::trace(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args)
 {
-    log(level::trace, fmt, args...);
+    log(fileName, line, level::trace, fmt, args...);
 }
 
 template<typename... Args>
-inline void spdlog::logger::debug(const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::debug(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args)
 {
-    log(level::debug, fmt, args...);
+    log(fileName, line, level::debug, fmt, args...);
 }
 
 template<typename... Args>
-inline void spdlog::logger::info(const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::info(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args)
 {
-    log(level::info, fmt, args...);
+    log(fileName, line, level::info, fmt, args...);
 }
 
 template<typename... Args>
-inline void spdlog::logger::warn(const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::warn(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args)
 {
-    log(level::warn, fmt, args...);
+    log(fileName, line, level::warn, fmt, args...);
 }
 
 template<typename... Args>
-inline void spdlog::logger::error(const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::error(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args)
 {
-    log(level::err, fmt, args...);
+    log(fileName, line, level::err, fmt, args...);
 }
 
 template<typename... Args>
-inline void spdlog::logger::critical(const wchar_t *fmt, const Args &... args)
+inline void spdlog::logger::critical(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args)
 {
-    log(level::critical, fmt, args...);
+    log(fileName, line, level::critical, fmt, args...);
 }
 
 #endif // SPDLOG_WCHAR_TO_UTF8_SUPPORT

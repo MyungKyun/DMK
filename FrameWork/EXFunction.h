@@ -15,6 +15,8 @@ public:
 	static Bool			AcceptEx(SOCKET listen, SOCKET accept, PVOID outBuffer, DWORD recvDataLen, DWORD addrLen,
 							DWORD remoteAddrLen, LPDWORD byteRecv, LPOVERLAPPED overlapped);
 
+	static Bool			ConnectEx(SOCKET socket, const IPv4& addr, LPOVERLAPPED overlapped);
+
 	static Bool			SetupExFunction();
 
 	

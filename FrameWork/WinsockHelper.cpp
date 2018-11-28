@@ -20,14 +20,14 @@ namespace WinsockHelper
 		SOCKET socket = ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, nullptr, 0, WSA_FLAG_OVERLAPPED);
 		if (socket == INVALID_SOCKET)
 		{
-			ErrorDisplay(L"WSASocket() falied."); //임시출력
+			LOG_ERROR(L"WSASocket Failed. Error:{0}", ::WSAGetLastError());
 			return INVALID_SOCKET;
 		}
 
 		int sendBufSizeOpt = 0;
 		if (::setsockopt(socket, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<const char*>(&sendBufSizeOpt), sizeof(sendBufSizeOpt)) == SOCKET_ERROR)
 		{
-			ErrorDisplay(L"setsockopt SO_SNDBUF falied.");
+			LOG_ERROR(L"setsockopt SO_SNDBUF Falied. Error:{0}", ::WSAGetLastError());
 			::closesocket(socket);
 			::WSASetLastError(::WSAGetLastError());
 			return INVALID_SOCKET;
@@ -41,7 +41,7 @@ namespace WinsockHelper
 		Int optVal = 1;
 		if (SOCKET_ERROR == ::setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<const char*>(&optVal), sizeof(optVal)))
 		{
-			ErrorDisplay(L"NagleOff failed.");
+			LOG_ERROR(L"NagleOff Failed. Error{0}", ::WSAGetLastError());
 		}
 	}
 }

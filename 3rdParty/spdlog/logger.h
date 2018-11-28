@@ -26,7 +26,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-
+#define SPDLOG_WCHAR_TO_UTF8_SUPPORT
 namespace spdlog {
 
 class logger
@@ -76,28 +76,28 @@ public:
 #error SPDLOG_WCHAR_TO_UTF8_SUPPORT only supported on windows
 #else
     template<typename... Args>
-    void log(level::level_enum lvl, const wchar_t *fmt, const Args &... args);
+    void log(const char* fileName, uint32_t line, level::level_enum lvl, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void log(source_location soruce, level::level_enum lvl, const wchar_t *fmt, const Args &... args);
+    void log(source_loc soruce, level::level_enum lvl, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void trace(const wchar_t *fmt, const Args &... args);
+    void trace(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void debug(const wchar_t *fmt, const Args &... args);
+    void debug(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void info(const wchar_t *fmt, const Args &... args);
+    void info(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void warn(const wchar_t *fmt, const Args &... args);
+    void warn(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void error(const wchar_t *fmt, const Args &... args);
+    void error(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args);
 
     template<typename... Args>
-    void critical(const wchar_t *fmt, const Args &... args);
+    void critical(const char* fileName, uint32_t line, const wchar_t *fmt, const Args &... args);
 #endif // _WIN32
 #endif // SPDLOG_WCHAR_TO_UTF8_SUPPORT
 

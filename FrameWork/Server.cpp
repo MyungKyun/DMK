@@ -44,14 +44,14 @@ Bool Server::startup()
 	if (::WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 	{
 		//스타트업 실패
-		std::cout << "Failed. WSAStartup" << std::endl;//임시출력
+		LOG_ERROR(L"WSAStartup Failed.");
 		return false;
 	}
 
 	if (LOBYTE(wsa.wVersion) != 2 || HIBYTE(wsa.wVersion) != 2)
 	{
 		::WSACleanup();
-		std::cout << "not found version(2.2) winsock.dll" << std::endl;//임시출력
+		LOG_ERROR(L"Not found version(2.2) winsock.dll");
 		return false;
 	}
 	

@@ -16,7 +16,7 @@ Void AcceptProcessor::PreparingAccept(SessionPool* sessionPool, UShort totalAcce
 {
 	if (nullptr == sessionPool)
 	{
-		WinsockHelper::ErrorDisplay(L"PreparingAccept(), sessionPool was Nullptr!");//임시출력
+		LOG_ERROR(L"SessionPool is nullptr");
 		return;
 	}
 
@@ -37,7 +37,7 @@ Void AcceptProcessor::PreparingAccept(SessionPool* sessionPool, UShort totalAcce
 		auto error = ::WSAGetLastError();
 		if (error != WSA_IO_PENDING)
 		{
-			WinsockHelper::ErrorDisplay(L"AcceptEx error");//임시출력
+			LOG_ERROR(L"AcceptEx Error:{0}", error);
 
 			delete overlappedAccept;
 			overlappedAccept = nullptr;
@@ -67,7 +67,7 @@ Void AcceptProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numb
 										 reinterpret_cast<Char*>(&overlappedAccept->socket_), sizeof(overlappedAccept->socket_)))
 		{
 			auto error = ::WSAGetLastError();
-			WinsockHelper::ErrorDisplay(L"acceptCompleted, setsockopt error");//임시출력
+			LOG_ERROR(L"AcceptCompleted, setsockopt Error:{0}", error);
 			result = false;
 		}
 
@@ -75,7 +75,7 @@ Void AcceptProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numb
 		if (SOCKET_ERROR == ::getpeername(sessionSocket, reinterpret_cast<sockaddr*>(&addr), &addrLen))
 		{
 			auto error = ::WSAGetLastError();
-			WinsockHelper::ErrorDisplay(L"acceptCompleted, getpeername error");//임시출력
+			LOG_ERROR(L"acceptCompleted, getpeername Error:{0}", error);
 			result = false;
 		}
 	}
