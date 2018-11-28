@@ -22,6 +22,24 @@ enum
 };
 
 
+enum
+{
+	MILLI_PER_SEC = 1000,
+	NANO_PER_SEC = 1000000000,
+	NANO_PER_MILLI = 1000000
+};
+
+
+
+// chrono type
+using time_point_t = std::chrono::time_point<std::chrono::system_clock>;
+using second_t = std::chrono::seconds;
+using milli_t = std::chrono::milliseconds;
+using time_point_t = std::chrono::time_point<std::chrono::system_clock>;
+
+
+
+
 class Uncopyable
 {
 private:

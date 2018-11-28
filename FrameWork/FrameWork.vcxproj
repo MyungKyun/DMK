@@ -173,6 +173,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Handler.h" />
     <ClInclude Include="Job.h" />
+    <ClInclude Include="LocalClock.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="NetworkDepartment.h" />
     <ClInclude Include="NetworkDepartmentManager.h" />

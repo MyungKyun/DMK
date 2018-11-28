@@ -73,6 +73,7 @@
 #include "Singleton.h"
 #include "Type.h"
 #include "Defines.h"
+#include "LocalClock.h"
 #include "AsyncLogMsg.h"
 #include "Log.h"
 #include "Packet.h"

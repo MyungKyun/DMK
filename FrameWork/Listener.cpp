@@ -16,18 +16,18 @@ Bool	Listener::Listen(const IPv4& address)
 	if (::setsockopt(listenSocket_, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char*>(&reuseAddrOption), sizeof(reuseAddrOption)) == SOCKET_ERROR)
 	{
 		int errorCode = ::WSAGetLastError();
-		std::cout << "setsockopt() SO_REUSEADDR failed. errorCode" << std::endl;//임시출력
+		LOG_ERROR(L"setsockopt() SO_REUSEADDR failed. Error:{0}", errorCode);
 
 		::WSASetLastError(errorCode);
 		return false;
 	}
 
-	//WinsockHelper::NagleOff(listenSocket_);
 
 	if (::bind(listenSocket_, address.GetSockAddr(), address.GetSockAddrLen()) == SOCKET_ERROR)
 	{
 		int errorCode = ::WSAGetLastError();
-		std::cout << "bind() for address(%s:%u) failed. errorCode" << std::endl;//임시출력
+		
+		LOG_ERROR(L"bind failed. address({0},{1}) Error:{2}", address.GetIpString().c_str(), address.GetPort(), errorCode);
 
 		::WSASetLastError(errorCode);
 		return false;
@@ -36,7 +36,7 @@ Bool	Listener::Listen(const IPv4& address)
 	if (::listen(listenSocket_, SOMAXCONN) == SOCKET_ERROR)
 	{
 		int errorCode = ::WSAGetLastError();
-		std::cout << "listen() failed. errorCode" << std::endl; //임시출력
+		LOG_ERROR(L"listen Failed. Error:{0}", errorCode);
 
 		::WSASetLastError(errorCode);
 		return false;
