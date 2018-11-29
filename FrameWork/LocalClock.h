@@ -147,6 +147,15 @@ public:
 		return buf.data();
 	}
 
+	std::wstring	DateTimeToString()
+	{
+		auto st = ToSystemTime();
+		std::array<wchar_t, 64>	buf;
+		swprintf_s(buf.data(), buf.size(), L"%04u_%02u_%02u_%02u_%02u_%02u_%llu",
+			st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, GetDiffseconds());
+		return buf.data();
+	}
+
 	SYSTEMTIME	ToSystemTime()
 	{
 		auto tm = GetTm();

@@ -26,7 +26,7 @@ class Logger : public Singleton<Logger>
 
 	enum
 	{
-		LOG_FILE_SIZE = 1024 * 1024 * 3,
+		LOG_FILE_SIZE = 1024 * 1024 * 10,
 		MAX_LOG_FILE_COUNT	= 9999
 	};
 

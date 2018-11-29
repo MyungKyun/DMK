@@ -99,10 +99,15 @@ Bool Logger::Setup(const String& filePath)
 	}
 
 	auto stdoutSink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_st>();
+	auto stringFilePath = path.string() + fileName;
+	std::array<wchar_t, 64> buf;
 	
-	auto saveLogFilePath = path.string() + fileName + ".log";
+	convertCharToWide(stringFilePath.c_str(), buf.data(), 64);
+	WString	saveLogFilePath(buf.data());
+	saveLogFilePath += L".log";
 	
-	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(saveLogFilePath, LOG_FILE_SIZE, MAX_LOG_FILE_COUNT);
+	//뒤에 0 은 무시하자.. 로그 파일을 얼마나 만들지 개수인데, 아무숫자나 넣어도 무한대로 만들게 수정해두었다.
+	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(saveLogFilePath, LOG_FILE_SIZE, 0);
 
 	stdoutSink->set_level(spdlog::level::trace);
 	rotatingSink->set_level(spdlog::level::trace);
