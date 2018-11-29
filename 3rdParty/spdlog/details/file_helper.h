@@ -66,6 +66,16 @@ public:
         open(_filename, truncate);
     }
 
+	void reopen(filename_t filename, bool truncate)
+	{
+		if (filename.empty())
+		{
+			throw spdlog_ex("Failed re opening file - was not opened before");
+		}
+
+		open(filename, truncate);
+	}
+
     void flush()
     {
         std::fflush(fd_);

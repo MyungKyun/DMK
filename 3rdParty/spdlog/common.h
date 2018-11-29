@@ -88,6 +88,8 @@ using level_t = std::atomic<int>;
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_INFO
 #endif
 
+#define SPDLOG_WCHAR_FILENAMES
+
 // Log level enum
 namespace level {
 enum level_enum

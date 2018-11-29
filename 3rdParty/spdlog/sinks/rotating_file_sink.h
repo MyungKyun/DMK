@@ -44,17 +44,29 @@ public:
     // e.g. calc_filename("logs/mylog.txt, 3) => "logs/mylog.3.txt".
     static filename_t calc_filename(const filename_t &filename, std::size_t index)
     {
+		auto dateTime = LocalClock::Now().DateTimeToString();
         typename std::conditional<std::is_same<filename_t::value_type, char>::value, fmt::memory_buffer, fmt::wmemory_buffer>::type w;
-        if (index != 0u)
-        {
-            filename_t basename, ext;
-            std::tie(basename, ext) = details::file_helper::split_by_extenstion(filename);
-            fmt::format_to(w, SPDLOG_FILENAME_T("{}.{}{}"), basename, index, ext);
-        }
-        else
-        {
-            fmt::format_to(w, SPDLOG_FILENAME_T("{}"), filename);
-        }
+
+		filename_t basename, ext;
+		std::tie(basename, ext) = details::file_helper::split_by_extenstion(filename);
+		basename += (L"_" + dateTime);
+		fmt::format_to(w, SPDLOG_FILENAME_T("{}{}"), basename, ext);
+
+
+   //     if (index != 0u)
+   //     {
+   //         filename_t basename, ext;
+   //         std::tie(basename, ext) = details::file_helper::split_by_extenstion(filename);
+			////basename += (L"_" + dateTime);
+   //         fmt::format_to(w, SPDLOG_FILENAME_T("{}.{}{}"), basename, index, ext);
+   //     }
+   //     else
+   //     {
+			////filename_t basename, ext;
+			////std::tie(basename,ext) = details::file_helper::split_by_extenstion(filename);
+			////basename += (L"_" + dateTime);
+   //         fmt::format_to(w, SPDLOG_FILENAME_T("{}"), filename);
+   //     }
         return fmt::to_string(w);
     }
 
@@ -86,32 +98,40 @@ private:
     void rotate_()
     {
         using details::os::filename_to_str;
+		previous_filename_ = file_helper_.filename();
         file_helper_.close();
-        for (auto i = max_files_; i > 0; --i)
-        {
-            filename_t src = calc_filename(base_filename_, i - 1);
-            if (!details::file_helper::file_exists(src))
-            {
-                continue;
-            }
-            filename_t target = calc_filename(base_filename_, i);
+		filename_t target = calc_filename(base_filename_, 0);
 
-            if (!rename_file(src, target))
-            {
-                // if failed try again after a small delay.
-                // this is a workaround to a windows issue, where very high rotation
-                // rates can cause the rename to fail with permission denied (because of antivirus?).
-                details::os::sleep_for_millis(100);
-                if (!rename_file(src, target))
-                {
-                    file_helper_.reopen(true); // truncate the log file anyway to prevent it to grow beyond its limit!
-                    current_size_ = 0;
-                    throw spdlog_ex(
-                        "rotating_file_sink: failed renaming " + filename_to_str(src) + " to " + filename_to_str(target), errno);
-                }
-            }
-        }
-        file_helper_.reopen(true);
+		// 리네임 하지 않고 계속 파일을 만든다. 
+
+        //for (auto i = max_files_; i > 0; --i)
+        //{
+        //    filename_t src = calc_filename(base_filename_, i - 1);
+        //    if (!details::file_helper::file_exists(src))
+        //    {
+        //        continue;
+        //    }
+        //    filename_t target = calc_filename(base_filename_, i);
+
+        //    if (!rename_file(src, target))
+        //    {
+        //        // if failed try again after a small delay.
+        //        // this is a workaround to a windows issue, where very high rotation
+        //        // rates can cause the rename to fail with permission denied (because of antivirus?).
+        //        details::os::sleep_for_millis(100);
+        //        if (!rename_file(src, target))
+        //        {
+        //            file_helper_.reopen(true); // truncate the log file anyway to prevent it to grow beyond its limit!
+        //            current_size_ = 0;
+        //            throw spdlog_ex(
+        //                "rotating_file_sink: failed renaming " + filename_to_str(src) + " to " + filename_to_str(target), errno);
+        //        }
+        //    }
+        //}
+		
+       // file_helper_.reopen(true);
+
+		file_helper_.reopen(target, true);
     }
 
     // delete the target if exists, and rename the src file  to target
@@ -123,6 +143,7 @@ private:
         return details::os::rename(src_filename, target_filename) == 0;
     }
 
+	filename_t previous_filename_;
     filename_t base_filename_;
     std::size_t max_size_;
     std::size_t max_files_;

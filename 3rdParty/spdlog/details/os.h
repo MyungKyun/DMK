@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <thread>
+#include <codecvt>
 
 #ifdef _WIN32
 
