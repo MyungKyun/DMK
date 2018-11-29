@@ -11,6 +11,6 @@
 
 void convertCharToTchar(CHAR* src, TCHAR* dest, size_t destLen);
 void convertTcharToChar(TCHAR* src, CHAR* dest, size_t destLen);
-void convertCharToWide(CHAR* src, WCHAR* dest, size_t destLen);
+void convertCharToWide(const CHAR* src, WCHAR* dest, size_t destLen);
 void convertWideToChar(const WCHAR* src, CHAR* dest, size_t destLen);
 	

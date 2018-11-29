@@ -26,7 +26,7 @@ void convertTcharToChar(TCHAR* src, CHAR* dest, size_t destLen)
 }
 
 
-void convertCharToWide(CHAR* src, WCHAR* dest, size_t destLen)
+void convertCharToWide(const CHAR* src, WCHAR* dest, size_t destLen)
 {
 	if (destLen < 1)
 	{
