@@ -57,6 +57,9 @@
     <Filter Include="소스 파일\Log">
       <UniqueIdentifier>{e1b895a6-ebe5-4947-8246-9b55d2b41d20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\DataBase">
+      <UniqueIdentifier>{a829cf13-9ed2-419d-a985-4a26693cc76f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -176,6 +179,12 @@
     <ClInclude Include="LocalClock.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="DBConnection.h">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DBErrorMessage.h">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -258,6 +267,12 @@
     </ClCompile>
     <ClCompile Include="AsyncLogMsg.cpp">
       <Filter>소스 파일\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="DBConnection.cpp">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DBErrorMessage.cpp">
+      <Filter>소스 파일\DataBase</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
