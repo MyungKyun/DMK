@@ -40,19 +40,19 @@ using time_point_t = std::chrono::time_point<std::chrono::system_clock>;
 
 
 
-class Uncopyable
+class Noncopyable
 {
 private:
 
-	Uncopyable(const Uncopyable&);
-	Uncopyable(const Uncopyable&&);
-	Uncopyable& operator=(const Uncopyable&);
-	Uncopyable&& operator=(const Uncopyable&&);
+	Noncopyable(const Noncopyable&);
+	Noncopyable(const Noncopyable&&);
+	Noncopyable& operator=(const Noncopyable&);
+	Noncopyable&& operator=(const Noncopyable&&);
 
 protected:
 
-	Uncopyable() {}
-	virtual ~Uncopyable() {}
+	Noncopyable() {}
+	virtual ~Noncopyable() {}
 };
 
 

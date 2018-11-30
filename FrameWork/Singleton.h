@@ -4,7 +4,7 @@
 
 
 template <typename T>
-class Singleton : private Uncopyable
+class Singleton : private Noncopyable
 {
 
 	static std::once_flag		onceFlag_;

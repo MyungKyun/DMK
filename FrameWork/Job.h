@@ -1,6 +1,6 @@
 #pragma once
 
-class Job : private Uncopyable
+class Job : private Noncopyable
 {
 public:
 	

@@ -81,6 +81,8 @@
 #include "Job.h"
 #include "WinsockHelper.h"
 #include "IPv4.h"
+#include "DBErrorMessage.h"
+#include "DBConnection.h"
 
 #include "Iocp.h"
 #include "Overlapped.h"
