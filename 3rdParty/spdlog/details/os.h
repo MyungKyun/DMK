@@ -363,8 +363,14 @@ inline void sleep_for_millis(int milliseconds) SPDLOG_NOEXCEPT
 #define SPDLOG_FILENAME_T(s) L##s
 inline std::string filename_to_str(const filename_t &filename)
 {
-    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> c;
-    return c.to_bytes(filename);
+	std::array<char, 256> buf{ 0, };
+	convertWideToChar(filename.c_str(), buf.data(), 256);
+	std::string ret(buf.data());
+
+	return ret;
+	
+	//std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> c;
+    //return c.to_bytes(filename);
 }
 #else
 #define SPDLOG_FILENAME_T(s) s
