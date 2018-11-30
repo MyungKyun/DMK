@@ -27,6 +27,7 @@
 //	Lock_t& GetMutex();	
 //};
 
+#define		SCOPED_LOCK(lock)			if(std::lock_guard<std::recursive_mutex> lock(lock); true)
 
 #define		DECLARE_LOCK		std::shared_mutex	lock
 #define		WRITE_LOCK			std::unique_lock<std::shared_mutex> writeLock(lock)
