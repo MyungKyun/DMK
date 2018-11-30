@@ -28,7 +28,7 @@ public:
 
 		GThreadManager.AddDepartment(NetworkIoThread::GetDepartmentNumber(), &iocp_);
 		GThreadManager.Start<NetworkIoThread>(0, "NetworkIoThread", &iocp_);
-
+		
 
 		return true;
 	}
@@ -80,24 +80,22 @@ private:
 	}
 };
 
-
-
-
-
 int main(int argc, CHAR* argv[])
 {
-
+	
 	GLogger.Setup(argv[0]);
-	
-	int a = 10;
-	
+		
 	LOG_INFO(L"..........Test Server Start..........");
 	LOG_INFO(L"Start Test Logging...");
-	LOG_INFO(L"HI this is test Log message {0}", a);
-	
+
+	/////////// DB Connection Test////////////////////////
+	// 연결이 정상적으로 이루어진다. 우선 연결만 확인.
+	DBConnection con;
+	con.Connect(Singleton<DBEnv>::GetInstance().GetEnv());
+	//////////////////////////////////////////////////////
 	
 	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestPacketDispathcer);
-	
+
 	if (false == server->Setup())
 	{
 		return -1;
