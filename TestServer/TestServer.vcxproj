@@ -93,6 +93,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../ServerLib/include/; ../3rdParty/Flatbuffers/; ../Packet/Generated/; ../3rdParty/;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
