@@ -185,6 +185,15 @@
     <ClInclude Include="DBErrorMessage.h">
       <Filter>소스 파일\DataBase</Filter>
     </ClInclude>
+    <ClInclude Include="DBQuery.h">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DBRecord.h">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlTypeHelper.h">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -272,6 +281,12 @@
       <Filter>소스 파일\DataBase</Filter>
     </ClCompile>
     <ClCompile Include="DBErrorMessage.cpp">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DBQuery.cpp">
+      <Filter>소스 파일\DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DBRecord.cpp">
       <Filter>소스 파일\DataBase</Filter>
     </ClCompile>
   </ItemGroup>

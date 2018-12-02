@@ -140,6 +140,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../3rdParty/Flatbuffers/;../3rdParty/;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/await /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -172,6 +173,8 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="ClientNetWorkDepartment.h" />
     <ClInclude Include="DBConnection.h" />
     <ClInclude Include="DBErrorMessage.h" />
+    <ClInclude Include="DBQuery.h" />
+    <ClInclude Include="DBRecord.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Handler.h" />
@@ -198,6 +201,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="Session.h" />
     <ClInclude Include="SessionPool.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SqlTypeHelper.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />
@@ -214,6 +218,8 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClCompile Include="ClientNetWorkDepartment.cpp" />
     <ClCompile Include="DBConnection.cpp" />
     <ClCompile Include="DBErrorMessage.cpp" />
+    <ClCompile Include="DBQuery.cpp" />
+    <ClCompile Include="DBRecord.cpp" />
     <ClCompile Include="EXFunction.cpp" />
     <ClCompile Include="Iocp.cpp" />
     <ClCompile Include="IoProcessor.cpp" />

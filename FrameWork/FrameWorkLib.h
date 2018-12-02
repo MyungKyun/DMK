@@ -81,8 +81,12 @@
 #include "Job.h"
 #include "WinsockHelper.h"
 #include "IPv4.h"
+
+#include "SqlTypeHelper.h"
 #include "DBErrorMessage.h"
 #include "DBConnection.h"
+#include "DBQuery.h"
+#include "DBRecord.h"
 
 #include "Iocp.h"
 #include "Overlapped.h"
