@@ -17,6 +17,7 @@ public:
 
 	Bool		Connect(SQLHENV	henv);
 	Void		Disconnect();
+	SQLHSTMT	GetHstmt() const;
 };
 
 
@@ -29,7 +30,7 @@ public:
 	DBEnv() 
 	{
 		SQLRETURN ret = ::SQLAllocEnv(&henv_);
-		if (false == DBErrorMessage::CheckError(SQL_HANDLE_ENV, henv_, ret))
+		if (false == DBErrorMessage::CheckError(nullptr, SQL_HANDLE_ENV, henv_, ret))
 		{
 			LOG_CRITIC(L"SQL_HANDLE_ENV allocate falied.");
 			assert(false);
@@ -39,7 +40,7 @@ public:
 
 		Int version = 0;
 		ret = ::SQLGetEnvAttr(henv_, SQL_ATTR_ODBC_VERSION, &version, 0, 0);
-		if (false == DBErrorMessage::CheckError(SQL_HANDLE_ENV, henv_, ret))
+		if (false == DBErrorMessage::CheckError(nullptr, SQL_HANDLE_ENV, henv_, ret))
 		{
 			LOG_INFO(L"SQLSetEnv Failed. : SQL_ODBC_VERSION=>{0}", version);
 		}
