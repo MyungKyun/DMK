@@ -364,7 +364,7 @@ inline void sleep_for_millis(int milliseconds) SPDLOG_NOEXCEPT
 inline std::string filename_to_str(const filename_t &filename)
 {
 	std::array<char, 256> buf{ 0, };
-	convertWideToChar(filename.c_str(), buf.data(), 256);
+	ConvertWideToChar(filename.c_str(), buf.data(), 256);
 	std::string ret(buf.data());
 
 	return ret;
