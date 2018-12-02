@@ -29,7 +29,7 @@ IPv4::IPv4(const Char* ip, UShort port)
 IPv4::IPv4(const WChar* ip, UShort port)
 {
 	Char aip[INET_ADDRSTRLEN] = { 0, };
-	convertWideToChar(ip, aip, _countof(aip));
+	ConvertWideToChar(ip, aip, _countof(aip));
 	setAddress(aip, port);
 }
 
@@ -56,7 +56,7 @@ WString IPv4::GetIpString()	const
 	::inet_ntop(GetFamily(), const_cast<in_addr*>(&sockAddr_.sin_addr), aip, sizeof(aip));
 
 	WChar wip[INET_ADDRSTRLEN] = { 0, };
-	convertCharToWide(aip, wip, _countof(wip));
+	ConvertCharToWide(aip, wip, _countof(wip));
 	return wip;
 }
 
