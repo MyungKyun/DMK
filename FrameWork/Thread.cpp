@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
-Thread::Thread(const String& threadName, Short deptNum)
+Thread::Thread(DWORD id, const String& threadName, Short deptNum)
 	: name_(threadName)
 	, deptNumber_(deptNum)
+	, id_(id)
 {
 
 }
@@ -29,10 +30,20 @@ Void	Thread::Initialize()
 
 Bool	Thread::Setup()
 {
-	::Init_TLS(GetCurrentThreadId(), deptNumber_);
+	::Init_TLS(id_, deptNumber_);
 	::SetThreadName(LThreadId, name_.c_str());
 
 	return true;
+}
+
+String Thread::GetName()
+{
+	return name_;
+}
+
+DWORD Thread::GetId()
+{
+	return id_;
 }
 
 Void	Thread::ThreadRun(Thread* thread)
