@@ -36,6 +36,9 @@
     <ClInclude Include="..\..\Packet\Generated\playerInfo_generated.h">
       <Filter>소스 파일\Packet\Generated</Filter>
     </ClInclude>
+    <ClInclude Include="QueryTest.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
