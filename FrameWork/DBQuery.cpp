@@ -25,24 +25,12 @@ DBQuery::~DBQuery()
 		}
 		catch (std::exception& e)
 		{
-			LOG_ERROR(L"SQLFreeStmt{0}", e.what());
+			LOG_ERROR("SQLFreeStmt{0}", e.what());
 		}
 	}
 
 	queryStatement_.clear();
 	params_.clear();
-}
-
-
-
-Void		DBQuery::SetQuery(const WString& queryStatement)
-{
-	queryStatement_ = queryStatement;
-}
-
-WString		DBQuery::GetQuery()
-{
-	return queryStatement_;
 }
 
 Bool		DBQuery::Execute(DBConnection* const connection)
