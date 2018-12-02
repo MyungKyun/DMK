@@ -102,7 +102,7 @@ Bool Logger::Setup(const String& filePath)
 	auto stringFilePath = path.string() + fileName;
 	std::array<wchar_t, 64> buf;
 	
-	convertCharToWide(stringFilePath.c_str(), buf.data(), 64);
+	ConvertCharToWide(stringFilePath.c_str(), buf.data(), 64);
 	WString	saveLogFilePath(buf.data());
 	saveLogFilePath += L".log";
 	
