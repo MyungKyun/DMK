@@ -11,7 +11,7 @@ enum
 {
 	NETWORK_IO_PROCESSING_DEPT = 0,
 	PACKET_PROCESSING_DEPT = 1,
-
+	DB_PROCESSING_DEPT = 2,
 	MAX_DEPT,
 };
 
@@ -55,6 +55,11 @@ protected:
 	virtual ~Noncopyable() {}
 };
 
+template <typename T>
+constexpr auto toUtype(T enumerator) noexcept
+{
+	return static_cast<std::underlying_type_t<T>>(enumerator);
+}
 
 
 class IdGenerator : public Singleton<IdGenerator>
