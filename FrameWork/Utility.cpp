@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-void convertCharToTchar(CHAR* src, TCHAR* dest, size_t destLen)
+void ConvertCharToTchar(CHAR* src, TCHAR* dest, size_t destLen)
 {
 #ifdef UNICODE
 	if (destLen < 1)
@@ -13,7 +13,7 @@ void convertCharToTchar(CHAR* src, TCHAR* dest, size_t destLen)
 }
 
 
-void convertTcharToChar(TCHAR* src, CHAR* dest, size_t destLen)
+void ConvertTcharToChar(TCHAR* src, CHAR* dest, size_t destLen)
 {
 #ifdef UNICODE
 	if (destLen < 1)
@@ -26,7 +26,7 @@ void convertTcharToChar(TCHAR* src, CHAR* dest, size_t destLen)
 }
 
 
-void convertCharToWide(const CHAR* src, WCHAR* dest, size_t destLen)
+void ConvertCharToWide(const CHAR* src, WCHAR* dest, size_t destLen)
 {
 	if (destLen < 1)
 	{
@@ -37,7 +37,7 @@ void convertCharToWide(const CHAR* src, WCHAR* dest, size_t destLen)
 }
 
 
-void convertWideToChar(const WCHAR* src, CHAR* dest, size_t destLen)
+void ConvertWideToChar(const WCHAR* src, CHAR* dest, size_t destLen)
 {
 	if (destLen < 1)
 	{
