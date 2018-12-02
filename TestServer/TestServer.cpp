@@ -143,8 +143,8 @@ int main(int argc, CHAR* argv[])
 	// 연결이 정상적으로 이루어진다. 우선 연결만 확인.
 	DBConnection con;
 	con.Connect(Singleton<DBEnv>::GetInstance().GetEnv());
-	WString oldId(L"ultraman");
-	WString newId(L"mhkmbj232");
+	WString oldId(L"k2345");
+	WString newId(L"lkju45");
 	   
 	TestStringQuery query(oldId, newId);
 	query.Execute(&con);
