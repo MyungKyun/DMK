@@ -47,7 +47,7 @@ Bool DBErrorMessage::CheckError(DBConnection* const connection, SQLSMALLINT hand
 			}
 		}
 		
-		LOG_ERROR("State: {0}, nativeError: {1}", state, nativeError);
+		LOG_ERROR(L"State: {0}, nativeError: {1}", state, nativeError);
 	}
 
 	if (true == disconnect)
