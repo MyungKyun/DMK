@@ -68,8 +68,8 @@ struct TestGetQuery : public DBQuery
 
 	Bool GetColumnData() override
 	{
-		GetColData(SQL_C_WCHAR, outName_, _countof(outName_));
-		GetColData(SQL_C_WCHAR, outPass_, _countof(outPass_));
+		GetColData(outName_, _countof(outName_));
+		GetColData(outPass_, _countof(outPass_));
 
 		LOG_WARN(L"UserId: {}, Pass: {}", outName_, outPass_);
 
@@ -84,7 +84,7 @@ struct TestOutputParamQuery : public DBQuery
 	WChar	outval2_[30] = { 0, };
 
 	TestOutputParamQuery(Int id)
-		: DBQuery(L"spGetTestValue(?,?,?)")
+		: DBQuery(L"spGetTestValue2(?)")
 		, id_(id)
 	{
 	}
@@ -96,11 +96,19 @@ struct TestOutputParamQuery : public DBQuery
 		auto ret = BindParam(SQL_PARAM_INPUT, id_);
 		if (ret != SQL_SUCCESS)	{ return false; }
 
-		ret= BindParam(SQL_PARAM_OUTPUT, outval1_);
+	/*	ret= BindParam(SQL_PARAM_OUTPUT, outval1_);
 		if (ret != SQL_SUCCESS) { return false; }
 
 		ret = BindParam(SQL_PARAM_OUTPUT, outval2_, _countof(outval2_));
-		if (ret != SQL_SUCCESS) { return false; }
+		if (ret != SQL_SUCCESS) { return false; }*/
+
+		return true;
+	}
+
+	Bool GetColumnData() override
+	{
+		GetColData(outval1_);
+		GetColData(outval2_, _countof(outval2_));
 
 		return true;
 	}

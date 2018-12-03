@@ -150,7 +150,7 @@ int main(int argc, CHAR* argv[])
 	Int id(1);
 	{
 		TestOutputParamQuery query(id);
-		//query.PreparingParams(&con);
+		query.PreparingParams(&con);
 		query.Execute(&con);
 		query.Print();
 	}
@@ -185,6 +185,7 @@ int main(int argc, CHAR* argv[])
 	}*/
 	
 	//////////////////////////////////////////////////////
+
 	
 	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestPacketDispathcer);
 
