@@ -20,8 +20,6 @@ using Char = char;
 using ULong = ULONG;
 using Long = LONG;
 
-using UDLong = ULONGLONG;
-using DLong = LONGLONG;
 using UInt = UInt32;
 using Int = Int32;
 using Short = Int16;
