@@ -68,6 +68,7 @@ public:
 
 	Bool	Setup()
 	{
+		
 		sessionPool_ = new SessionPool();
 		
 		if (false == Server::Setup(sessionPool_))
@@ -136,18 +137,53 @@ int main(int argc, CHAR* argv[])
 	
 	GLogger.Setup(argv[0]);
 		
-	//LOG_INFO(L"..........Test Server Start..........");
+	LOG_INFO(L".........Test Server Start..........");
 	//LOG_INFO(L"Start Test Logging...");
+	
 
 	/////////// DB Connection Test////////////////////////
 	// 연결이 정상적으로 이루어진다. 우선 연결만 확인.
 	DBConnection con;
 	con.Connect(Singleton<DBEnv>::GetInstance().GetEnv());
-	WString oldId(L"k2345");
-	WString newId(L"lkju45");
-	   
-	TestStringQuery query(oldId, newId);
-	query.Execute(&con);
+	WString old(L"choi");
+	WString change(L"mmk");
+	Int id(1);
+	{
+		TestOutputParamQuery query(id);
+		//query.PreparingParams(&con);
+		query.Execute(&con);
+		query.Print();
+	}
+
+	{
+		UInt id = 2;
+		TestGetQuery query(id);
+		query.Execute(&con);
+
+	}
+
+	// test query updateAccountId
+	/*{
+		TestChangeAccountIdQuery	query(old, change);
+		query.Execute(&con);
+	}
+*/
+	// test query
+	//{
+	//	UInt64 id = 2;
+	//	TestGetQuery query(id);
+
+	//	//TestSetUserAccountInfo query(name, pass);
+	//	query.Execute(&con);
+	//}
+
+	// test query (SQLFreeStmt Test)
+	/*{
+		UInt64 id = 3;
+		TestGetQuery query(id);
+		query.Execute(&con);
+	}*/
+	
 	//////////////////////////////////////////////////////
 	
 	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestPacketDispathcer);

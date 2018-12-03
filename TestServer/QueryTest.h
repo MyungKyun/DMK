@@ -4,28 +4,110 @@
 
 struct TestQuery : public DBQuery
 {
-	Short curId_;
-	Short newId_;
+	Short     curId_;
+	Short	  newId_;
 
 	TestQuery(Short curId, Short newId)
-		: DBQuery(L"{call sp_UpdateTestVal(?,?)}")
+		: DBQuery(L"sp_UpdateTestVal(?,?)")
 		, curId_(curId)
 		, newId_(newId)
 	{
-		BindParams(&curId_, &newId_);
 	}
 };
 
-struct TestStringQuery : public DBQuery
+struct TestChangeAccountIdQuery : public DBQuery
 {
 	WString oName_;
 	WString nName_;
 
-	TestStringQuery(const WString& on, const WString& nn)
-		: DBQuery(L"{call sp_UpdateAccountId(?,?)}")
+	TestChangeAccountIdQuery(const WString& on, const WString& nn)
+		: DBQuery(L"sp_UpdateAccountId(?,?)")
 		, oName_(on)
 		, nName_(nn)
 	{
-		BindParams(oName_.c_str(), nName_.c_str());
 	}
+};
+
+struct TestSetUserAccountInfo : public DBQuery
+{
+	WString name_;
+	WString pass_;
+
+	TestSetUserAccountInfo(const WString& name, const WString& pss)
+		: DBQuery(L"SetAccount(?,?)")
+		, name_(name)
+		, pass_(pss)
+	{
+	}
+
+	
+};
+
+struct TestGetQuery : public DBQuery
+{
+	UInt64	uid;
+	
+	WChar outName_[30];
+	WChar outPass_[30];
+	TestGetQuery(UInt64 id)
+		: DBQuery(L"GetAccount(?)")
+		, uid(id)
+		, outName_(L"")
+	{
+	}
+
+	virtual Bool PreparingParams(DBConnection* const connection) override
+	{
+		__super::PreparingParams(connection);
+
+		auto ret = BindParam(SQL_PARAM_INPUT, uid);
+		if (ret != SQL_SUCCESS) { return false; }
+
+		return true;
+	}
+
+	Bool GetColumnData() override
+	{
+		GetColData(SQL_C_WCHAR, outName_, _countof(outName_));
+		GetColData(SQL_C_WCHAR, outPass_, _countof(outPass_));
+
+		LOG_WARN(L"UserId: {}, Pass: {}", outName_, outPass_);
+
+		return true;
+	}
+};
+
+struct TestOutputParamQuery : public DBQuery
+{
+	Int id_;
+	Int outval1_;
+	WChar	outval2_[30] = { 0, };
+
+	TestOutputParamQuery(Int id)
+		: DBQuery(L"spGetTestValue(?,?,?)")
+		, id_(id)
+	{
+	}
+
+	virtual Bool PreparingParams(DBConnection* const connection) final
+	{
+		__super::PreparingParams(connection);
+
+		auto ret = BindParam(SQL_PARAM_INPUT, id_);
+		if (ret != SQL_SUCCESS)	{ return false; }
+
+		ret= BindParam(SQL_PARAM_OUTPUT, outval1_);
+		if (ret != SQL_SUCCESS) { return false; }
+
+		ret = BindParam(SQL_PARAM_OUTPUT, outval2_, _countof(outval2_));
+		if (ret != SQL_SUCCESS) { return false; }
+
+		return true;
+	}
+
+	Void Print()
+	{
+		LOG_WARN(L"first Value: {}, second: {}", outval1_, outval2_);
+	}
+
 };
