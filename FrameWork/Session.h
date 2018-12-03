@@ -14,7 +14,7 @@ private:
 private:
 
 	NetworkDepartment*								serverNetDept_;
-	UDLong											sessionId_ = 0;
+	UInt64											sessionId_ = 0;
 	SOCKET											socket_ = INVALID_SOCKET;
 	Int												totalBufferSize_ = 0;
 	
@@ -40,7 +40,7 @@ public:
 	Void		Send(std::shared_ptr<SendBuffer>&& sendBuffer, Int len);
 	Bool		AcceptCompleted(const IPv4& address);
 	
-	UDLong		GetSessionId() const;
+	UInt64		GetSessionId() const;
 	Int			GetBufferSize() const;
 	HANDLE		GetHandle();
 	SOCKET		GetSocket();

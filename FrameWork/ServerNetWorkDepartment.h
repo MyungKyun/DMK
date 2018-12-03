@@ -11,7 +11,7 @@ class ServerNetWorkDepartment : public NetworkDepartment
 	Dispatcher*				packetDispathcer_;
 	UShort					totalAcceptCount_;
 
-	using ConnectedSessions = std::unordered_map<UDLong, std::shared_ptr<Session>>;
+	using ConnectedSessions = std::unordered_map<UInt64, std::shared_ptr<Session>>;
 	ConnectedSessions		  sessions_;
 
 	DECLARE_LOCK;

@@ -24,7 +24,7 @@ Void	Session::Disconnect()
 	
 }
 
-UDLong	Session::GetSessionId() const
+UInt64	Session::GetSessionId() const
 {
 	return sessionId_;
 }
