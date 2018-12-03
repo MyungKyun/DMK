@@ -2,14 +2,18 @@
 
 DBQuery::DBQuery()
 	: queryStatement_(L"")
+	, paramIdx_(1)
+	, columnIdx_(1)
 {
 
 }
 
 DBQuery::DBQuery(const WString& queryStatement)
-	: queryStatement_(queryStatement)
+	: queryStatement_(L"")
+	, paramIdx_(1)
+	, columnIdx_(1)
 {
-
+	queryStatement_ = L"{call " + queryStatement + L"}";
 }
 
 DBQuery::~DBQuery()
@@ -29,8 +33,9 @@ DBQuery::~DBQuery()
 		}
 	}
 
+	paramIdx_ = 1;
+	columnIdx_ = 1;
 	queryStatement_.clear();
-	params_.clear();
 }
 
 Bool		DBQuery::Execute(DBConnection* const connection)
@@ -39,12 +44,9 @@ Bool		DBQuery::Execute(DBConnection* const connection)
 	{
 		return false;
 	}
-
-	hstmt_ = connection->GetHstmt();
 	
-	if (false == preparingParams(connection))
+	if (false == PreparingParams(connection))
 	{
-		LOG_ERROR(L"DBQuery Execute => bindParams Failed.");
 		return false;
 	}
 
@@ -74,31 +76,127 @@ Bool		DBQuery::Execute(DBConnection* const connection)
 	return true;
 }
 
-Bool		DBQuery::preparingParams(DBConnection* const connection)
+Bool		DBQuery::PreparingParams(DBConnection* const connection)
 {
-	if (params_.size() <= 0)
+	hstmt_ = connection->GetHstmt();
+
+	if (hstmt_ == nullptr)
 	{
+		LOG_ERROR(L"SQL STMT is NULL");
 		return false;
-	}
-
-	if (hstmt_ == NULL)
-	{
-		return false;
-	}
-
-	SQLUSMALLINT index = 1;
-	for (auto& p : params_)
-	{
-		std::wcout << *(static_cast<wchar_t*>(p.paramValuePtr_)+1) << std::endl;
-
-		auto ret = ::SQLBindParameter(hstmt_, index++, p.ioType_, p.cType_, p.sType_, p.columnSize_,
-			p.decimalDigits_, p.paramValuePtr_, p.paramValueSize_, &p.strLen_or_lnd_);
-
-		if (false == DBErrorMessage::CheckError(connection, SQL_HANDLE_STMT, hstmt_, ret))
-		{
-			return false;
-		}
 	}
 
 	return true;
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, Char& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_TINYINT, SQL_TINYINT, 0, 0, &val, sizeof(Short), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, Byte& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_UTINYINT, SQL_TINYINT, 0, 0, &val, sizeof(Short), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, Short& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_SSHORT, SQL_SMALLINT, 0, 0, &val, sizeof(Short), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, UShort& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_USHORT, SQL_SMALLINT, 0, 0, &val, sizeof(UShort), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, Int& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_SLONG, SQL_INTEGER, 0, 0, &val, sizeof(Int), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, UInt& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_ULONG, SQL_INTEGER, 0, 0, &val, sizeof(UInt), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, Int64& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_SBIGINT, SQL_BIGINT, 0, 0, &val, sizeof(Int64), nullptr);
+}
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, UInt64& val)
+{
+	return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_UBIGINT, SQL_BIGINT, 0, 0, &val, sizeof(UInt64), nullptr);
+}
+
+
+SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, WChar* val, Int len)
+{
+	SQLLEN strlen_or_lnd = 0;
+	if (ioType == SQL_PARAM_INPUT)
+	{
+		strlen_or_lnd = SQL_NTSL;
+		return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_WCHAR, SQL_WVARCHAR, 0, 0, val, 0, &strlen_or_lnd);
+	}
+	else
+	{
+		return ::SQLBindParameter(hstmt_, paramIdx_++, ioType, SQL_C_WCHAR, SQL_WVARCHAR, 0, 0, val, len, nullptr);
+	}
+}
+
+//////////////////////////////////////
+// GetColumnData
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Char& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Char), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Byte& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Byte), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Short& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Short), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, UShort& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(UShort), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Int& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Int), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, UInt& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(UInt), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Int64& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Int64), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, UInt64& out)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(UInt64), &strlen_or_lnd);
+}
+
+SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, WChar* out, Int strSize)
+{
+	SQLLEN strlen_or_lnd;
+	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)out, strSize, &strlen_or_lnd);
 }
