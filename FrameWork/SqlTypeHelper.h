@@ -8,6 +8,25 @@ namespace SqlTypeHelper
 	using TypeInfo = std::pair<SQLSMALLINT, SQLSMALLINT>;
 
 	template <typename T>
+	std::enable_if_t<(std::is_reference_v<T>) && (std::is_same_v<Short, std::remove_reference_t<T>>), TypeInfo> GetType()
+	{
+		return TypeInfo::pair(SQLSMALLINT(SQL_SMALLINT), SQLSMALLINT(SQL_C_SLONG));
+	}
+
+	template <typename T>
+	std::enable_if_t<(std::is_reference_v<T>) && (std::is_same_v<UInt64, std::remove_reference_t<T>>), TypeInfo> GetType()
+	{
+		return TypeInfo::pair(SQLSMALLINT(SQL_BIGINT), SQLSMALLINT(SQL_C_UBIGINT));
+	}
+
+
+	template<typename T>
+	std::enable_if_t<(std::is_reference_v<T>) && (std::is_same_v<Int, std::remove_reference_t<T>>), TypeInfo> GetType()
+	{
+		return TypeInfo::pair(SQLSMALLINT(SQL_INTEGER), SQLSMALLINT(SQL_C_SLONG));
+	}
+	
+	template <typename T>
 	std::enable_if_t< (std::is_pointer_v<T>) && (std::is_same_v<WChar, std::remove_const_t<std::remove_pointer_t<T>>>), TypeInfo> GetType()
 	{
 		return TypeInfo::pair(SQLSMALLINT(SQL_WVARCHAR), SQLSMALLINT(SQL_C_WCHAR));
