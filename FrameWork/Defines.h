@@ -64,11 +64,11 @@ constexpr auto toUtype(T enumerator) noexcept
 
 class IdGenerator : public Singleton<IdGenerator>
 {
-	std::atomic<UDLong>		sessionIdGen_{ 0 };
+	std::atomic<UInt64>		sessionIdGen_{ 0 };
 
 public:
 
-	UDLong				SessionIdGenerate()
+	UInt64				SessionIdGenerate()
 	{
 		return sessionIdGen_.fetch_add(1);
 	}
