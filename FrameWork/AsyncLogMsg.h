@@ -14,7 +14,7 @@ class AsyncLogMsg
 	DWORD									threadId_;
 	std::chrono::system_clock::time_point	time_;
 	String									text_;
-	UDLong									msgId_;
+	UInt64									msgId_;
 	AsyncMsgType							msgType_;
 	std::string								fileName_;
 	UInt									fileLine_;
