@@ -56,13 +56,21 @@ Bool		DBQuery::Execute(DBConnection* const connection)
 		return false;
 	}
 	
-	// fetchColumnData
-	//  getColumnData()
+	SQLSMALLINT count = 0;
+	ret = ::SQLNumResultCols(hstmt_, &count);
+	if (ret != SQL_SUCCESS)
+	{
+		return false;
+	}
 
-	// hstmt_ Á¤¸®
-	// resetStmt;
+	ret = ::SQLFetch(hstmt_);
 
-
+	if (false == GetColumnData())
+	{
+		LOG_ERROR(L"GetColumnData() Failed. Query:{}", queryStatement_.c_str());
+		return false;
+	}
+	
 	return true;
 }
 

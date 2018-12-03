@@ -34,8 +34,12 @@ class DBQuery
 	using ParamDatas = std::vector<ParamData>;
 	
 	WString			queryStatement_;
-	SQLHSTMT		hstmt_;
 	ParamDatas		params_;
+
+protected:
+
+	SQLHSTMT		hstmt_;
+	virtual			Bool	GetColumnData() { return true; }
 
 public:
 
@@ -54,17 +58,46 @@ public:
 	{
 	}
 
+	template<typename Arg, typename... Args>
+	Void BindOutParams(Arg&& arg, Args&&... args)
+	{
+		bindOut(std::forward<Arg>(arg));
+		BindOutParams(std::forward<Args>(args)...);
+	}
+
+	Void BindOutParams()
+	{
+	}
+
 	Bool		Execute( DBConnection* const connection);
 
 private:
 
 	template<typename T>
-	Void bind(T*&& value)
+	Void bindOut(T&& value)
+	{
+		auto[sqltype, ctype] = SqlTypeHelper::GetType<T>();
+		ParamData param(sqltype, ctype, SQL_PARAM_OUTPUT);
+		param.paramValuePtr_ = &value;
+		param.paramValueSize_ = sizeof(T);
+	}
+
+	template<>
+	Void bindOut(wchar_t*&& val)
+	{
+		ParamData param(SQL_WVARCHAR, SQL_C_WCHAR, SQL_PARAM_INPUT);
+		param.paramValuePtr_ = const_cast<wchar_t*>(val);
+		param.paramValueSize_ = 0;
+		param.strLen_or_lnd_ = SQL_NTSL;
+	}
+
+	template<typename T>
+	Void bind(T&& value)
 	{
 		auto[sqltype, ctype] = SqlTypeHelper::GetType<T>();
 		ParamData param(sqltype, ctype, SQL_PARAM_INPUT);
-		param.paramValuePtr_ = value;
-		param.paramValueSize_ = sizeof(*value);
+		param.paramValuePtr_ = &value;
+		param.paramValueSize_ = sizeof(T);
 
 		params_.emplace_back(param);
 	}
