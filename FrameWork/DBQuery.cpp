@@ -147,56 +147,74 @@ SQLRETURN DBQuery::BindParam(SQLSMALLINT ioType, WChar* val, Int len)
 //////////////////////////////////////
 // GetColumnData
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Char& out)
+SQLRETURN DBQuery::GetColData(Char& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Char), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(Char), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Byte& out)
+SQLRETURN DBQuery::GetColData(Byte& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Byte), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(Byte), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Short& out)
+SQLRETURN DBQuery::GetColData(Short& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Short), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(Short), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, UShort& out)
+SQLRETURN DBQuery::GetColData(UShort& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(UShort), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(UShort), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Int& out)
+SQLRETURN DBQuery::GetColData(Int& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+	
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Int), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(Int), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, UInt& out)
+SQLRETURN DBQuery::GetColData(UInt& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(UInt), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(UInt), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, Int64& out)
+SQLRETURN DBQuery::GetColData(Int64& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(Int64), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(Int64), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, UInt64& out)
+SQLRETURN DBQuery::GetColData(UInt64& out)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)&out, sizeof(UInt64), &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)&out, sizeof(UInt64), &strlen_or_lnd);
 }
 
-SQLRETURN DBQuery::GetColData(SQLSMALLINT cType, WChar* out, Int strSize)
+SQLRETURN DBQuery::GetColData(WChar* out, Int strSize)
 {
+	auto[sqltype, ctype] = SqlTypeHelper::GetType<decltype(out)>();
+
 	SQLLEN strlen_or_lnd;
-	return ::SQLGetData(hstmt_, columnIdx_++, cType, (SQLPOINTER)out, strSize, &strlen_or_lnd);
+	return ::SQLGetData(hstmt_, columnIdx_++, ctype, (SQLPOINTER)out, strSize, &strlen_or_lnd);
 }

@@ -35,15 +35,15 @@ public:
 	///////////////////////////////////////////////////////////////////
 
 	
-	SQLRETURN GetColData(SQLSMALLINT cType, Char& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, Byte& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, Short& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, UShort& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, Int& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, UInt& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, Int64& out);
-	SQLRETURN GetColData(SQLSMALLINT cType, UInt64& out);
+	SQLRETURN GetColData(Char& out);
+	SQLRETURN GetColData(Byte& out);
+	SQLRETURN GetColData(Short& out);
+	SQLRETURN GetColData(UShort& out);
+	SQLRETURN GetColData(Int& out);
+	SQLRETURN GetColData(UInt& out);
+	SQLRETURN GetColData(Int64& out);
+	SQLRETURN GetColData(UInt64& out);
 
-	SQLRETURN GetColData(SQLSMALLINT cType, WChar* out, Int strSize);
+	SQLRETURN GetColData(WChar* out, Int strSize);
 	
 };
