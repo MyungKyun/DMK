@@ -7,6 +7,7 @@ enum IO_TYPE
 	IO_RECV,
 	IO_SEND,
 	IO_ACCEPT,
+	IO_CONNECT,
 };
 
 class IoProcessor;
@@ -47,3 +48,8 @@ struct Overlapped_Ex_Send : public Overlapped_Ex
 	Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, Byte* buf, Int len, Int numberOfSend, std::shared_ptr<Session> sessionPtr);
 };
 
+struct Overlapped_Ex_Connect : public Overlapped_Ex
+{
+	IPv4	address_;
+	Overlapped_Ex_Connect(IoProcessor* processor, SOCKET socket, IPv4 address, std::shared_ptr<Session> sessionPtr);
+};

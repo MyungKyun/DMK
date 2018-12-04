@@ -14,3 +14,18 @@ void ConvertTcharToChar(TCHAR* src, CHAR* dest, size_t destLen);
 void ConvertCharToWide(const CHAR* src, WCHAR* dest, size_t destLen);
 void ConvertWideToChar(const WCHAR* src, CHAR* dest, size_t destLen);
 	
+
+
+class IdGenerator : public Singleton<IdGenerator>
+{
+	std::atomic<UInt64>		sessionIdGen_{ 0 };
+
+public:
+
+	UInt64				SessionIdGenerate()
+	{
+		return sessionIdGen_.fetch_add(1);
+	}
+};
+
+#define		GIDGen		Singleton<IdGenerator>::GetInstance()

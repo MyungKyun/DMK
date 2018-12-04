@@ -1,12 +1,11 @@
 #include "stdafx.h"
 
-ServerNetWorkDepartment::ServerNetWorkDepartment(Iocp* iocp, Dispatcher* dispatcher, SessionPool* sessionPool, const IPv4& address, UShort totalAcceptCount)
+ServerNetWorkDepartment::ServerNetWorkDepartment(Iocp* iocp, SessionPool* sessionPool, const IPv4& address, UShort totalAcceptCount)
 	: iocp_(iocp ? iocp : nullptr)
 	, sessionPool_(sessionPool ? sessionPool : nullptr)
 	, totalAcceptCount_(totalAcceptCount) // юс╫ц
 	, address_(address)
 	, acceptProcessor_(this)
-	, packetDispathcer_(dispatcher)
 {
 	
 	
@@ -77,5 +76,5 @@ Void	ServerNetWorkDepartment::RegisterToIocp(HANDLE handle)
 
 Bool	ServerNetWorkDepartment::Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, const Byte* buf, Int transferredBytes)
 {
-	return packetDispathcer_->Dispatch(session, header, buf, transferredBytes);
+	return dispathcer_->Dispatch(session, header, buf, transferredBytes);
 }

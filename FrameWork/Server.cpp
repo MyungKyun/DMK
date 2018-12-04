@@ -1,8 +1,7 @@
 #include "stdafx.h"
 
-Server::Server(Dispatcher* packetDispatcher)
-	: testDispatcher_(packetDispatcher)
-	
+Server::Server(const WString& name)
+	: name_(name)
 {
 	
 }
@@ -12,14 +11,9 @@ Server::~Server()
 	ShutDown();
 }
 
-Bool Server::Setup(SessionPool* sessionPool)
+Bool Server::Setup()
 {
 	if (false == startup())
-	{
-		return false;
-	}
-
-	if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, testDispatcher_, sessionPool, IPv4("127.0.0.1", 20000), Count::TOTAL_ACCEPT_COUNT))
 	{
 		return false;
 	}

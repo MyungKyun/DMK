@@ -171,6 +171,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="AcceptProcessor.h" />
     <ClInclude Include="AsyncLogMsg.h" />
     <ClInclude Include="ClientNetWorkDepartment.h" />
+    <ClInclude Include="ConnectProcessor.h" />
     <ClInclude Include="DBConnection.h" />
     <ClInclude Include="DBErrorMessage.h" />
     <ClInclude Include="DBQuery.h" />
@@ -216,6 +217,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClCompile Include="AcceptProcessor.cpp" />
     <ClCompile Include="AsyncLogMsg.cpp" />
     <ClCompile Include="ClientNetWorkDepartment.cpp" />
+    <ClCompile Include="ConnectProcessor.cpp" />
     <ClCompile Include="DBConnection.cpp" />
     <ClCompile Include="DBErrorMessage.cpp" />
     <ClCompile Include="DBQuery.cpp" />

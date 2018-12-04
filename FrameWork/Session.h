@@ -8,12 +8,11 @@ class Session :	public std::enable_shared_from_this<Session>
 private:
 	
 	Session() = delete;
-	Session(NetworkDepartment* serverNetDept, Int ioTotalBufsize);
-
+	Session(NetworkDepartment* netDept, Int ioTotalBufsize);
 
 private:
 
-	NetworkDepartment*								serverNetDept_;
+	NetworkDepartment*								netDept_;
 	UInt64											sessionId_ = 0;
 	SOCKET											socket_ = INVALID_SOCKET;
 	Int												totalBufferSize_ = 0;
@@ -39,13 +38,14 @@ public:
 	Void		ReRegisterToIocp();
 	Void		Send(std::shared_ptr<SendBuffer>&& sendBuffer, Int len);
 	Bool		AcceptCompleted(const IPv4& address);
+	Bool		ConnectCompleted(const IPv4& address);
 	
 	UInt64		GetSessionId() const;
 	Int			GetBufferSize() const;
 	HANDLE		GetHandle();
 	SOCKET		GetSocket();
 	Bool		IsConnected();
-	
+	Void		CloseSocket();
 	NetworkDepartment*		GetNetworkDept();
 
 

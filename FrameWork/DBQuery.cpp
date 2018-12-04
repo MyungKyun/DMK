@@ -9,8 +9,7 @@ DBQuery::DBQuery()
 }
 
 DBQuery::DBQuery(const WString& queryStatement)
-	: queryStatement_(L"")
-	, paramIdx_(1)
+	:  paramIdx_(1)
 	, columnIdx_(1)
 {
 	queryStatement_ = L"{call " + queryStatement + L"}";

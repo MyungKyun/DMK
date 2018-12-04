@@ -62,20 +62,6 @@ constexpr auto toUtype(T enumerator) noexcept
 }
 
 
-class IdGenerator : public Singleton<IdGenerator>
-{
-	std::atomic<UInt64>		sessionIdGen_{ 0 };
-
-public:
-
-	UInt64				SessionIdGenerate()
-	{
-		return sessionIdGen_.fetch_add(1);
-	}
-};
-
-#define		GIDGen		Singleton<IdGenerator>::GetInstance()
-
 
 template <typename ObjectType, typename... FnArgs, typename... TupArgs>
 decltype(auto) ExecuteMemFunc(std::shared_ptr<ObjectType> object, Void(ObjectType::*memFunc)(FnArgs...), const std::tuple<TupArgs...>& targs)

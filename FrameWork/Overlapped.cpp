@@ -43,3 +43,10 @@ Overlapped_Ex_Send::Overlapped_Ex_Send(IoProcessor* processor, SOCKET socket, By
 {
 
 }
+
+Overlapped_Ex_Connect::Overlapped_Ex_Connect(IoProcessor* processor, SOCKET socket, IPv4 address, std::shared_ptr<Session> sessionPtr)
+	: Overlapped_Ex(IO_CONNECT, processor, sessionPtr, socket, nullptr, 0)
+	, address_(address)
+{
+
+}

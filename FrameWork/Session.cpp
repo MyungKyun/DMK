@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Session.h"
 
-Session::Session(NetworkDepartment* serverNetDept, Int bufSize)
+Session::Session(NetworkDepartment* netDept, Int bufSize)
 	: totalBufferSize_(bufSize)
 	, sessionId_(GIDGen.SessionIdGenerate())
-	, serverNetDept_(serverNetDept ? serverNetDept : nullptr)
+	, netDept_(netDept ? netDept : nullptr)
 	
 {
 	socket_ = WinsockHelper::CreateTcpSocket();
@@ -40,14 +40,14 @@ Void	Session::ReRegisterToIocp()
 
 	socket_ = WinsockHelper::CreateTcpSocket();
 
-	serverNetDept_->RegisterToIocp(reinterpret_cast<HANDLE>(socket_));
+	netDept_->RegisterToIocp(reinterpret_cast<HANDLE>(socket_));
 
-	serverNetDept_->SessionWasDismissed(GetThisPtr());
+	netDept_->SessionWasDismissed(GetThisPtr());
 }
 
 NetworkDepartment*		Session::GetNetworkDept()
 {
-	return serverNetDept_;
+	return netDept_;
 }
 
 Void	Session::Send(std::shared_ptr<SendBuffer>&& sendBuffer, Int len)
@@ -79,6 +79,24 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 	}
 	
 	return true;
+}
+
+Bool	Session::ConnectCompleted(const IPv4& address)
+{
+	completedConnect_.store(true);
+	peerAddress_ = address;
+	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+Void		Session::CloseSocket()
+{
+	::closesocket(socket_);
+	socket_ = INVALID_SOCKET;
 }
 
 std::shared_ptr<Session>	Session::GetThisPtr()

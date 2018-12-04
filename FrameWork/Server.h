@@ -10,16 +10,16 @@ class Server
 
 protected:
 
+	WString											name_;
 	Iocp											iocp_;
-	Dispatcher*										testDispatcher_;
 	NetworkDepartmentManager						netDeptManger_;
 		
 public:
 
-	Server(Dispatcher* packetDispatcher);
+	Server(const WString& name);
 	virtual ~Server();
 
-	Bool					Setup(SessionPool* sessionPool);
+	Bool					Setup();
 	virtual Void			Run();
 	virtual Void			ShutDown();
 

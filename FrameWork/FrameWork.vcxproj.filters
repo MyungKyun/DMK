@@ -194,6 +194,9 @@
     <ClInclude Include="SqlTypeHelper.h">
       <Filter>소스 파일\DataBase</Filter>
     </ClInclude>
+    <ClInclude Include="ConnectProcessor.h">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -288,6 +291,9 @@
     </ClCompile>
     <ClCompile Include="DBRecord.cpp">
       <Filter>소스 파일\DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectProcessor.cpp">
+      <Filter>소스 파일\Network\IoEventProcessor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -70,9 +70,9 @@
 #endif
 
 
-#include "Singleton.h"
 #include "Type.h"
 #include "Defines.h"
+#include "Singleton.h"
 #include "Utility.h"
 #include "LocalClock.h"
 #include "AsyncLogMsg.h"
@@ -106,6 +106,7 @@
 #include "SendBufferQueue.h"
 
 #include "IoProcessor.h"
+#include "ConnectProcessor.h"
 #include "AcceptProcessor.h"
 #include "SendProcessor.h"
 #include "ReceiveProcessor.h"
