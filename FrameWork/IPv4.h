@@ -19,7 +19,7 @@ public:
 
 	WString					GetIpString()		const;
 	UShort					GetPort()			const;
-
+	String					GetIpChar()			const;
 private:
 
 	Void	setAddress(const Char* ip, UShort port);

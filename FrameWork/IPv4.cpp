@@ -49,6 +49,13 @@ Int	IPv4::GetSockAddrLen()	const
 	return sizeof(sockAddr_);
 }
 
+String	IPv4::GetIpChar()	const
+{
+	Char aip[INET_ADDRSTRLEN] = { 0, };
+	::inet_ntop(GetFamily(), const_cast<in_addr*>(&sockAddr_.sin_addr), aip, sizeof(aip));
+
+	return aip;
+}
 
 WString IPv4::GetIpString()	const
 {
