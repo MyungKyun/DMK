@@ -58,23 +58,35 @@ class TestServer : public Server
 {
 
 	SessionPool*			sessionPool_;
+	SessionPool*			testConnectSessionPool_;
 
 public:
-	TestServer(Dispatcher* packetDispatcher)
-		: Server(packetDispatcher)
+	TestServer()
+		: Server(L"TestServer")
 	{
-
 	}
 
 	Bool	Setup()
 	{
 		
 		sessionPool_ = new SessionPool();
-		
-		if (false == Server::Setup(sessionPool_))
+		testConnectSessionPool_ = new SessionPool();
+		if (false == __super::Setup())
 		{
 			return false;
 		}
+
+		int acceptCount = 100; // 데이터로드해서 만들자
+		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, sessionPool_, IPv4("127.0.0.1", 20000), acceptCount))
+		{
+			return false;
+		}
+
+		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, testConnectSessionPool_, IPv4("127.0.0.1", 19000), 10))
+		{
+			return false;
+		}
+
 
 		GThreadManager.AddDepartment(NETWORK_IO_PROCESSING_DEPT, &iocp_);
 		GThreadManager.Start<NetworkIoThread>(0, "NetworkIoThread");
@@ -187,7 +199,7 @@ int main(int argc, CHAR* argv[])
 	//////////////////////////////////////////////////////
 
 	
-	std::shared_ptr<TestServer> server = std::make_shared<TestServer>(new TestPacketDispathcer);
+	std::shared_ptr<TestServer> server = std::make_shared<TestServer>();
 
 	if (false == server->Setup())
 	{
