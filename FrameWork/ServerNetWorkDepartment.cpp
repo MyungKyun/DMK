@@ -44,7 +44,7 @@ Bool	ServerNetWorkDepartment::Setup()
 	return true;
 }
 
-Void	ServerNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
+Bool	ServerNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
 {
 	{
 		READ_LOCK;
@@ -52,7 +52,7 @@ Void	ServerNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
 		if (found != sessions_.end())
 		{
 			//이미 존재하는 세션이다.
-			return;
+			return false;
 		}
 	}
 
@@ -60,6 +60,8 @@ Void	ServerNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
 		WRITE_LOCK;
 		sessions_.emplace(session->GetSessionId(), std::move(session));
 	}
+
+	return true;
 }
 
 Void	ServerNetWorkDepartment::SessionWasDismissed(std::shared_ptr<Session>& sessionPtr)

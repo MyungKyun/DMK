@@ -5,6 +5,7 @@ ClientNetWorkDepartment::ClientNetWorkDepartment(Iocp* iocp, SessionPool* sessio
 	, sessionPool_(sessionPool ? sessionPool : nullptr )
 	, address_(address)
 	, connectCount_(connectCount)
+	, connectProcessor_(this)
 {
 
 }
@@ -63,19 +64,24 @@ Void		ClientNetWorkDepartment::RegisterToIocp(HANDLE handle)
 }
 
 
-Void		ClientNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
+Bool		ClientNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
 {
-	if (nullptr == session)
 	{
-		return;
+		READ_LOCK;
+		auto found = sessions_.find(session->GetSessionId());
+		if (found != sessions_.end())
+		{
+			//이미 존재하는 세션이다.
+			return false;
+		}
 	}
 
-	if (false == session->IsConnected())
 	{
-		return;
+		WRITE_LOCK;
+		sessions_.emplace(session->GetSessionId(), std::move(session));
 	}
-
-	sessions_.emplace(session->GetSessionId(), session);
+	
+	return true;
 }
 
 Void		ClientNetWorkDepartment::SessionWasDismissed(std::shared_ptr<Session>& sessionPtr)

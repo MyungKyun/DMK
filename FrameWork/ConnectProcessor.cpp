@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
-ConnectProcessor::ConnectProcessor()
+ConnectProcessor::ConnectProcessor(NetworkDepartment* networkDept)
+	: networkDept_(networkDept)
 {
 
 }
@@ -26,6 +27,10 @@ Void ConnectProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int num
 	{
 		LOG_ERROR(L"ConnectCompleted Failed.");
 		return;
+	}
+	else
+	{
+		networkDept_->AddSession(sessionPtr);
 	}
 	
 	delete overlappedConnect;

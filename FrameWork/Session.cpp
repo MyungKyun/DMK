@@ -60,6 +60,11 @@ Void	Session::Send(std::shared_ptr<SendBuffer>&& sendBuffer, Int len)
 	sendProcessor_.PostSend(shared_from_this(), std::move(sendBuffer), len);
 }
 
+IPv4	Session::GetPeer() const
+{
+	return peerAddress_;
+}
+
 Bool	Session::AcceptCompleted(const IPv4& address)
 {
 	completedConnect_.exchange(true);
@@ -72,7 +77,7 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 	}
 
 	//WinsockHelper::NagleOff(socket_);
-
+	LOG_DEBUG(L"Accept complete address: {}", peerAddress_.GetIpString().c_str()); // 테스트후 삭제.
 	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
 	{
 		return false;
@@ -85,11 +90,18 @@ Bool	Session::ConnectCompleted(const IPv4& address)
 {
 	completedConnect_.store(true);
 	peerAddress_ = address;
+
+	if (false == netDept_->AddSession(shared_from_this()))
+	{
+		return false;
+	}
+
 	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
 	{
 		return false;
 	}
 
+	LOG_INFO("Connect Complete  address:{0}", address.GetIpChar().c_str()); // 테스트후 삭제.
 	return true;
 }
 

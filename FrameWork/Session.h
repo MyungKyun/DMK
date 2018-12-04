@@ -47,7 +47,7 @@ public:
 	Bool		IsConnected();
 	Void		CloseSocket();
 	NetworkDepartment*		GetNetworkDept();
-
+	IPv4					GetPeer() const;
 
 	std::shared_ptr<Session>	GetThisPtr();
 };

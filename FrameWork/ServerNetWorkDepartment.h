@@ -23,7 +23,7 @@ public:
 
 	Bool			Setup() override;
 	Void			RegisterToIocp(HANDLE handle) final;
-	Void			AddSession(std::shared_ptr<Session>& session) final;
+	Bool			AddSession(std::shared_ptr<Session>& session) final;
 	Void			SessionWasDismissed(std::shared_ptr<Session>& sessionPtr) final; // 세션을 풀에 반환하고 다시 억셉트 대기 
 	Bool			Dispatch(std::shared_ptr<Session> session, const PacketHeader* header, const Byte* buf, Int transferredBytes) override;
 };
