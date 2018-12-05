@@ -2,12 +2,6 @@
 
 class Server 
 {
-	enum Count 
-	{
-		//юс╫ц
-		TOTAL_ACCEPT_COUNT	= 100,
-	};
-
 protected:
 
 	WString											name_;
