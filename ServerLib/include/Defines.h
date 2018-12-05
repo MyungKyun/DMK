@@ -11,7 +11,7 @@ enum
 {
 	NETWORK_IO_PROCESSING_DEPT = 0,
 	PACKET_PROCESSING_DEPT = 1,
-
+	DB_PROCESSING_DEPT = 2,
 	MAX_DEPT,
 };
 
@@ -40,36 +40,27 @@ using time_point_t = std::chrono::time_point<std::chrono::system_clock>;
 
 
 
-class Uncopyable
+class Noncopyable
 {
 private:
 
-	Uncopyable(const Uncopyable&);
-	Uncopyable(const Uncopyable&&);
-	Uncopyable& operator=(const Uncopyable&);
-	Uncopyable&& operator=(const Uncopyable&&);
+	Noncopyable(const Noncopyable&);
+	Noncopyable(const Noncopyable&&);
+	Noncopyable& operator=(const Noncopyable&);
+	Noncopyable&& operator=(const Noncopyable&&);
 
 protected:
 
-	Uncopyable() {}
-	virtual ~Uncopyable() {}
+	Noncopyable() {}
+	virtual ~Noncopyable() {}
 };
 
-
-
-class IdGenerator : public Singleton<IdGenerator>
+template <typename T>
+constexpr auto toUtype(T enumerator) noexcept
 {
-	std::atomic<UDLong>		sessionIdGen_{ 0 };
+	return static_cast<std::underlying_type_t<T>>(enumerator);
+}
 
-public:
-
-	UDLong				SessionIdGenerate()
-	{
-		return sessionIdGen_.fetch_add(1);
-	}
-};
-
-#define		GIDGen		Singleton<IdGenerator>::GetInstance()
 
 
 template <typename ObjectType, typename... FnArgs, typename... TupArgs>

@@ -11,8 +11,8 @@ public:
 		return NETWORK_IO_PROCESSING_DEPT;
 	}
 
-	NetworkIoThread(const String& name, Iocp* iocp)
-		: Thread(name, NETWORK_IO_PROCESSING_DEPT)
+	NetworkIoThread(DWORD id, Iocp* iocp, const String& name)
+		: Thread(id, name, NETWORK_IO_PROCESSING_DEPT)
 		, iocp_(iocp ? iocp : nullptr)
 	{
 

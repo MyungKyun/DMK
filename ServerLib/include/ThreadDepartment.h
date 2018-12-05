@@ -7,6 +7,7 @@ class ThreadDepartment
 	Iocp*									iocp_;
 	std::vector<std::unique_ptr<Thread>>	threads_;
 	std::atomic_bool						isStop_;
+	std::atomic_int16_t						threadCount_;
 
 public:
 
@@ -26,7 +27,8 @@ public:
 
 		for (Int i = 0; i < threadCount; ++i)
 		{
-			threads_.push_back(std::make_unique<ThreadType>(args...));
+			DWORD id = threadCount_.fetch_add(1);
+			threads_.push_back(std::make_unique<ThreadType>(id, iocp_, args...));
 		}
 
 		for (auto& thread : threads_)

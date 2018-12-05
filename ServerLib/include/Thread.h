@@ -20,7 +20,7 @@ namespace
 		THREADNAME_INFO info;
 		info.dwType = 0x1000;
 		info.szName = name;
-		info.dwThreadID = threadId;
+		info.dwThreadID = static_cast<DWORD>(-1);
 		info.dwFlags = 0;
 
 		__try 
@@ -41,14 +41,14 @@ class Thread
 	std::thread			thread_;
 	String				name_;
 	Short				deptNumber_;
-
+	DWORD				id_;
 protected:
 
 	Bool				isStop_ = false;
 
 public:
 	
-	Thread(const String& threadName, Short deptNum);
+	Thread(DWORD id, const String& threadName, Short deptNum);
 	virtual			~Thread();
 
 
@@ -58,6 +58,8 @@ public:
 	virtual Void	ShutDown() = 0;
 
 	Short			GetDepartmentNumber();
+	String			GetName();
+	DWORD			GetId();
 private:
 
 	static Void ThreadRun(Thread* thread);
