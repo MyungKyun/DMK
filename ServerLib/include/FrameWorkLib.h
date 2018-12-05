@@ -79,7 +79,7 @@
 #include "LocalClock.h"
 #include "AsyncLogMsg.h"
 #include "Log.h"
-#include "Packet.h"
+#include "PacketHeader.h"
 #include "Job.h"
 #include "WinsockHelper.h"
 #include "IPv4.h"

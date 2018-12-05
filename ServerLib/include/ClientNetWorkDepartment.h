@@ -1,5 +1,5 @@
 #pragma once
-
+class Session;
 class ClientNetWorkDepartment : public NetworkDepartment
 {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-
+class Session;
 class ServerNetWorkDepartment : public NetworkDepartment
 {
 	Iocp*					iocp_;
