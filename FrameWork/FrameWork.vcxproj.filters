@@ -60,6 +60,12 @@
     <Filter Include="소스 파일\DataBase">
       <UniqueIdentifier>{a829cf13-9ed2-419d-a985-4a26693cc76f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Parser">
+      <UniqueIdentifier>{90540dad-b226-495a-9c5e-34539bbd1d47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Parser\Json">
+      <UniqueIdentifier>{b7906712-0789-47bf-9e6d-159acfda4007}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -197,6 +203,9 @@
     <ClInclude Include="ConnectProcessor.h">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
     </ClInclude>
+    <ClInclude Include="Json.h">
+      <Filter>소스 파일\Parser\Json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -294,6 +303,9 @@
     </ClCompile>
     <ClCompile Include="ConnectProcessor.cpp">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="Json.cpp">
+      <Filter>소스 파일\Parser\Json</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -180,6 +180,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Handler.h" />
     <ClInclude Include="Job.h" />
+    <ClInclude Include="Json.h" />
     <ClInclude Include="LocalClock.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="NetworkDepartment.h" />
@@ -226,6 +227,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClCompile Include="Iocp.cpp" />
     <ClCompile Include="IoProcessor.cpp" />
     <ClCompile Include="IPv4.cpp" />
+    <ClCompile Include="Json.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="Log.cpp" />

@@ -39,6 +39,7 @@
 
 #include <string>
 #include <tchar.h>
+#include <limits>
 
 #include <ctime>
 #include <random>
@@ -74,6 +75,7 @@
 #include "Defines.h"
 #include "Singleton.h"
 #include "Utility.h"
+#include "Json.h"
 #include "LocalClock.h"
 #include "AsyncLogMsg.h"
 #include "Log.h"
