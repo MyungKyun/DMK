@@ -1,4 +1,5 @@
 #pragma once
+class Session;
 
 using PacketHandlerFunction = Bool(*)(std::shared_ptr<Session> , const PacketHeader* , const Byte* , Int );
 

@@ -137,9 +137,6 @@
     <ClInclude Include="Overlapped.h">
       <Filter>소스 파일\Overlapped</Filter>
     </ClInclude>
-    <ClInclude Include="Packet.h">
-      <Filter>소스 파일\Packet</Filter>
-    </ClInclude>
     <ClInclude Include="SendProcessor.h">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
     </ClInclude>
@@ -205,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Json.h">
       <Filter>소스 파일\Parser\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHeader.h">
+      <Filter>소스 파일\Packet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

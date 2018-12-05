@@ -194,7 +194,7 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="Lock.h" />
     <ClInclude Include="NetworkIoThread.h" />
     <ClInclude Include="Overlapped.h" />
-    <ClInclude Include="Packet.h" />
+    <ClInclude Include="PacketHeader.h" />
     <ClInclude Include="ReceiveProcessor.h" />
     <ClInclude Include="SendBufferQueue.h" />
     <ClInclude Include="SendProcessor.h" />

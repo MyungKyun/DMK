@@ -1,5 +1,5 @@
 #pragma once
-
+class Session;
 
 enum IO_TYPE
 {
