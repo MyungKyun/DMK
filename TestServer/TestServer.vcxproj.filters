@@ -19,6 +19,9 @@
     <Filter Include="소스 파일\Packet\Generated">
       <UniqueIdentifier>{71c6e7ac-60aa-45d9-9bf5-afe1901103f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\TestServerConfig">
+      <UniqueIdentifier>{315958c0-05de-4abe-b2ff-71af7736be36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -39,6 +42,9 @@
     <ClInclude Include="QueryTest.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TestServerConfig.h">
+      <Filter>소스 파일\TestServerConfig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -46,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="TestServer.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TestServerConfig.cpp">
+      <Filter>소스 파일\TestServerConfig</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

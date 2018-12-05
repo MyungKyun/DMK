@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "playerInfo_generated.h"
 #include "QueryTest.h"
+#include "TestServerConfig.h"
 
 
 class DBThread : public Thread
@@ -59,6 +60,8 @@ class TestServer : public Server
 
 	SessionPool*			sessionPool_;
 	SessionPool*			testConnectSessionPool_;
+	TestServerConfig		config_;
+
 
 public:
 	TestServer()
@@ -68,6 +71,10 @@ public:
 
 	Bool	Setup()
 	{
+ 		if (false == config_.Load(L"ServerConfig.json"))
+		{
+			return false;
+		}
 		
 		sessionPool_ = new SessionPool();
 		testConnectSessionPool_ = new SessionPool();
@@ -76,23 +83,24 @@ public:
 			return false;
 		}
 
-		int acceptCount = 100; // 데이터로드해서 만들자
-		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, sessionPool_, IPv4("127.0.0.1", 20000), acceptCount))
+		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, sessionPool_, 
+																			IPv4(config_.GetIp().c_str(), config_.GetClientPort()), config_.GetClientCount()))
 		{
 			return false;
 		}
 
-		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, testConnectSessionPool_, IPv4("127.0.0.1", 19000), 10))
+		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, testConnectSessionPool_, 
+																			IPv4(config_.GetIp().c_str(), config_.GetGameServerPort()), config_.GetServerCount()))
 		{
 			return false;
 		}
 
 
 		GThreadManager.AddDepartment(NETWORK_IO_PROCESSING_DEPT, &iocp_);
-		GThreadManager.Start<NetworkIoThread>(0, "NetworkIoThread");
+		GThreadManager.Start<NetworkIoThread>(config_.GetIoThreadCount(), "NetworkIoThread");
 		
 		//GThreadManager.AddDepartment(DB_PROCESSING_DEPT, nullptr);
-		//GThreadManager.Start<DBThread>(5, "DBThread");
+		//GThreadManager.Start<DBThread>(config_.GetDBThreadCount(), "DBThread");
 
 		return true;
 	}
@@ -154,7 +162,7 @@ int main(int argc, CHAR* argv[])
 	
 
 	/////////// DB Connection Test////////////////////////
-	// 연결이 정상적으로 이루어진다. 우선 연결만 확인.
+	// DB 쿼리 테스트 완료.
 	DBConnection con;
 	con.Connect(Singleton<DBEnv>::GetInstance().GetEnv());
 	WString old(L"choi");
@@ -174,12 +182,6 @@ int main(int argc, CHAR* argv[])
 
 	}
 
-	// test query updateAccountId
-	/*{
-		TestChangeAccountIdQuery	query(old, change);
-		query.Execute(&con);
-	}
-*/
 	// test query
 	//{
 	//	UInt64 id = 2;
