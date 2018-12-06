@@ -56,10 +56,8 @@ struct TestGetQuery : public DBQuery
 	{
 	}
 
-	virtual Bool PreparingParams(DBConnection* const connection) override
+	virtual Bool PreparingParams() final
 	{
-		__super::PreparingParams(connection);
-
 		auto ret = BindParam(SQL_PARAM_INPUT, uid);
 		if (ret != SQL_SUCCESS) { return false; }
 
@@ -89,10 +87,8 @@ struct TestOutputParamQuery : public DBQuery
 	{
 	}
 
-	virtual Bool PreparingParams(DBConnection* const connection) final
+	virtual Bool PreparingParams() final
 	{
-		__super::PreparingParams(connection);
-
 		auto ret = BindParam(SQL_PARAM_INPUT, id_);
 		if (ret != SQL_SUCCESS)	{ return false; }
 
