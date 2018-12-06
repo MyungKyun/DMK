@@ -170,7 +170,6 @@ int main(int argc, CHAR* argv[])
 	Int id(1);
 	{
 		TestOutputParamQuery query(id);
-		query.PreparingParams(&con);
 		query.Execute(&con);
 		query.Print();
 	}
