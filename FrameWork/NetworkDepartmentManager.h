@@ -12,7 +12,7 @@ public:
 	~NetworkDepartmentManager();
 
 	template <typename DeptType, typename... Args>
-	Bool MakeDeaprtment(Args&&... args)
+	Bool Start(Args&&... args)
 	{
 		static_assert(std::is_base_of<NetworkDepartment, DeptType>::value, "Failed. NetworkDepartment Type miss matched.");
 
