@@ -110,6 +110,7 @@ Bool Logger::Setup(const String& filePath)
 
 	auto stdoutSink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_st>();
 	
+	//TODO: 일별로 폴더를 만들어 관리하게 rotating 내부 코드를 좀더 수정해야겠다.
 	//뒤에 0 은 무시하자.. 로그 파일을 얼마나 만들지 개수인데, 아무숫자나 넣어도 무한대로 만들게 수정해두었다.
 	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(logPath, LOG_FILE_SIZE, 0);
 
