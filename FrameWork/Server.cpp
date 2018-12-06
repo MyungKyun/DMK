@@ -11,8 +11,15 @@ Server::~Server()
 	ShutDown();
 }
 
-Bool Server::Setup()
+Bool Server::Setup(Int argc, Char* argv[])
 {
+	if (false == GLogger.Setup(argv[0]))
+	{
+		return false;
+	}
+
+	LOG_INFO(L"========== Logging Start ==========");
+
 	if (false == startup())
 	{
 		return false;
