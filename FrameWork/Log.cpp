@@ -73,46 +73,53 @@ Logger::~Logger()
 
 Bool Logger::Setup(const String& filePath)
 {
-	auto fullPath = std::experimental::filesystem::path(filePath);
+	using namespace std::experimental;
+
+	auto fullPath = filesystem::path(filePath);
 	if (fullPath.empty())
 	{
 		return false;
 	}
-	
+
 	auto fileName = fullPath.filename().wstring();
 	fileName = fileName.substr(0, fileName.find_last_of('.'));
 
 	WChar curDir[256] = { 0, };
 	::GetCurrentDirectoryW(256, curDir);
+
+	auto curLogPath = filesystem::current_path().wstring();
+	curLogPath += L"\\Logs";
+
+	auto logDirectoryPath = filesystem::path(curLogPath);
+
+	if (false == filesystem::exists(logDirectoryPath))
+	{
+		if (false == filesystem::create_directory(logDirectoryPath))
+		{
+			return false;
+		}
+	}
 	
-	WString logPath(curDir);
-	logPath += L"\\Logs";
-	if (false == ExistDirectory(logPath))
+	curLogPath += (L"\\" + fileName);
+	auto logFileNameDirectoryPath = filesystem::path(curLogPath);
+
+	if (false == filesystem::exists(logFileNameDirectoryPath))
 	{
-		if (false == ::CreateDirectory(logPath.c_str(), nullptr))
+		if (false == filesystem::create_directory(logFileNameDirectoryPath))
 		{
 			return false;
 		}
 	}
 
-	logPath += (L"\\" + fileName);
-	if (false == ExistDirectory(logPath))
-	{
-		if (false == ::CreateDirectory(logPath.c_str(), nullptr))
-		{
-			return false;
-		}
-	}
-
-	logPath += L"\\";
-	logPath += fileName;
-	logPath += L".log";
+	curLogPath += L"\\";
+	curLogPath += fileName;
+	curLogPath += L".log";
 
 	auto stdoutSink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_st>();
 	
 	//TODO: 일별로 폴더를 만들어 관리하게 rotating 내부 코드를 좀더 수정해야겠다.
 	//뒤에 0 은 무시하자.. 로그 파일을 얼마나 만들지 개수인데, 아무숫자나 넣어도 무한대로 만들게 수정해두었다.
-	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(logPath, LOG_FILE_SIZE, 0);
+	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(curLogPath, LOG_FILE_SIZE, 0);
 
 	stdoutSink->set_level(spdlog::level::trace);
 	rotatingSink->set_level(spdlog::level::trace);
