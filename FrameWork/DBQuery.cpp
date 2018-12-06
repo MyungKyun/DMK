@@ -44,7 +44,15 @@ Bool		DBQuery::Execute(DBConnection* const connection)
 		return false;
 	}
 	
-	if (false == PreparingParams(connection))
+	hstmt_ = connection->GetHstmt();
+
+	if (hstmt_ == nullptr)
+	{
+		LOG_ERROR(L"SQL STMT is NULL");
+		return false;
+	}
+
+	if (false == PreparingParams())
 	{
 		return false;
 	}
@@ -75,16 +83,8 @@ Bool		DBQuery::Execute(DBConnection* const connection)
 	return true;
 }
 
-Bool		DBQuery::PreparingParams(DBConnection* const connection)
+Bool		DBQuery::PreparingParams()
 {
-	hstmt_ = connection->GetHstmt();
-
-	if (hstmt_ == nullptr)
-	{
-		LOG_ERROR(L"SQL STMT is NULL");
-		return false;
-	}
-
 	return true;
 }
 

@@ -19,7 +19,7 @@ public:
 
 	Bool		Execute( DBConnection* const connection);
 
-	virtual Bool		PreparingParams(DBConnection* const connection);
+	virtual Bool		PreparingParams();
 	
 	SQLRETURN BindParam(SQLSMALLINT ioType, Char& val);
 	SQLRETURN BindParam(SQLSMALLINT ioType, Byte& val);
