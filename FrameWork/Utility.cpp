@@ -46,3 +46,15 @@ void ConvertWideToChar(const WCHAR* src, CHAR* dest, size_t destLen)
 
 	WideCharToMultiByte(CP_ACP, 0, src, -1, dest, (Int)destLen, NULL, FALSE);
 }
+
+Bool ExistDirectory(const WString& path)
+{
+	DWORD dwAttrib = ::GetFileAttributes(path.c_str());
+	if (dwAttrib == 0xFFFFFFFF || 
+		(dwAttrib & FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY)
+	{
+		return false;
+	}
+
+	return true;
+}

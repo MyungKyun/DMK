@@ -29,3 +29,7 @@ public:
 };
 
 #define		GIDGen		Singleton<IdGenerator>::GetInstance()
+
+
+
+Bool ExistDirectory(const WString& path);
