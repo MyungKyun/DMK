@@ -69,28 +69,30 @@ public:
 	{
 	}
 
-	Bool	Setup()
+	Bool	Setup(Int argc, Char* argv[])
 	{
- 		if (false == config_.Load(L"ServerConfig.json"))
+		
+		if (false == __super::Setup(argc, argv))
+		{
+			return false;
+		}
+		
+		if (false == config_.Load(L"ServerConfig.json"))
 		{
 			return false;
 		}
 		
 		sessionPool_ = new SessionPool();
 		testConnectSessionPool_ = new SessionPool();
-		if (false == __super::Setup())
+
+		if (false == netDeptManager_.Start<ServerNetWorkDepartment>(&iocp_, sessionPool_,
+				IPv4(config_.GetIp().c_str(), config_.GetClientPort()), config_.GetClientCount()))
 		{
 			return false;
 		}
 
-		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, sessionPool_, 
-																			IPv4(config_.GetIp().c_str(), config_.GetClientPort()), config_.GetClientCount()))
-		{
-			return false;
-		}
-
-		if (false == netDeptManger_.MakeDeaprtment<ServerNetWorkDepartment>(&iocp_, testConnectSessionPool_, 
-																			IPv4(config_.GetIp().c_str(), config_.GetGameServerPort()), config_.GetServerCount()))
+		if (false == netDeptManager_.Start<ServerNetWorkDepartment>(&iocp_, testConnectSessionPool_, 
+				IPv4(config_.GetIp().c_str(), config_.GetGameServerPort()), config_.GetServerCount()))
 		{
 			return false;
 		}
@@ -152,57 +154,12 @@ private:
 	}
 };
 
-int main(int argc, CHAR* argv[])
+int main(int argc, Char* argv[])
 {
-	
-	GLogger.Setup(argv[0]);
-		
-	LOG_INFO(L".........Test Server Start..........");
-	//LOG_INFO(L"Start Test Logging...");
-	
-
-	/////////// DB Connection Test////////////////////////
-	// DB 쿼리 테스트 완료.
-	DBConnection con;
-	con.Connect(Singleton<DBEnv>::GetInstance().GetEnv());
-	WString old(L"choi");
-	WString change(L"mmk");
-	Int id(1);
-	{
-		TestOutputParamQuery query(id);
-		query.Execute(&con);
-		query.Print();
-	}
-
-	{
-		UInt id = 2;
-		TestGetQuery query(id);
-		query.Execute(&con);
-
-	}
-
-	// test query
-	//{
-	//	UInt64 id = 2;
-	//	TestGetQuery query(id);
-
-	//	//TestSetUserAccountInfo query(name, pass);
-	//	query.Execute(&con);
-	//}
-
-	// test query (SQLFreeStmt Test)
-	/*{
-		UInt64 id = 3;
-		TestGetQuery query(id);
-		query.Execute(&con);
-	}*/
-	
-	//////////////////////////////////////////////////////
-
 	
 	std::shared_ptr<TestServer> server = std::make_shared<TestServer>();
 
-	if (false == server->Setup())
+	if (false == server->Setup(argc, argv))
 	{
 		return -1;
 	}
