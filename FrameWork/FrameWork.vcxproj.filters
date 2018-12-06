@@ -30,9 +30,6 @@
     <Filter Include="소스 파일\Util">
       <UniqueIdentifier>{c9099a0f-1c42-4fdb-8fb1-df5b1db3ad22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\IPaddress">
-      <UniqueIdentifier>{1bf0cc7c-c1da-4903-b694-395b91f27a78}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Packet">
       <UniqueIdentifier>{55812e87-6353-41bc-b318-28da7ea4d7dd}</UniqueIdentifier>
     </Filter>
@@ -65,6 +62,9 @@
     </Filter>
     <Filter Include="소스 파일\Dispatcher">
       <UniqueIdentifier>{a5c05582-e075-4d58-a0bb-4ed1df7b541a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Network\IPaddress">
+      <UniqueIdentifier>{1bf0cc7c-c1da-4903-b694-395b91f27a78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +126,7 @@
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="IPv4.h">
-      <Filter>소스 파일\IPaddress</Filter>
+      <Filter>소스 파일\Network\IPaddress</Filter>
     </ClInclude>
     <ClInclude Include="Lock.h">
       <Filter>소스 파일\Lock</Filter>
@@ -254,7 +254,7 @@
       <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="IPv4.cpp">
-      <Filter>소스 파일\IPaddress</Filter>
+      <Filter>소스 파일\Network\IPaddress</Filter>
     </ClCompile>
     <ClCompile Include="Lock.cpp">
       <Filter>소스 파일\Lock</Filter>
