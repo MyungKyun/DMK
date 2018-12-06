@@ -9,17 +9,11 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Session">
-      <UniqueIdentifier>{b3cc4817-0ed5-4055-aabc-8d02acfa7024}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Singleton">
       <UniqueIdentifier>{c3cc74ce-f5b3-4a74-bdbd-202aa8426ec7}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Lock">
       <UniqueIdentifier>{afeb5ebc-6e49-4928-b78e-917e600c7890}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Iocp">
-      <UniqueIdentifier>{685e198b-071d-4569-abef-8ef3f11d23d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Network">
       <UniqueIdentifier>{e2aac618-5482-4d57-861a-57b29bf761b9}</UniqueIdentifier>
@@ -39,9 +33,6 @@
     <Filter Include="소스 파일\IPaddress">
       <UniqueIdentifier>{1bf0cc7c-c1da-4903-b694-395b91f27a78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Overlapped">
-      <UniqueIdentifier>{33c783b8-1c15-4703-9957-a9842563d58c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Packet">
       <UniqueIdentifier>{55812e87-6353-41bc-b318-28da7ea4d7dd}</UniqueIdentifier>
     </Filter>
@@ -50,9 +41,6 @@
     </Filter>
     <Filter Include="소스 파일\Job">
       <UniqueIdentifier>{1fe21ffb-2c36-484c-b3c7-16841d4f40f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Network\Dispatcher">
-      <UniqueIdentifier>{a5c05582-e075-4d58-a0bb-4ed1df7b541a}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Log">
       <UniqueIdentifier>{e1b895a6-ebe5-4947-8246-9b55d2b41d20}</UniqueIdentifier>
@@ -66,6 +54,18 @@
     <Filter Include="소스 파일\Parser\Json">
       <UniqueIdentifier>{b7906712-0789-47bf-9e6d-159acfda4007}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Network\Iocp">
+      <UniqueIdentifier>{685e198b-071d-4569-abef-8ef3f11d23d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Network\Session">
+      <UniqueIdentifier>{b3cc4817-0ed5-4055-aabc-8d02acfa7024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Network\Overlapped">
+      <UniqueIdentifier>{33c783b8-1c15-4703-9957-a9842563d58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Dispatcher">
+      <UniqueIdentifier>{a5c05582-e075-4d58-a0bb-4ed1df7b541a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -78,13 +78,13 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Session.h">
-      <Filter>소스 파일\Session</Filter>
+      <Filter>소스 파일\Network\Session</Filter>
     </ClInclude>
     <ClInclude Include="SessionPool.h">
-      <Filter>소스 파일\Session</Filter>
+      <Filter>소스 파일\Network\Session</Filter>
     </ClInclude>
     <ClInclude Include="Iocp.h">
-      <Filter>소스 파일\Iocp</Filter>
+      <Filter>소스 파일\Network\Iocp</Filter>
     </ClInclude>
     <ClInclude Include="EXFunction.h">
       <Filter>소스 파일\Network</Filter>
@@ -135,7 +135,7 @@
       <Filter>소스 파일\Server</Filter>
     </ClInclude>
     <ClInclude Include="Overlapped.h">
-      <Filter>소스 파일\Overlapped</Filter>
+      <Filter>소스 파일\Network\Overlapped</Filter>
     </ClInclude>
     <ClInclude Include="SendProcessor.h">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
@@ -168,10 +168,10 @@
       <Filter>소스 파일\Job</Filter>
     </ClInclude>
     <ClInclude Include="Dispatcher.h">
-      <Filter>소스 파일\Network\Dispatcher</Filter>
+      <Filter>소스 파일\Dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="Handler.h">
-      <Filter>소스 파일\Network\Dispatcher</Filter>
+      <Filter>소스 파일\Dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>소스 파일\Log</Filter>
@@ -212,13 +212,13 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
-      <Filter>소스 파일\Session</Filter>
+      <Filter>소스 파일\Network\Session</Filter>
     </ClCompile>
     <ClCompile Include="SessionPool.cpp">
-      <Filter>소스 파일\Session</Filter>
+      <Filter>소스 파일\Network\Session</Filter>
     </ClCompile>
     <ClCompile Include="Iocp.cpp">
-      <Filter>소스 파일\Iocp</Filter>
+      <Filter>소스 파일\Network\Iocp</Filter>
     </ClCompile>
     <ClCompile Include="EXFunction.cpp">
       <Filter>소스 파일\Network</Filter>
@@ -260,7 +260,7 @@
       <Filter>소스 파일\Lock</Filter>
     </ClCompile>
     <ClCompile Include="Overlapped.cpp">
-      <Filter>소스 파일\Overlapped</Filter>
+      <Filter>소스 파일\Network\Overlapped</Filter>
     </ClCompile>
     <ClCompile Include="SendProcessor.cpp">
       <Filter>소스 파일\Network\IoEventProcessor</Filter>
