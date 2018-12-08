@@ -1,7 +1,8 @@
 #pragma once
 
-class TestServerConfig	: public Singleton<TestServerConfig>
+class TestServerConfig
 {
+
 	Int			serverId_;
 	WString		ip_;
 	Int			clientPort_;
@@ -27,5 +28,3 @@ public:
 	Int			GetDBThreadCount();
 	WString		GetIp();
 };
-
-//#define GTestServerConfig	Singleton<TestServerConfig>::GetInstance()
