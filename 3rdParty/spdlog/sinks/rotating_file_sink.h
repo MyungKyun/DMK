@@ -40,6 +40,23 @@ public:
         current_size_ = file_helper_.size(); // expensive. called only once
     }
 
+	rotating_file_sink(filename_t base_filename, std::size_t max_size, std::wstring sourceDirPath, std::wstring curDateDirPath, std::wstring fileName)
+		: base_filename_(std::move(base_filename))
+		, max_size_(max_size)
+		, max_files_(0)
+		, srcDirPath_(std::move(sourceDirPath))
+		, dateDirPath_(std::move(curDateDirPath))
+		, fileName_(std::move(fileName))
+	{
+		file_helper_.open(calc_filename(base_filename_, 0));
+		current_size_ = file_helper_.size(); // expensive. called only once		
+		nextRotationTime_ = nextRotationTime();
+
+		time_t time_tomorrow = std::chrono::system_clock::to_time_t(nextRotationTime_);
+		std::tm tomorrowDate = spdlog::details::os::localtime(time_tomorrow);
+
+	}
+
     // calc filename according to index and file extension if exists.
     // e.g. calc_filename("logs/mylog.txt, 3) => "logs/mylog.3.txt".
     static filename_t calc_filename(const filename_t &filename, std::size_t index)
@@ -76,7 +93,15 @@ protected:
         fmt::memory_buffer formatted;
         sink::formatter_->format(msg, formatted);
         current_size_ += formatted.size();
-        if (current_size_ > max_size_)
+
+		auto now = std::chrono::system_clock::now();
+		if (now >= nextRotationTime_)
+		{
+			rotate_dirctory_file_();
+			current_size_ = formatted.size();
+			nextRotationTime_ = nextRotationTime();
+		}
+        else if ( current_size_ > max_size_)
         {
             rotate_();
             current_size_ = formatted.size();
@@ -97,13 +122,12 @@ private:
     // log.3.txt -> delete
     void rotate_()
     {
+		using namespace std::experimental;
         using details::os::filename_to_str;
-		previous_filename_ = file_helper_.filename();
-        file_helper_.close();
+		
+        file_helper_.close();			   		
 		filename_t target = calc_filename(base_filename_, 0);
-
-		// 리네임 하지 않고 계속 파일을 만든다. 
-
+		
         //for (auto i = max_files_; i > 0; --i)
         //{
         //    filename_t src = calc_filename(base_filename_, i - 1);
@@ -134,6 +158,70 @@ private:
 		file_helper_.reopen(target, true);
     }
 
+	void rotate_dirctory_file_()
+	{
+		using namespace std::experimental;
+		using details::os::filename_to_str;
+		file_helper_.close();
+
+		auto curPath = filesystem::current_path();
+
+		// 디렉터리 날짜
+		auto now = std::chrono::system_clock::now();
+		auto sec = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+		std::tm nowTm;
+		time_t tt = static_cast<time_t>(sec.count());
+		::localtime_s(&nowTm, &tt);
+
+		std::array<wchar_t, 64> buf;
+		swprintf_s(buf.data(), buf.size(), L"%04u-%02u-%02u", nowTm.tm_year + 1900, nowTm.tm_mon + 1, nowTm.tm_mday);
+
+		std::wstring newDate(buf.data());
+		auto newPath = srcDirPath_ + L"_" + newDate;
+		auto newDirPath = filesystem::path(newPath);
+		auto oldDirPaht = filesystem::path(dateDirPath_);
+
+		if (false == filesystem::equivalent(oldDirPaht, newDirPath))
+		{
+			if (false == filesystem::create_directory(newDirPath))
+			{
+				LOG_ERROR(L"Log directory create failed. Path => {}", newDirPath.wstring().c_str());
+				return;
+			}
+
+			newPath += L"\\" + fileName_ + L".log";
+			base_filename_ = newPath;
+			dateDirPath_ = newDirPath;
+		}
+
+		filename_t target = calc_filename(base_filename_, 0);
+
+		file_helper_.reopen(target, true);
+	}
+
+	std::chrono::system_clock::time_point	nextRotationTime()
+	{
+		auto now = std::chrono::system_clock::now();
+		//time_t tnow = std::chrono::system_clock::to_time_t(now);
+		//std::tm date = spdlog::details::os::localtime(tnow);
+
+		auto tomorrow = now + std::chrono::hours(24);
+		time_t time_tomorrow = std::chrono::system_clock::to_time_t(tomorrow);
+		std::tm tomorrowDate = spdlog::details::os::localtime(time_tomorrow);
+		tomorrowDate.tm_hour = 0;
+		tomorrowDate.tm_min = 0;
+		tomorrowDate.tm_sec = 0;
+		
+
+		auto rotation_time = std::chrono::system_clock::from_time_t(std::mktime(&tomorrowDate));
+		if (rotation_time > now)
+		{
+			return rotation_time;
+		}
+
+		return rotation_time + std::chrono::hours(24);
+	}
+
     // delete the target if exists, and rename the src file  to target
     // return true on success, false otherwise.
     bool rename_file(const filename_t &src_filename, const filename_t &target_filename)
@@ -143,12 +231,14 @@ private:
         return details::os::rename(src_filename, target_filename) == 0;
     }
 
-	filename_t previous_filename_;
+	
+	std::wstring	srcDirPath_, dateDirPath_, fileName_;
     filename_t base_filename_;
     std::size_t max_size_;
     std::size_t max_files_;
     std::size_t current_size_;
     details::file_helper file_helper_;
+	std::chrono::system_clock::time_point	nextRotationTime_;
 };
 
 using rotating_file_sink_mt = rotating_file_sink<std::mutex>;
