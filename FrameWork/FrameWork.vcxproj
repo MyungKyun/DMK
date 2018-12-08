@@ -175,7 +175,6 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClInclude Include="DBConnection.h" />
     <ClInclude Include="DBErrorMessage.h" />
     <ClInclude Include="DBQuery.h" />
-    <ClInclude Include="DBRecord.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Handler.h" />
@@ -222,7 +221,6 @@ IF NOT EXIST $(SolutionDir)ServerLib\include MD $(SolutionDir)ServerLib\include
     <ClCompile Include="DBConnection.cpp" />
     <ClCompile Include="DBErrorMessage.cpp" />
     <ClCompile Include="DBQuery.cpp" />
-    <ClCompile Include="DBRecord.cpp" />
     <ClCompile Include="EXFunction.cpp" />
     <ClCompile Include="Iocp.cpp" />
     <ClCompile Include="IoProcessor.cpp" />
