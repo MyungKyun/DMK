@@ -100,8 +100,13 @@ Bool Logger::Setup(const String& filePath)
 		}
 	}
 	
-	curLogPath += (L"\\" + fileName);
-	auto logFileNameDirectoryPath = filesystem::path(curLogPath);
+	auto date = LocalClock::Now().DateToString();
+
+	auto srcLogPath = curLogPath + L"\\" + fileName;
+
+	auto curDateLogPath = srcLogPath + L"_" + date;
+
+	auto logFileNameDirectoryPath = filesystem::path(curDateLogPath);
 
 	if (false == filesystem::exists(logFileNameDirectoryPath))
 	{
@@ -111,18 +116,22 @@ Bool Logger::Setup(const String& filePath)
 		}
 	}
 
-	curLogPath += L"\\";
-	curLogPath += fileName;
-	curLogPath += L".log";
+	auto finalLogPath = logFileNameDirectoryPath.wstring();
+	finalLogPath += L"\\";
+	finalLogPath += fileName;
+	finalLogPath += L".log";
+
+	
 
 	auto stdoutSink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_st>();
-	
-	//TODO: 일별로 폴더를 만들어 관리하게 rotating 내부 코드를 좀더 수정해야겠다.
-	//뒤에 0 은 무시하자.. 로그 파일을 얼마나 만들지 개수인데, 아무숫자나 넣어도 무한대로 만들게 수정해두었다.
-	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(curLogPath, LOG_FILE_SIZE, 0);
+	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(finalLogPath, 100, srcLogPath, curDateLogPath, fileName);
 
+#ifdef _DEBUG
 	stdoutSink->set_level(spdlog::level::trace);
 	rotatingSink->set_level(spdlog::level::trace);
+#else
+	rotatingSink->set_level(spdlog::level::trace);
+#endif
 
 	auto logger = std::make_shared<AsyncLog>("AsyncLogger", spdlog::sinks_init_list{ stdoutSink, rotatingSink });
 	logger->set_level(spdlog::level::trace);
