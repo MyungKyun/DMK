@@ -28,10 +28,7 @@ Void ConnectProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int num
 		LOG_ERROR(L"ConnectCompleted Failed.");
 		return;
 	}
-	else
-	{
-		networkDept_->AddSession(sessionPtr);
-	}
+	
 	
 	delete overlappedConnect;
 	overlappedConnect = nullptr;
