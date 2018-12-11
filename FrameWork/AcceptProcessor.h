@@ -1,6 +1,6 @@
 #pragma once
 
-class SessionPool;
+class BaseSessionPool;
 class NetworkDepartment;
 
 class AcceptProcessor : public IoProcessor
@@ -13,7 +13,7 @@ public:
 	AcceptProcessor(NetworkDepartment* networkDept);
 	~AcceptProcessor();
 
-	Void PreparingAccept(SessionPool* sessionPool,  UShort totalAcceptCount, SOCKET listenSock);
+	Void PreparingAccept(std::shared_ptr<Session>& sessionPool,  UShort totalAcceptCount, SOCKET listenSock);
 	
 	Void CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numberOfTransferred, Bool ioEventResult) override;
 

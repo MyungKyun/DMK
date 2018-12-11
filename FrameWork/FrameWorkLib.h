@@ -88,7 +88,6 @@
 #include "DBErrorMessage.h"
 #include "DBConnection.h"
 #include "DBQuery.h"
-#include "DBRecord.h"
 
 #include "Iocp.h"
 #include "Overlapped.h"

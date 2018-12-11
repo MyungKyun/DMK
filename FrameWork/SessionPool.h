@@ -1,10 +1,20 @@
 #pragma once
 
-class ServerIocp;
 
 using SessionSptr = std::shared_ptr<Session>;
 
-class SessionPool
+
+class BaseSessionPool
+{
+public:
+
+	virtual SessionSptr GetSession() = 0;
+	virtual Void		SessionReturns(std::shared_ptr<Session>& sessionPtr) = 0;
+};
+
+
+template <typename SessionType>
+class SessionPool : public BaseSessionPool
 {
 
 	enum
@@ -19,13 +29,61 @@ class SessionPool
 	Short							poolCount_;
 
 public:
-	SessionPool();
-	~SessionPool();
 
-	Bool							MakeSessionPool(NetworkDepartment* networkDept, UShort poolCount);
-	
-	SessionSptr						GetSession();
-	
-	Void							SessionReturns(const std::shared_ptr<Session>& sessionPtr);
+	SessionPool(UShort poolCount, Int bufferSize = 128 * 1024)
+		: poolCount_(poolCount)
+	{
+		if (false == makeSession(poolCount, bufferSize))
+		{
+			assert(false);
+		}			
+	}
+
+	~SessionPool()
+	{
+
+	}
+
+	SessionSptr		GetSession() override
+	{
+		std::shared_ptr<Session> sessionPtr;
+		if (sessionQue_.try_pop(sessionPtr))
+		{
+			return  sessionPtr;
+		}
+
+		return nullptr;
+	}
+
+	Void		SessionReturns(std::shared_ptr<Session>& sessionPtr) override
+	{
+		sessionQue_.push(sessionPtr);
+	}
+
+private:
+
+	Bool	makeSession(UShort poolCount, Int bufferSize = 128 * 1024)
+	{
+		poolCount_ = poolCount;
+		if (poolCount_ <= 0)
+		{
+			return false;
+		}
+
+		for (auto i = 0; i < poolCount; ++i)
+		{
+			auto sessionPtr = std::make_shared<SessionType>(bufferSize);
+			if (nullptr == sessionPtr)
+			{
+				LOG_ERROR(L"sessionPtr is null");
+				return false;
+			}
+
+			sessionQue_.push(sessionPtr);
+
+		}
+
+		return true;
+	}
 		
 };

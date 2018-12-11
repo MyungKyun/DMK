@@ -152,7 +152,7 @@ Void	ReceiveProcessor::processingReceive(Overlapped_Ex* overlapped, Int numberOf
 			break;
 		}
 
-		overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, buf + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
+		//overlappedRecv->sessionSPtr_->GetNetworkDept()->Dispatch(overlappedRecv->sessionSPtr_, header, buf + sizeof(PacketHeader), header->size - sizeof(PacketHeader));
 	
 		buf += header->size;
 		processStandByBytes -= header->size;

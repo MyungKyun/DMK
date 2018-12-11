@@ -1,21 +1,18 @@
 #include "stdafx.h"
 #include "Session.h"
 
-Session::Session(NetworkDepartment* netDept, Int bufSize)
+Session::Session(Int bufSize)
 	: totalBufferSize_(bufSize)
 	, sessionId_(GIDGen.SessionIdGenerate())
-	, netDept_(netDept ? netDept : nullptr)
 	
 {
 	socket_ = WinsockHelper::CreateTcpSocket();
-	WinsockHelper::NagleOff(socket_);
 	std::atomic_init(&completedConnect_, false);
 }
 
 
 Session::~Session()
 {
-	std::cout << "session dctor call" << std::endl;
 	::closesocket(socket_);
 }
 
@@ -43,6 +40,11 @@ Void	Session::ReRegisterToIocp()
 	netDept_->RegisterToIocp(reinterpret_cast<HANDLE>(socket_));
 
 	netDept_->SessionWasDismissed(GetThisPtr());
+}
+
+Void	Session::SetNetworkDept(NetworkDepartment* networkDept)
+{
+	netDept_ = networkDept;
 }
 
 NetworkDepartment*		Session::GetNetworkDept()
@@ -83,6 +85,11 @@ Bool	Session::AcceptCompleted(const IPv4& address)
 		return false;
 	}
 	
+	if (false == netDept_->AddSession(shared_from_this()))
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -91,12 +98,13 @@ Bool	Session::ConnectCompleted(const IPv4& address)
 	completedConnect_.store(true);
 	peerAddress_ = address;
 
-	if (false == netDept_->AddSession(shared_from_this()))
+	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
 	{
 		return false;
 	}
 
-	if (false == recvProcessor_.ReservingReceive(shared_from_this()))
+
+	if (false == netDept_->AddSession(shared_from_this()))
 	{
 		return false;
 	}

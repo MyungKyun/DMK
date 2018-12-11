@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-ClientNetWorkDepartment::ClientNetWorkDepartment(Iocp* iocp, SessionPool* sessionPool, const IPv4& address, Int connectCount)
+ClientNetWorkDepartment::ClientNetWorkDepartment(Iocp* iocp, BaseSessionPool* sessionPool, const IPv4& address, Int connectCount)
 	: iocp_(iocp ? iocp : nullptr)
 	, sessionPool_(sessionPool ? sessionPool : nullptr )
 	, address_(address)
@@ -17,11 +17,11 @@ ClientNetWorkDepartment::~ClientNetWorkDepartment()
 
 Bool		ClientNetWorkDepartment::Setup()
 {
-	if (false == sessionPool_->MakeSessionPool(this, connectCount_))
+	/*if (false == sessionPool_->MakeSessionPool(this, connectCount_))
 	{
 		return false;
 	}
-
+*/
 	for (Int i = 0; i < connectCount_; ++i)
 	{
 		auto& session = sessionPool_->GetSession();

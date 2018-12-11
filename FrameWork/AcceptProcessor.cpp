@@ -12,11 +12,11 @@ AcceptProcessor::~AcceptProcessor()
 
 }
 
-Void AcceptProcessor::PreparingAccept(SessionPool* sessionPool, UShort totalAcceptCount, SOCKET listenSock)
+Void AcceptProcessor::PreparingAccept(std::shared_ptr<Session>& sessionPtr, UShort totalAcceptCount, SOCKET listenSock)
 {
-	if (nullptr == sessionPool)
+	if (nullptr == sessionPtr)
 	{
-		LOG_ERROR(L"SessionPool is nullptr");
+		LOG_ERROR(L"Session is nullptr");
 		return;
 	}
 
@@ -26,7 +26,7 @@ Void AcceptProcessor::PreparingAccept(SessionPool* sessionPool, UShort totalAcce
 		return;
 	}
 
-	decltype(auto) sessionPtr = sessionPool->GetSession();
+	sessionPtr->SetNetworkDept(networkDept_);
 
 	Overlapped_Ex_Accept* overlappedAccept = new Overlapped_Ex_Accept(this, listenSock, sessionPtr);
 
@@ -86,11 +86,7 @@ Void AcceptProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int numb
 	}
 	else
 	{
-		if (true == sessionPtr->AcceptCompleted(IPv4(reinterpret_cast<const sockaddr*>(&addr), addrLen)))
-		{
-			networkDept_->AddSession(sessionPtr);
-		}
-		else
+		if (false == sessionPtr->AcceptCompleted(IPv4(reinterpret_cast<const sockaddr*>(&addr), addrLen)))
 		{
 			networkDept_->SessionWasDismissed(sessionPtr);
 		}

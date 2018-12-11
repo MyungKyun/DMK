@@ -1,10 +1,11 @@
 #pragma once
 
 class Session;
+class BaseSessionPool;
 class ServerNetWorkDepartment : public NetworkDepartment
 {
 	Iocp*					iocp_;
-	SessionPool*			sessionPool_;
+	BaseSessionPool*		sessionPool_;
 	IPv4					address_;
 	Listener				listener_;
 	AcceptProcessor			acceptProcessor_;
@@ -18,7 +19,7 @@ class ServerNetWorkDepartment : public NetworkDepartment
 
 public:
 
-	ServerNetWorkDepartment(Iocp* iocp, SessionPool* sessionPool, const IPv4& address, UShort totalAcceptCount);
+	ServerNetWorkDepartment(Iocp* iocp, BaseSessionPool* sessionPool, const IPv4& address, UShort totalAcceptCount);
 	~ServerNetWorkDepartment();
 
 	Bool			Setup() override;

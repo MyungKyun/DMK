@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-ServerNetWorkDepartment::ServerNetWorkDepartment(Iocp* iocp, SessionPool* sessionPool, const IPv4& address, UShort totalAcceptCount)
+ServerNetWorkDepartment::ServerNetWorkDepartment(Iocp* iocp, BaseSessionPool* sessionPool, const IPv4& address, UShort totalAcceptCount)
 	: iocp_(iocp ? iocp : nullptr)
 	, sessionPool_(sessionPool ? sessionPool : nullptr)
 	, totalAcceptCount_(totalAcceptCount) // юс╫ц
@@ -24,11 +24,6 @@ Bool	ServerNetWorkDepartment::Setup()
 		assert(false);
 	}
 
-	if (false == sessionPool_->MakeSessionPool(this, totalAcceptCount_))
-	{
-		return false;
-	}
-
 	if (false == listener_.Listen(address_))
 	{
 		return false;
@@ -38,7 +33,16 @@ Bool	ServerNetWorkDepartment::Setup()
 
 	for (Short i = 0; i < totalAcceptCount_; ++i)
 	{
-		acceptProcessor_.PreparingAccept(sessionPool_, totalAcceptCount_, listener_.GetListenSocket());
+		auto& sessionPtr = sessionPool_->GetSession();
+		if (nullptr == sessionPtr)
+		{
+			LOG_ERROR(L"Session shared_ptr is nullptr.");
+			continue;
+		}
+		
+		RegisterToIocp(sessionPtr->GetHandle());
+
+		acceptProcessor_.PreparingAccept(sessionPtr, totalAcceptCount_, listener_.GetListenSocket());
 	}
 
 	return true;
@@ -67,8 +71,14 @@ Bool	ServerNetWorkDepartment::AddSession(std::shared_ptr<Session>& session)
 Void	ServerNetWorkDepartment::SessionWasDismissed(std::shared_ptr<Session>& sessionPtr)
 {
 	sessionPool_->SessionReturns(sessionPtr);
+	auto& sessionSPtr = sessionPool_->GetSession();
+	if (nullptr == sessionSPtr)
+	{
+		LOG_ERROR(L"Session shared_ptr is nullptr.");
+		return;
+	}
 
-	acceptProcessor_.PreparingAccept(sessionPool_, totalAcceptCount_, listener_.GetListenSocket());
+	acceptProcessor_.PreparingAccept(sessionSPtr, totalAcceptCount_, listener_.GetListenSocket());
 }
 
 Void	ServerNetWorkDepartment::RegisterToIocp(HANDLE handle)

@@ -1,10 +1,11 @@
 #pragma once
 class Session;
+class BaseSessionPool;
 class ClientNetWorkDepartment : public NetworkDepartment
 {
 
 	Iocp*					iocp_;
-	SessionPool*			sessionPool_;
+	BaseSessionPool*	    sessionPool_;
 	IPv4					address_;
 	Dispatcher*				dispacher_;
 	Int						connectCount_;
@@ -17,7 +18,7 @@ class ClientNetWorkDepartment : public NetworkDepartment
 
 public:
 
-	ClientNetWorkDepartment(Iocp* iocp, SessionPool* sessionPool, const IPv4& adress, Int connectCount);
+	ClientNetWorkDepartment(Iocp* iocp, BaseSessionPool* sessionPool, const IPv4& adress, Int connectCount);
 	~ClientNetWorkDepartment();
 
 	Bool		Setup() override;

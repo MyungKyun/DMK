@@ -45,7 +45,10 @@ Bool ConnectProcessor::Connect(std::shared_ptr<Session>& sessionPtr, IPv4& addre
 		{
 			LOG_ERROR(L"ConnectEx failed. ErrorCode: {}", error);
 			sessionPtr->CloseSocket();
+
 			delete overlappedConnect;
+			overlappedConnect = nullptr;
+
 			return false;
 		}
 	}

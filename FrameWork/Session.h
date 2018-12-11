@@ -8,7 +8,7 @@ class Session :	public std::enable_shared_from_this<Session>
 private:
 	
 	Session() = delete;
-	Session(NetworkDepartment* netDept, Int ioTotalBufsize);
+	
 
 private:
 
@@ -24,13 +24,8 @@ private:
 	SendProcessor									sendProcessor_; 
 
 public:
-
-	template <typename ... Args>
-	static std::shared_ptr<Session> CreateSession(Args&&... args)
-	{
-		return  std::shared_ptr<Session>(new Session(std::forward<Args>(args)...));
-	}
-	
+		
+	Session(Int ioTotalBufsize);
 	~Session();
 
 	Void		Disconnect();
@@ -39,7 +34,10 @@ public:
 	Void		Send(std::shared_ptr<SendBuffer>&& sendBuffer, Int len);
 	Bool		AcceptCompleted(const IPv4& address);
 	Bool		ConnectCompleted(const IPv4& address);
-	
+
+	Void		SetNetworkDept(NetworkDepartment* networkDept);
+
+
 	UInt64		GetSessionId() const;
 	Int			GetBufferSize() const;
 	HANDLE		GetHandle();
