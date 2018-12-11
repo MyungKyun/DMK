@@ -38,6 +38,8 @@ Bool ConnectProcessor::Connect(std::shared_ptr<Session>& sessionPtr, IPv4& addre
 {
 	Overlapped_Ex* overlappedConnect = new Overlapped_Ex_Connect(this, sessionPtr->GetSocket(), address, sessionPtr);
 
+	sessionPtr->SetNetworkDept(networkDept_);
+
 	if (false == EXFunction::ConnectEx(sessionPtr->GetSocket(), address, overlappedConnect))
 	{
 		auto error = ::WSAGetLastError();

@@ -31,6 +31,8 @@ Bool		ClientNetWorkDepartment::Setup()
 			return false;
 		}
 		
+		RegisterToIocp(session->GetHandle());
+
 		if (false == connectProcessor_.Connect(session, address_))
 		{
 			return false;

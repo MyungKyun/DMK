@@ -24,12 +24,12 @@ Bool	ServerNetWorkDepartment::Setup()
 		assert(false);
 	}
 
+	iocp_->Resister((HANDLE)listener_.GetListenSocket());
+
 	if (false == listener_.Listen(address_))
 	{
 		return false;
 	}
-
-	iocp_->Resister((HANDLE)listener_.GetListenSocket());
 
 	for (Short i = 0; i < totalAcceptCount_; ++i)
 	{
