@@ -58,9 +58,9 @@ public:
 class TestServer : public Server
 {
 
-	SessionPool*			sessionPool_;
-	SessionPool*			testConnectSessionPool_;
-	TestServerConfig		config_;
+	BaseSessionPool*			sessionPool_;
+	BaseSessionPool*			testConnectSessionPool_;
+	TestServerConfig			config_;
 
 
 public:
@@ -82,17 +82,20 @@ public:
 			return false;
 		}
 		
-		sessionPool_ = new SessionPool();
-		testConnectSessionPool_ = new SessionPool();
+		Int clientPoolCount = config_.GetClientCount();
+		Int serverPoolCount = config_.GetServerCount();
+
+		sessionPool_ = new SessionPool<Session>(clientPoolCount);
+		testConnectSessionPool_ = new SessionPool<Session>(serverPoolCount);
 
 		if (false == netDeptManager_.Start<ServerNetWorkDepartment>(&iocp_, sessionPool_,
-				IPv4(config_.GetIp().c_str(), config_.GetClientPort()), config_.GetClientCount()))
+				IPv4(config_.GetIp().c_str(), config_.GetClientPort()), clientPoolCount))
 		{
 			return false;
 		}
 
 		if (false == netDeptManager_.Start<ServerNetWorkDepartment>(&iocp_, testConnectSessionPool_, 
-				IPv4(config_.GetIp().c_str(), config_.GetGameServerPort()), config_.GetServerCount()))
+				IPv4(config_.GetIp().c_str(), config_.GetGameServerPort()), serverPoolCount))
 		{
 			return false;
 		}
