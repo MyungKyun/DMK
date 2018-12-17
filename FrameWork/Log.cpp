@@ -124,7 +124,7 @@ Bool Logger::Setup(const String& filePath)
 	
 
 	auto stdoutSink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_st>();
-	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(finalLogPath, 100, srcLogPath, curDateLogPath, fileName);
+	auto rotatingSink = std::make_shared<spdlog::sinks::rotating_file_sink_st>(finalLogPath, LOG_FILE_SIZE, srcLogPath, curDateLogPath, fileName);
 
 #ifdef _DEBUG
 	stdoutSink->set_level(spdlog::level::trace);
