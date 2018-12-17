@@ -32,7 +32,8 @@ Void SendProcessor::CompleteIoEventProcess(Overlapped_Ex * overlapped, Int numbe
 
 	if (numberOfTransferredBytes != overlappedSend->wsabuf_.len)
 	{
-		return;
+		LOG_ERROR(L"not equal to wsa buf length.");
+		assert(false);
 	}
 
 	Int numberOfSent = overlappedSend->numberOfSend_;
