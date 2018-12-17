@@ -17,7 +17,7 @@ Void ConnectProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int num
 	if (nullptr == overlappedConnect)
 	{
 		LOG_ERROR(L"ConnectOverlapped is nullptr");
-		return;
+		assert(false);
 	}
 
 	auto& sessionPtr = overlappedConnect->sessionSPtr_;
@@ -26,7 +26,7 @@ Void ConnectProcessor::CompleteIoEventProcess(Overlapped_Ex* overlapped, Int num
 	if (false == sessionPtr->ConnectCompleted(address))
 	{
 		LOG_ERROR(L"ConnectCompleted Failed.");
-		return;
+		networkDept_->SessionWasDismissed(sessionPtr);
 	}
 	
 	
