@@ -43,7 +43,7 @@ Void Iocp::ListenToCompletionPort()
 				{
 					return;
 				}
-				else if (ERROR_ABANDONED_WAIT_0)
+				else if (ERROR_ABANDONED_WAIT_0 == error)
 				{
 					return;
 				}
