@@ -1,5 +1,0 @@
-table PlayerInfo
-{
-	name : string;
-	level : int;
-}
